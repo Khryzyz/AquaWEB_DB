@@ -1,0 +1,3341 @@
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: localhost    Database: aquaweb
+-- ------------------------------------------------------
+-- Server version	5.7.18-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `colegas`
+--
+
+DROP TABLE IF EXISTS `colegas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `colegas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `colega_id` int(11) NOT NULL,
+  `estado` enum('1','2') DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `COLEGAS_FK1_idx` (`colega_id`),
+  KEY `COLEGAS_FK0_idx` (`usuario_id`),
+  CONSTRAINT `COLEGAS_FK0` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `COLEGAS_FK1` FOREIGN KEY (`colega_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `colegas`
+--
+
+LOCK TABLES `colegas` WRITE;
+/*!40000 ALTER TABLE `colegas` DISABLE KEYS */;
+INSERT INTO `colegas` VALUES (5,3,1,'1','2017-09-04 15:29:26','2017-09-04 15:29:26');
+/*!40000 ALTER TABLE `colegas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `exposicion_solar`
+--
+
+DROP TABLE IF EXISTS `exposicion_solar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `exposicion_solar` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `exposicion_solar`
+--
+
+LOCK TABLES `exposicion_solar` WRITE;
+/*!40000 ALTER TABLE `exposicion_solar` DISABLE KEYS */;
+INSERT INTO `exposicion_solar` VALUES (1,'BAJA','1','2017-07-02 15:36:07','2017-07-02 15:36:07'),(2,'BAJA - MEDIA','1','2017-07-02 15:36:07','2017-07-02 15:36:07'),(3,'MEDIA','1','2017-07-02 15:36:07','2017-07-02 15:36:07'),(4,'MEDIA - ALTA','1','2017-07-02 15:36:07','2017-07-02 15:36:07'),(5,'ALTA','1','2017-07-02 15:36:07','2017-07-02 15:36:07');
+/*!40000 ALTER TABLE `exposicion_solar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `galeria`
+--
+
+DROP TABLE IF EXISTS `galeria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `galeria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `planta_id` int(11) DEFAULT NULL,
+  `pez_id` int(11) DEFAULT NULL,
+  `codigo` varchar(100) NOT NULL,
+  `extension` varchar(45) NOT NULL DEFAULT 'jpg',
+  `titulo` varchar(100) DEFAULT NULL,
+  `descripcion` varchar(1000) DEFAULT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `codigo_UNIQUE` (`codigo`),
+  KEY `GALERIA_FK1_idx` (`planta_id`),
+  KEY `GALERIA_FK2_idx` (`pez_id`),
+  KEY `GALERIA_FK3_idx` (`usuario_id`),
+  CONSTRAINT `GALERIA_FK1` FOREIGN KEY (`planta_id`) REFERENCES `planta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `GALERIA_FK2` FOREIGN KEY (`pez_id`) REFERENCES `pez` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `GALERIA_FK3` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `galeria`
+--
+
+LOCK TABLES `galeria` WRITE;
+/*!40000 ALTER TABLE `galeria` DISABLE KEYS */;
+INSERT INTO `galeria` VALUES (1,3,1,NULL,'d66d3f0c-4838-4089-844e-44e757b37ab1','jpg','Cultivo Acelgas','Cultivo de acelgas en un cultivo acuaponico','1','2017-04-21 20:28:45','2017-08-30 00:34:21'),(2,3,1,NULL,'ef808cc6-c84d-4e3f-b934-04d09c19081c','jpg','Cultivo de Acelgas Experimental','Cultivo de Acelgas Experimental','1','2017-04-21 20:28:58','2017-04-21 20:28:58'),(3,3,2,NULL,'685344db-ef98-41b7-957e-00091def1115','jpg',NULL,NULL,'1','2017-04-21 20:30:37','2017-04-21 20:30:37'),(4,3,2,NULL,'8d84af05-ab9e-4d06-bb7c-12b420a7e2c8','jpg',NULL,NULL,'1','2017-04-21 20:30:38','2017-04-21 20:30:38'),(5,3,3,NULL,'dab88922-cb5b-4cee-92e9-502ca7831f48','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(6,3,4,NULL,'3f8fb1be-5759-4004-a84d-ab380a3d181d','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(7,3,5,NULL,'95825654-e282-45d4-8f6b-47038ad55d69','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(8,3,6,NULL,'fcd24f2b-737e-45c6-94fc-c1abf8f40757','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(9,3,6,NULL,'46ac23f6-ce1b-4f14-b4cc-18095d31f083','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(10,3,7,NULL,'480ea7db-9703-4be5-b29c-050debec3ab1','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(11,3,8,NULL,'17f3032e-83ee-460e-bbd6-cac6ebed6b23','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(12,3,8,NULL,'3cfc458c-2d0e-4fa8-8345-a52767a4b1c3','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(13,3,8,NULL,'13920ed9-2dc6-4dc8-959f-c19ba5a0a083','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(14,3,9,NULL,'16a6eb94-fa4d-4a5f-aed0-46fa33045571','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(15,3,10,NULL,'37edaffd-aecd-4ed0-9f6e-a80965149cd0','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(16,3,10,NULL,'5dab7d41-8f09-403d-9e1c-5f6bb93475bd','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(17,3,11,NULL,'c7ba088d-c040-4657-baca-f0562bc5da2e','jpg',NULL,NULL,'1','2017-04-21 20:58:38','2017-04-21 20:58:38'),(18,3,11,NULL,'413bb931-3ce9-411b-9fdb-0817fb2756a7','jpg',NULL,NULL,'1','2017-04-21 20:58:39','2017-04-21 20:58:39'),(29,3,NULL,1,'ab4288e5-bc6e-41f7-80c8-4fca6c752435','jpg',NULL,NULL,'1','2017-04-21 21:24:45','2017-04-21 21:24:45'),(30,3,NULL,2,'cb333ccf-3039-4863-898f-4fec7aa721f9','jpg',NULL,NULL,'1','2017-04-21 21:24:45','2017-04-21 21:24:45'),(31,3,NULL,3,'82c297a1-4cc9-4109-821c-09d07d13f32a','jpg','Bagre del canal','Bagre del canal en acuario','2','2017-04-21 21:24:45','2017-08-30 00:42:31'),(32,3,NULL,4,'30d44e1d-5814-4ad0-ba6c-a55c2afa3a6b','jpg',NULL,NULL,'1','2017-04-21 21:24:45','2017-04-21 21:24:45'),(33,3,NULL,6,'0e603932-e5e4-4d03-a8a9-5217461f98e8','jpg','Camaron de Rio','Camaron de Rio','1','2017-04-21 21:24:45','2017-04-21 21:24:45'),(54,3,1,NULL,'078bbf3c-8c51-11e7-825c-4ccc6a8ac90b','jpg','Hoja de Acelga','Imagen Tomada del Universal','1','2017-08-29 00:28:44','2017-08-29 00:28:44'),(55,3,1,NULL,'38070ee8-8c51-11e7-825c-4ccc6a8ac90b','jpg','Acelga Empacada','Empaque de Acelgas','1','2017-08-29 00:30:05','2017-08-29 00:30:05'),(56,3,1,NULL,'68d81705-8c51-11e7-825c-4ccc6a8ac90b','jpeg','Platillo de Acelgas','Platillo de acelgas','1','2017-08-29 00:31:27','2017-08-29 00:31:27'),(57,3,NULL,3,'d992778b-8c55-11e7-825c-4ccc6a8ac90b','jpg','Bagre del Canal Adulto','Bagre del canal recien capturado estado de adultez','1','2017-08-29 01:03:14','2017-08-29 01:03:14'),(58,3,NULL,3,'ec8da1dc-8d1b-11e7-b826-4ccc6a8ac90b','png','Bagre del canal','Bagre del canal dibujo conceptual','1','2017-08-30 00:41:13','2017-08-30 00:41:13'),(59,3,NULL,12,'5b37257d-9035-11e7-b94c-4ccc6a8ac90b','png','darwin kawai','Darwin kawaii','1','2017-09-02 23:20:49','2017-09-02 23:20:49');
+/*!40000 ALTER TABLE `galeria` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `galeriaUUID`
+BEFORE INSERT ON `aquaweb`.`galeria`
+FOR EACH ROW
+  SET NEW.`codigo` = UUID() */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `permiso`
+--
+
+DROP TABLE IF EXISTS `permiso`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `permiso` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `estado` enum('1','2') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `slug_UNIQUE` (`slug`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permiso`
+--
+
+LOCK TABLES `permiso` WRITE;
+/*!40000 ALTER TABLE `permiso` DISABLE KEYS */;
+/*!40000 ALTER TABLE `permiso` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `permiso_tusuario`
+--
+
+DROP TABLE IF EXISTS `permiso_tusuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `permiso_tusuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tusuario_id` int(11) NOT NULL,
+  `permiso_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `PERMISO_ROL_FK1_idx` (`tusuario_id`),
+  KEY `PERMISO_ROL_FK0_idx` (`permiso_id`),
+  CONSTRAINT `PERMISO_ROL_FK0` FOREIGN KEY (`permiso_id`) REFERENCES `permiso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `PERMISO_ROL_FK1` FOREIGN KEY (`tusuario_id`) REFERENCES `tipo_usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `permiso_tusuario`
+--
+
+LOCK TABLES `permiso_tusuario` WRITE;
+/*!40000 ALTER TABLE `permiso_tusuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `permiso_tusuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pez`
+--
+
+DROP TABLE IF EXISTS `pez`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pez` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `tacceso_id` enum('1','2','3') NOT NULL DEFAULT '3',
+  `nombre` varchar(100) NOT NULL,
+  `temperatura_vital_min` int(11) NOT NULL,
+  `temperatura_vital_max` int(11) NOT NULL,
+  `temperatura_optima_min` int(11) NOT NULL,
+  `temperatura_optima_max` int(11) NOT NULL,
+  `nitrogeno_nat` double NOT NULL,
+  `nitrito` double NOT NULL,
+  `oxigeno` int(11) NOT NULL,
+  `porcentaje_proteina_min` int(11) NOT NULL,
+  `porcentaje_proteina_max` int(11) NOT NULL,
+  `crecimiento_peso` int(11) NOT NULL,
+  `crecimiento_tiempo` int(11) NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `PEZ_FK01_idx` (`usuario_id`),
+  KEY `PEZ_FK02_idx` (`tacceso_id`),
+  CONSTRAINT `PEZ_FK01` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `PEZ_FK02` FOREIGN KEY (`tacceso_id`) REFERENCES `tipo_acceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pez`
+--
+
+LOCK TABLES `pez` WRITE;
+/*!40000 ALTER TABLE `pez` DISABLE KEYS */;
+INSERT INTO `pez` VALUES (1,3,'3','CARPA COMÚN',4,34,25,30,1,1,4,30,38,600,10,'1','2017-04-21 20:13:06','2017-07-29 17:29:36'),(2,3,'3','TILAPIA DEL NILO',14,36,27,30,2,1,4,28,32,600,7,'2','2017-04-21 20:14:08','2017-09-02 23:23:04'),(3,3,'3','BAGRE DEL CANAL',5,34,25,30,1,1,3,25,36,400,8,'1','2017-04-21 20:15:23','2017-04-21 20:15:23'),(4,3,'3','TRUCHA ARCO IRIS',10,18,14,16,0.5,0.3,6,42,42,1000,15,'1','2017-04-21 20:16:14','2017-04-21 20:16:14'),(6,3,'3','CAMARON DE AGUA DULCE',18,34,26,29,0.5,2,3,35,35,30,4,'1','2017-04-21 20:18:09','2017-04-21 20:18:09'),(7,1,'3','BESUCON',1,1,1,1,1,1,1,1,1,1,1,'1','2017-07-08 16:59:51','2017-07-08 16:59:51'),(11,3,'3','CAMARON DE AGUA DULCE',18,34,26,29,1,2,3,35,35,30,4,'2','2017-07-21 17:04:31','2017-07-21 17:04:31'),(12,3,'3','PEZ DAARWIN',1,1,1,1,1,1,1,1,1,1,1,'2','2017-09-02 23:18:55','2017-09-08 18:14:07');
+/*!40000 ALTER TABLE `pez` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `planta`
+--
+
+DROP TABLE IF EXISTS `planta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `planta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `tacceso_id` enum('1','2','3') NOT NULL DEFAULT '3',
+  `nombre` varchar(100) NOT NULL,
+  `ph_min` double NOT NULL,
+  `ph_max` double NOT NULL,
+  `planta_m2_min` int(11) NOT NULL,
+  `planta_m2_max` int(11) NOT NULL,
+  `tiempo_germinacion_min` int(11) NOT NULL,
+  `tiempo_germinacion_max` int(11) NOT NULL,
+  `tiempo_crecimiento_min` int(11) NOT NULL,
+  `tiempo_crecimiento_max` int(11) NOT NULL,
+  `temperatura_min` int(11) NOT NULL,
+  `temperatura_max` int(11) NOT NULL,
+  `solar_id` int(11) NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `PLANTA_FK01_idx` (`usuario_id`),
+  KEY `PLANTA_FK02_idx` (`solar_id`),
+  KEY `PLANTA_FK03_idx` (`tacceso_id`),
+  CONSTRAINT `PLANTA_FK01` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `PLANTA_FK02` FOREIGN KEY (`solar_id`) REFERENCES `exposicion_solar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `PLANTA_FK03` FOREIGN KEY (`tacceso_id`) REFERENCES `tipo_acceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `planta`
+--
+
+LOCK TABLES `planta` WRITE;
+/*!40000 ALTER TABLE `planta` DISABLE KEYS */;
+INSERT INTO `planta` VALUES (1,3,'3','ACELGAS',6,7.5,15,20,4,5,4,5,15,25,1,'1','2017-04-21 16:48:11','2017-07-29 18:18:49'),(2,3,'3','ALBAHACA',5.5,6.5,8,40,6,7,5,6,20,25,4,'1','2017-04-21 16:49:25','2017-07-31 20:50:11'),(3,3,'3','BERENJENA',5.5,7,3,5,8,10,12,16,15,25,5,'1','2017-04-21 16:50:21','2017-07-29 18:21:20'),(4,3,'3','BROCOLI',6,7,3,5,4,7,8,12,10,20,4,'2','2017-04-21 16:51:54','2017-08-30 00:42:51'),(5,3,'3','COLIFLOR',6,6.5,3,5,4,7,8,16,10,20,5,'1','2017-04-21 16:56:02','2017-04-21 16:56:02'),(6,3,'3','LECHUGA',6,7,20,25,3,6,4,5,15,22,2,'1','2017-04-21 19:55:48','2017-07-29 18:20:51'),(7,3,'3','PIMIENTO',5.5,6.5,3,4,8,12,8,12,15,30,5,'1','2017-04-21 19:55:48','2017-04-21 19:55:48'),(8,3,'3','PEPINO',5.5,6.5,2,5,3,6,7,9,18,26,4,'1','2017-04-21 19:55:48','2017-07-29 18:21:01'),(9,3,'3','PEREJIL',6,7,10,15,8,10,3,4,15,25,4,'1','2017-04-21 19:55:48','2017-04-21 19:55:48'),(10,1,'3','REPOLLO',6,7.2,4,8,4,7,6,10,15,20,5,'1','2017-04-21 19:55:48','2017-04-21 19:55:48'),(11,3,'3','TOMATE',5.5,6.5,3,5,4,7,8,12,15,25,4,'1','2017-04-21 19:55:48','2017-07-29 18:21:10');
+/*!40000 ALTER TABLE `planta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `proceso`
+--
+
+DROP TABLE IF EXISTS `proceso`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `proceso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id` int(11) NOT NULL,
+  `tacceso_id` enum('1','2','3') NOT NULL DEFAULT '3',
+  `codigo` varchar(100) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `descripcion` varchar(1000) DEFAULT NULL,
+  `fecha_implementacion` date DEFAULT NULL,
+  `area_cultivo` double DEFAULT NULL,
+  `volumen_cultivo` double DEFAULT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `codigo_UNIQUE` (`codigo`),
+  KEY `PROCESO_FK0_idx` (`usuario_id`),
+  KEY `PROCESO_FK0_idx1` (`tacceso_id`),
+  CONSTRAINT `PROCESO_FK0` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `PROCESO_FK1` FOREIGN KEY (`tacceso_id`) REFERENCES `tipo_acceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proceso`
+--
+
+LOCK TABLES `proceso` WRITE;
+/*!40000 ALTER TABLE `proceso` DISABLE KEYS */;
+INSERT INTO `proceso` VALUES (1,3,'3','6576e65f-d640-410a-943e-4b75a0e6c409','PROYECTO MARK-00','Proyecto de prueba enfocado en proceso de tesis','2017-04-26',10,25,'1','2017-04-26 00:00:28','2017-04-26 00:00:28'),(2,3,'3','cc07e8dd-e5ab-4be4-a2e3-35cbbba615aa','PROYECTO PRUEBA DOS','Proyecto de prueba ubicado en las instalaciones de Ceindetec','2017-04-25',15,20,'1','2017-05-07 00:35:58','2017-09-08 17:50:21'),(3,1,'3','b02e3e43-9186-11e7-a0b2-4ccc6a8ac90b','PROCESO TEST 01','Proceso test 01','2017-09-04',100,100,'1','2017-09-04 15:35:32','2017-09-04 15:35:32');
+/*!40000 ALTER TABLE `proceso` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `procesoUUID`
+BEFORE INSERT ON `aquaweb`.`proceso`
+FOR EACH ROW
+  SET NEW.`codigo` = UUID() */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `proceso_pez`
+--
+
+DROP TABLE IF EXISTS `proceso_pez`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `proceso_pez` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `proceso_id` int(11) NOT NULL,
+  `pez_id` int(11) NOT NULL,
+  `porcentaje` double NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `PROCESO_PEZ_FK1_idx` (`proceso_id`),
+  KEY `PROCESO_PEZ_FK2_idx` (`pez_id`),
+  CONSTRAINT `PROCESO_PEZ_FK1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `PROCESO_PEZ_FK2` FOREIGN KEY (`pez_id`) REFERENCES `pez` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proceso_pez`
+--
+
+LOCK TABLES `proceso_pez` WRITE;
+/*!40000 ALTER TABLE `proceso_pez` DISABLE KEYS */;
+INSERT INTO `proceso_pez` VALUES (1,1,1,100,'1','2017-04-26 00:01:24','2017-04-26 00:01:24'),(2,1,7,12,'1','2017-08-23 15:02:03','2017-08-23 15:02:03'),(3,1,6,6,'2','2017-08-26 12:13:21','2017-08-26 12:13:21'),(4,1,4,30,'1','2017-09-02 23:18:09','2017-09-02 23:18:09'),(5,1,12,2,'2','2017-09-02 23:19:17','2017-09-02 23:21:48'),(6,3,6,100,'2','2017-09-06 17:14:26','2017-09-06 17:37:18'),(7,3,1,100,'1','2017-09-06 17:33:19','2017-09-06 17:33:19'),(8,3,7,12,'1','2017-09-06 17:36:57','2017-09-06 17:36:57'),(9,3,4,30,'1','2017-09-06 17:37:21','2017-09-06 17:37:21');
+/*!40000 ALTER TABLE `proceso_pez` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `proceso_planta`
+--
+
+DROP TABLE IF EXISTS `proceso_planta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `proceso_planta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `proceso_id` int(11) NOT NULL,
+  `planta_id` int(11) NOT NULL,
+  `porcentaje` double NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `PROCESO_PLANTA_FK1_idx` (`proceso_id`),
+  KEY `PROCESO_PLANTA_FK2_idx` (`planta_id`),
+  CONSTRAINT `PROCESO_PLANTA_FK1` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `PROCESO_PLANTA_FK2` FOREIGN KEY (`planta_id`) REFERENCES `planta` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `proceso_planta`
+--
+
+LOCK TABLES `proceso_planta` WRITE;
+/*!40000 ALTER TABLE `proceso_planta` DISABLE KEYS */;
+INSERT INTO `proceso_planta` VALUES (5,1,7,25,'1','2017-04-26 00:03:09','2017-04-26 00:03:09'),(6,1,3,100,'1','2017-04-26 00:03:10','2017-04-26 00:03:10'),(7,1,5,25,'2','2017-04-26 00:03:10','2017-04-26 00:03:10'),(8,1,2,10,'1','2017-08-23 14:53:30','2017-08-23 14:53:30'),(9,1,1,15,'2','2017-08-23 14:58:49','2017-08-23 14:58:49'),(10,1,9,10,'1','2017-09-02 23:17:36','2017-09-02 23:17:36'),(11,3,1,15,'2','2017-09-06 17:13:47','2017-09-06 17:37:44'),(12,3,3,100,'2','2017-09-06 17:13:54','2017-09-06 17:40:32'),(13,3,6,12,'2','2017-09-06 17:14:00','2017-09-06 17:37:53'),(14,3,2,10,'1','2017-09-06 17:37:47','2017-09-06 17:37:47'),(15,3,7,25,'1','2017-09-06 17:37:57','2017-09-06 17:37:57'),(16,3,9,10,'1','2017-09-06 17:38:01','2017-09-06 17:38:01');
+/*!40000 ALTER TABLE `proceso_planta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sensor`
+--
+
+DROP TABLE IF EXISTS `sensor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sensor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tsensor_id` int(11) NOT NULL,
+  `proceso_id` int(11) NOT NULL,
+  `valor` double NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `captured_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `SENSOR_FK1_idx` (`tsensor_id`),
+  KEY `SESNOR_FK2_idx` (`proceso_id`),
+  CONSTRAINT `SENSOR_FK1` FOREIGN KEY (`tsensor_id`) REFERENCES `tipo_sensor` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `SESNOR_FK2` FOREIGN KEY (`proceso_id`) REFERENCES `proceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=27000 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sensor`
+--
+
+LOCK TABLES `sensor` WRITE;
+/*!40000 ALTER TABLE `sensor` DISABLE KEYS */;
+INSERT INTO `sensor` VALUES (1,1,1,0.23347619,'1','2017-06-02 22:09:28'),(2,1,1,0.87400293,'1','2017-06-02 22:14:02'),(3,2,1,29.07868,'1','2017-06-02 22:09:28'),(4,2,1,29.584385,'1','2017-06-02 22:14:02'),(5,3,1,26.59441,'1','2017-06-02 22:09:28'),(6,3,1,32.600285,'1','2017-06-02 22:14:02'),(7,4,1,0.44472844,'1','2017-06-02 22:09:28'),(8,4,1,0.24472844,'1','2017-06-02 22:14:02'),(9,5,1,0.434539,'1','2017-06-02 22:09:28'),(10,5,1,0.21966738,'1','2017-06-02 22:14:02'),(11,6,1,0.5,'1','2017-06-02 22:09:28'),(12,6,1,0.3,'1','2017-06-02 22:14:02'),(13,2,1,29.100746,'1','2017-06-03 01:06:59'),(14,3,1,34.96067,'1','2017-06-03 01:06:59'),(15,4,1,0.54472844,'1','2017-06-03 01:06:59'),(16,5,1,0.18682843,'1','2017-06-03 01:07:44'),(17,6,1,0.4,'1','2017-06-03 01:08:29'),(18,1,1,0.10543607,'1','2017-06-03 01:08:29'),(25278,1,1,0.23347619,'1','2017-07-20 22:12:37'),(25279,1,2,0.18601827,'1','2017-07-20 22:12:38'),(25280,2,1,32.867878,'1','2017-07-20 22:12:38'),(25281,2,2,25.577091,'1','2017-07-20 22:12:38'),(25282,3,1,32.005356,'1','2017-07-20 22:12:38'),(25283,3,2,33.74822,'1','2017-07-20 22:12:38'),(25284,4,1,0.34472844,'1','2017-07-20 22:12:38'),(25285,4,2,0.13974907,'1','2017-07-20 22:12:38'),(25286,5,1,0.434539,'1','2017-07-20 22:12:38'),(25287,5,2,0.21966738,'1','2017-07-20 22:12:38'),(25288,6,1,0.047761444,'1','2017-07-20 22:12:38'),(25289,6,2,0.21295679,'1','2017-07-20 22:12:38'),(25290,1,1,0.12060568,'1','2017-07-20 22:13:38'),(25291,1,2,0.10543607,'1','2017-07-20 22:13:38'),(25292,2,1,29.07868,'1','2017-07-20 22:13:38'),(25293,2,2,32.148167,'1','2017-07-20 22:13:38'),(25294,3,1,26.59441,'1','2017-07-20 22:13:38'),(25295,3,2,25.601574,'1','2017-07-20 22:13:38'),(25296,4,1,0.49965164,'1','2017-07-20 22:13:39'),(25297,4,2,0.1419398,'1','2017-07-20 22:13:39'),(25298,5,1,0.34959206,'1','2017-07-20 22:13:39'),(25299,5,2,0.02506377,'1','2017-07-20 22:13:39'),(25300,6,1,0.11762774,'1','2017-07-20 22:13:39'),(25301,6,2,0.15835254,'1','2017-07-20 22:13:39'),(25302,1,1,0.87400293,'1','2017-07-20 22:14:39'),(25303,1,2,0.6561807,'1','2017-07-20 22:14:39'),(25304,2,1,29.584385,'1','2017-07-20 22:14:39'),(25305,2,2,32.2195,'1','2017-07-20 22:14:39'),(25306,3,1,34.265423,'1','2017-07-20 22:14:39'),(25307,3,2,32.600285,'1','2017-07-20 22:14:39'),(25308,4,1,0.42591947,'1','2017-07-20 22:14:39'),(25309,4,2,0.17217736,'1','2017-07-20 22:14:39'),(25310,5,1,0.18682843,'1','2017-07-20 22:14:39'),(25311,5,2,0.20368528,'1','2017-07-20 22:14:39'),(25312,6,1,0.26584995,'1','2017-07-20 22:14:39'),(25313,6,2,0.00418405,'1','2017-07-20 22:14:39'),(25314,1,1,0.03183044,'1','2017-07-20 22:15:39'),(25315,1,2,0.74154973,'1','2017-07-20 22:15:39'),(25316,2,1,29.100746,'1','2017-07-20 22:15:39'),(25317,2,2,34.67016,'1','2017-07-20 22:15:39'),(25318,3,1,34.96067,'1','2017-07-20 22:15:39'),(25319,3,2,34.328255,'1','2017-07-20 22:15:40'),(25320,4,1,0.0065910625,'1','2017-07-20 22:15:40'),(25321,4,2,0.36438137,'1','2017-07-20 22:15:40'),(25322,5,1,0.45459735,'1','2017-07-20 22:15:40'),(25323,5,2,0.030289086,'1','2017-07-20 22:15:40'),(25324,6,1,0.23528549,'1','2017-07-20 22:15:40'),(25325,6,2,0.28006664,'1','2017-07-20 22:15:40'),(25326,1,1,0.63294077,'1','2017-07-20 22:16:40'),(25327,1,2,0.71922106,'1','2017-07-20 22:16:40'),(25328,2,1,32.56877,'1','2017-07-20 22:16:40'),(25329,2,2,33.269196,'1','2017-07-20 22:16:40'),(25330,3,1,32.378048,'1','2017-07-20 22:16:40'),(25331,3,2,32.13333,'1','2017-07-20 22:16:40'),(25332,4,1,0.061778344,'1','2017-07-20 22:16:40'),(25333,4,2,0.42130113,'1','2017-07-20 22:16:40'),(25334,5,1,0.032830425,'1','2017-07-20 22:16:40'),(25335,5,2,0.29174766,'1','2017-07-20 22:16:40'),(25336,6,1,0.0835276,'1','2017-07-20 22:16:40'),(25337,6,2,0.23689544,'1','2017-07-20 22:16:40'),(25338,1,1,0.98719484,'1','2017-07-20 22:17:40'),(25339,1,2,0.8615443,'1','2017-07-20 22:17:40'),(25340,2,1,32.553894,'1','2017-07-20 22:17:40'),(25341,2,2,31.073093,'1','2017-07-20 22:17:40'),(25342,3,1,33.756878,'1','2017-07-20 22:17:41'),(25343,3,2,33.924316,'1','2017-07-20 22:17:41'),(25344,4,1,0.08514842,'1','2017-07-20 22:17:41'),(25345,4,2,0.17480472,'1','2017-07-20 22:17:41'),(25346,5,1,0.37466326,'1','2017-07-20 22:17:41'),(25347,5,2,0.38980186,'1','2017-07-20 22:17:41'),(25348,6,1,0.10384292,'1','2017-07-20 22:17:41'),(25349,6,2,0.014079014,'1','2017-07-20 22:17:41'),(25350,1,1,0.9961347,'1','2017-07-20 22:18:41'),(25351,1,2,0.5117945,'1','2017-07-20 22:18:41'),(25352,2,1,34.031143,'1','2017-07-20 22:18:41'),(25353,2,2,28.58349,'1','2017-07-20 22:18:41'),(25354,3,1,30.88779,'1','2017-07-20 22:18:41'),(25355,3,2,31.113493,'1','2017-07-20 22:18:41'),(25356,4,1,0.36451313,'1','2017-07-20 22:18:41'),(25357,4,2,0.23825152,'1','2017-07-20 22:18:41'),(25358,5,1,0.110462226,'1','2017-07-20 22:18:41'),(25359,5,2,0.35383725,'1','2017-07-20 22:18:41'),(25360,6,1,0.2732257,'1','2017-07-20 22:18:41'),(25361,6,2,0.17272548,'1','2017-07-20 22:18:41'),(25362,1,1,0.35247263,'1','2017-07-20 22:19:41'),(25363,1,2,0.28413552,'1','2017-07-20 22:19:42'),(25364,2,1,34.035328,'1','2017-07-20 22:19:42'),(25365,2,2,27.048004,'1','2017-07-20 22:19:42'),(25366,3,1,27.379318,'1','2017-07-20 22:19:42'),(25367,3,2,29.726995,'1','2017-07-20 22:19:42'),(25368,4,1,0.47129273,'1','2017-07-20 22:19:42'),(25369,4,2,0.20826937,'1','2017-07-20 22:19:42'),(25370,5,1,0.31516656,'1','2017-07-20 22:19:42'),(25371,5,2,0.088924594,'1','2017-07-20 22:19:42'),(25372,6,1,0.28806967,'1','2017-07-20 22:19:42'),(25373,6,2,0.03020915,'1','2017-07-20 22:19:42'),(25374,1,1,0.002519897,'1','2017-07-20 22:20:42'),(25375,1,2,0.9997678,'1','2017-07-20 22:20:42'),(25376,2,1,30.61798,'1','2017-07-20 22:20:42'),(25377,2,2,34.39035,'1','2017-07-20 22:20:42'),(25378,3,1,33.08301,'1','2017-07-20 22:20:42'),(25379,3,2,28.965237,'1','2017-07-20 22:20:42'),(25380,4,1,0.46740997,'1','2017-07-20 22:20:42'),(25381,4,2,0.31905824,'1','2017-07-20 22:20:42'),(25382,5,1,0.25893793,'1','2017-07-20 22:20:42'),(25383,5,2,0.13797931,'1','2017-07-20 22:20:42'),(25384,6,1,0.27559578,'1','2017-07-20 22:20:42'),(25385,6,2,0.18340082,'1','2017-07-20 22:20:42'),(25386,1,1,0.34140912,'1','2017-07-21 14:32:43'),(25387,1,2,0.56674826,'1','2017-07-21 14:32:43'),(25388,2,1,28.684639,'1','2017-07-21 14:32:43'),(25389,2,2,27.567759,'1','2017-07-21 14:32:43'),(25390,3,1,28.338985,'1','2017-07-21 14:32:43'),(25391,3,2,26.440119,'1','2017-07-21 14:32:43'),(25392,4,1,0.19630507,'1','2017-07-21 14:32:43'),(25393,4,2,0.46077967,'1','2017-07-21 14:32:43'),(25394,5,1,0.49524263,'1','2017-07-21 14:32:43'),(25395,5,2,0.109978735,'1','2017-07-21 14:32:43'),(25396,6,1,0.205396,'1','2017-07-21 14:32:44'),(25397,6,2,0.23914906,'1','2017-07-21 14:32:44'),(25398,1,1,0.20698863,'1','2017-07-21 14:33:44'),(25399,1,2,0.9578122,'1','2017-07-21 14:33:44'),(25400,2,1,27.73618,'1','2017-07-21 14:33:44'),(25401,2,2,30.449041,'1','2017-07-21 14:33:44'),(25402,3,1,26.361883,'1','2017-07-21 14:33:44'),(25403,3,2,31.921556,'1','2017-07-21 14:33:44'),(25404,4,1,0.006196999,'1','2017-07-21 14:33:44'),(25405,4,2,0.13477582,'1','2017-07-21 14:33:44'),(25406,5,1,0.06275166,'1','2017-07-21 14:33:44'),(25407,5,2,0.14138113,'1','2017-07-21 14:33:44'),(25408,6,1,0.15157592,'1','2017-07-21 14:33:44'),(25409,6,2,0.23600653,'1','2017-07-21 14:33:44'),(25410,1,1,0.1634966,'1','2017-07-21 14:34:44'),(25411,1,2,0.48533213,'1','2017-07-21 14:34:44'),(25412,2,1,25.435322,'1','2017-07-21 14:34:44'),(25413,2,2,31.583752,'1','2017-07-21 14:34:44'),(25414,3,1,33.663612,'1','2017-07-21 14:34:44'),(25415,3,2,28.763727,'1','2017-07-21 14:34:44'),(25416,4,1,0.4263086,'1','2017-07-21 14:34:44'),(25417,4,2,0.4207575,'1','2017-07-21 14:34:45'),(25418,5,1,0.15302873,'1','2017-07-21 14:34:45'),(25419,5,2,0.3864067,'1','2017-07-21 14:34:45'),(25420,6,1,0.090596996,'1','2017-07-21 14:34:45'),(25421,6,2,0.26992556,'1','2017-07-21 14:34:45'),(25422,1,1,0.65851974,'1','2017-07-21 14:35:45'),(25423,1,2,0.14650513,'1','2017-07-21 14:35:46'),(25424,2,1,34.849846,'1','2017-07-21 14:35:46'),(25425,2,2,34.924362,'1','2017-07-21 14:35:46'),(25426,3,1,32.33373,'1','2017-07-21 14:35:46'),(25427,3,2,32.49579,'1','2017-07-21 14:35:46'),(25428,4,1,0.36801657,'1','2017-07-21 14:35:46'),(25429,4,2,0.13656656,'1','2017-07-21 14:35:46'),(25430,5,1,0.4679196,'1','2017-07-21 14:35:46'),(25431,5,2,0.26935294,'1','2017-07-21 14:35:46'),(25432,6,1,0.21616948,'1','2017-07-21 14:35:46'),(25433,6,2,0.27160373,'1','2017-07-21 14:35:46'),(25434,1,1,0.4514253,'1','2017-07-21 14:40:43'),(25435,1,2,0.4747144,'1','2017-07-21 14:40:43'),(25436,2,1,29.402601,'1','2017-07-21 14:40:43'),(25437,2,2,31.140451,'1','2017-07-21 14:40:43'),(25438,3,1,31.252607,'1','2017-07-21 14:40:43'),(25439,3,2,34.44424,'1','2017-07-21 14:40:43'),(25440,4,1,0.24906635,'1','2017-07-21 14:40:43'),(25441,4,2,0.32937664,'1','2017-07-21 14:40:43'),(25442,5,1,0.26417932,'1','2017-07-21 14:40:44'),(25443,5,2,0.4869025,'1','2017-07-21 14:40:44'),(25444,6,1,0.24510491,'1','2017-07-21 14:40:44'),(25445,6,2,0.28099135,'1','2017-07-21 14:40:44'),(25446,1,1,0.1906922,'1','2017-07-21 14:41:44'),(25447,1,2,0.6784759,'1','2017-07-21 14:41:44'),(25448,2,1,26.227732,'1','2017-07-21 14:41:44'),(25449,2,2,32.267464,'1','2017-07-21 14:41:44'),(25450,3,1,29.897057,'1','2017-07-21 14:41:44'),(25451,3,2,25.964178,'1','2017-07-21 14:41:44'),(25452,4,1,0.25543818,'1','2017-07-21 14:41:44'),(25453,4,2,0.41435978,'1','2017-07-21 14:41:44'),(25454,5,1,0.3996029,'1','2017-07-21 14:41:44'),(25455,5,2,0.08595089,'1','2017-07-21 14:41:44'),(25456,6,1,0.23927096,'1','2017-07-21 14:41:44'),(25457,6,2,0.026617719,'1','2017-07-21 14:41:44'),(25458,1,1,0.7916365,'1','2017-07-21 14:42:44'),(25459,1,2,0.5032476,'1','2017-07-21 14:42:44'),(25460,2,1,29.860943,'1','2017-07-21 14:42:44'),(25461,2,2,25.802345,'1','2017-07-21 14:42:44'),(25462,3,1,33.876617,'1','2017-07-21 14:42:44'),(25463,3,2,26.69877,'1','2017-07-21 14:42:44'),(25464,4,1,0.024713788,'1','2017-07-21 14:42:45'),(25465,4,2,0.14732048,'1','2017-07-21 14:42:45'),(25466,5,1,0.22866803,'1','2017-07-21 14:42:45'),(25467,5,2,0.2705165,'1','2017-07-21 14:42:45'),(25468,6,1,0.1070886,'1','2017-07-21 14:42:45'),(25469,6,2,0.27728721,'1','2017-07-21 14:42:45'),(25470,1,1,0.76874536,'1','2017-07-21 14:43:45'),(25471,1,2,0.08670672,'1','2017-07-21 14:43:45'),(25472,2,1,34.79769,'1','2017-07-21 14:43:45'),(25473,2,2,25.792442,'1','2017-07-21 14:43:45'),(25474,3,1,33.528442,'1','2017-07-21 14:43:45'),(25475,3,2,33.607212,'1','2017-07-21 14:43:45'),(25476,4,1,0.39878818,'1','2017-07-21 14:43:45'),(25477,4,2,0.034579538,'1','2017-07-21 14:43:45'),(25478,5,1,0.45366445,'1','2017-07-21 14:43:45'),(25479,5,2,0.25329494,'1','2017-07-21 14:43:45'),(25480,6,1,0.2400932,'1','2017-07-21 14:43:45'),(25481,6,2,0.060887232,'1','2017-07-21 14:43:45'),(25482,1,1,0.59772563,'1','2017-07-21 14:44:45'),(25483,1,2,0.348682,'1','2017-07-21 14:44:45'),(25484,2,1,27.280361,'1','2017-07-21 14:44:45'),(25485,2,2,29.11485,'1','2017-07-21 14:44:45'),(25486,3,1,31.304855,'1','2017-07-21 14:44:45'),(25487,3,2,28.743853,'1','2017-07-21 14:44:45'),(25488,4,1,0.11267174,'1','2017-07-21 14:44:46'),(25489,4,2,0.44107786,'1','2017-07-21 14:44:46'),(25490,5,1,0.13535982,'1','2017-07-21 14:44:46'),(25491,5,2,0.3436894,'1','2017-07-21 14:44:46'),(25492,6,1,0.29991677,'1','2017-07-21 14:44:46'),(25493,6,2,0.24288595,'1','2017-07-21 14:44:46'),(25494,1,1,0.19943795,'1','2017-07-31 12:45:29'),(25495,2,1,27.515087,'1','2017-07-31 12:45:29'),(25496,3,1,29.695204,'1','2017-07-31 12:45:29'),(25497,4,1,0.3736361,'1','2017-07-31 12:45:29'),(25498,5,1,0.3261619,'1','2017-07-31 12:45:29'),(25499,6,1,0.11347352,'1','2017-07-31 12:45:29'),(25500,1,1,0.011220877,'1','2017-07-31 12:47:29'),(25501,2,1,32.001,'1','2017-07-31 12:47:29'),(25502,3,1,26.163612,'1','2017-07-31 12:47:29'),(25503,4,1,0.15449889,'1','2017-07-31 12:47:29'),(25504,5,1,0.37880263,'1','2017-07-31 12:47:29'),(25505,6,1,0.17007926,'1','2017-07-31 12:47:29'),(25506,1,1,0.68355656,'1','2017-07-31 12:48:29'),(25507,2,1,28.139458,'1','2017-07-31 12:48:29'),(25508,3,1,33.525665,'1','2017-07-31 12:48:29'),(25509,4,1,0.26395103,'1','2017-07-31 12:48:29'),(25510,5,1,0.3424424,'1','2017-07-31 12:48:29'),(25511,6,1,0.0046947314,'1','2017-07-31 12:48:30'),(25512,1,1,0.49227935,'1','2017-07-31 12:49:30'),(25513,2,1,33.98788,'1','2017-07-31 12:49:30'),(25514,3,1,25.7044,'1','2017-07-31 12:49:30'),(25515,4,1,0.13507824,'1','2017-07-31 12:49:30'),(25516,5,1,0.17966223,'1','2017-07-31 12:49:30'),(25517,6,1,0.22654334,'1','2017-07-31 12:49:30'),(25518,1,1,0.07999005,'1','2017-07-31 12:50:30'),(25519,2,1,32.496838,'1','2017-07-31 12:50:30'),(25520,3,1,32.896908,'1','2017-07-31 12:50:30'),(25521,4,1,0.09228198,'1','2017-07-31 12:50:30'),(25522,5,1,0.09851146,'1','2017-07-31 12:50:30'),(25523,6,1,0.19789079,'1','2017-07-31 12:50:30'),(25524,1,1,0.63789576,'1','2017-07-31 20:44:27'),(25525,2,1,33.350857,'1','2017-07-31 20:44:27'),(25526,3,1,32.07017,'1','2017-07-31 20:44:28'),(25527,4,1,0.024570903,'1','2017-07-31 20:44:28'),(25528,5,1,0.4116528,'1','2017-07-31 20:44:28'),(25529,6,1,0.27927592,'1','2017-07-31 20:44:28'),(25530,1,1,0.57115364,'1','2017-07-31 20:45:12'),(25531,2,1,26.436901,'1','2017-07-31 20:45:12'),(25532,3,1,30.176598,'1','2017-07-31 20:45:12'),(25533,4,1,0.14770421,'1','2017-07-31 20:45:12'),(25534,5,1,0.40795743,'1','2017-07-31 20:45:12'),(25535,6,1,0.20929946,'1','2017-07-31 20:45:12'),(25536,1,1,0.033924233,'1','2017-07-31 20:46:12'),(25537,2,1,33.57036,'1','2017-07-31 20:46:12'),(25538,3,1,29.936403,'1','2017-07-31 20:46:12'),(25539,4,1,0.28489769,'1','2017-07-31 20:46:12'),(25540,5,1,0.293898,'1','2017-07-31 20:46:12'),(25541,6,1,0.15213558,'1','2017-07-31 20:46:12'),(25542,1,1,0.932149,'1','2017-07-31 20:47:13'),(25543,2,1,27.633116,'1','2017-07-31 20:47:13'),(25544,3,1,28.237057,'1','2017-07-31 20:47:13'),(25545,4,1,0.46785623,'1','2017-07-31 20:47:13'),(25546,5,1,0.47542074,'1','2017-07-31 20:47:13'),(25547,6,1,0.030290786,'1','2017-07-31 20:47:13'),(25548,1,1,0.7873813,'1','2017-07-31 20:48:13'),(25549,2,1,31.390379,'1','2017-07-31 20:48:13'),(25550,3,1,30.06883,'1','2017-07-31 20:48:13'),(25551,4,1,0.4961339,'1','2017-07-31 20:48:13'),(25552,5,1,0.3742136,'1','2017-07-31 20:48:13'),(25553,6,1,0.2345259,'1','2017-07-31 20:48:13'),(25554,1,1,0.8396335,'1','2017-07-31 20:49:13'),(25555,2,1,25.267714,'1','2017-07-31 20:49:13'),(25556,3,1,30.905018,'1','2017-07-31 20:49:13'),(25557,4,1,0.35313404,'1','2017-07-31 20:49:13'),(25558,5,1,0.49136972,'1','2017-07-31 20:49:13'),(25559,6,1,0.26557964,'1','2017-07-31 20:49:13'),(25560,1,1,0.22883849,'1','2017-07-31 20:50:13'),(25561,2,1,33.156963,'1','2017-07-31 20:50:13'),(25562,3,1,25.14278,'1','2017-07-31 20:50:13'),(25563,4,1,0.08150742,'1','2017-07-31 20:50:14'),(25564,5,1,0.39073098,'1','2017-07-31 20:50:14'),(25565,6,1,0.01505893,'1','2017-07-31 20:50:14'),(25566,1,1,0.697574,'1','2017-07-31 20:51:14'),(25567,2,1,33.331825,'1','2017-07-31 20:51:14'),(25568,3,1,32.68297,'1','2017-07-31 20:51:14'),(25569,4,1,0.10043939,'1','2017-07-31 20:51:14'),(25570,5,1,0.11439148,'1','2017-07-31 20:51:14'),(25571,6,1,0.07305197,'1','2017-07-31 20:51:14'),(25572,1,1,0.44147295,'1','2017-07-31 20:52:14'),(25573,2,1,33.611107,'1','2017-07-31 20:52:14'),(25574,3,1,31.520624,'1','2017-07-31 20:52:14'),(25575,4,1,0.117809825,'1','2017-07-31 20:52:14'),(25576,5,1,0.48024052,'1','2017-07-31 20:52:14'),(25577,6,1,0.27059048,'1','2017-07-31 20:52:14'),(25578,1,1,0.12912957,'1','2017-07-31 20:53:14'),(25579,2,1,27.03938,'1','2017-07-31 20:53:14'),(25580,3,1,30.174318,'1','2017-07-31 20:53:14'),(25581,4,1,0.4883763,'1','2017-07-31 20:53:14'),(25582,5,1,0.32861525,'1','2017-07-31 20:53:14'),(25583,6,1,0.050949447,'1','2017-07-31 20:53:14'),(25584,1,1,0.19052689,'1','2017-07-31 20:54:14'),(25585,2,1,32.08891,'1','2017-07-31 20:54:14'),(25586,3,1,25.180206,'1','2017-07-31 20:54:14'),(25587,4,1,0.118416116,'1','2017-07-31 20:54:14'),(25588,5,1,0.12897511,'1','2017-07-31 20:54:14'),(25589,6,1,0.269466,'1','2017-07-31 20:54:15'),(25590,1,1,0.7095856,'1','2017-07-31 20:55:15'),(25591,2,1,26.13918,'1','2017-07-31 20:55:15'),(25592,3,1,34.397377,'1','2017-07-31 20:55:15'),(25593,4,1,0.14627822,'1','2017-07-31 20:55:15'),(25594,5,1,0.18240353,'1','2017-07-31 20:55:15'),(25595,6,1,0.22393702,'1','2017-07-31 20:55:15'),(25596,1,1,0.051788025,'1','2017-07-31 20:56:15'),(25597,2,1,27.146187,'1','2017-07-31 20:56:15'),(25598,3,1,31.915028,'1','2017-07-31 20:56:15'),(25599,4,1,0.23909082,'1','2017-07-31 20:56:15'),(25600,5,1,0.42701426,'1','2017-07-31 20:56:15'),(25601,6,1,0.18263741,'1','2017-07-31 20:56:15'),(25602,1,1,0.28324988,'1','2017-07-31 20:57:15'),(25603,2,1,30.826029,'1','2017-07-31 20:57:15'),(25604,3,1,29.538471,'1','2017-07-31 20:57:15'),(25605,4,1,0.4389372,'1','2017-07-31 20:57:15'),(25606,5,1,0.3722625,'1','2017-07-31 20:57:15'),(25607,6,1,0.1345677,'1','2017-07-31 20:57:15'),(25608,1,1,0.48626056,'1','2017-07-31 20:58:15'),(25609,2,1,27.168808,'1','2017-07-31 20:58:15'),(25610,3,1,29.497715,'1','2017-07-31 20:58:15'),(25611,4,1,0.091071464,'1','2017-07-31 20:58:15'),(25612,5,1,0.21694168,'1','2017-07-31 20:58:15'),(25613,6,1,0.005732864,'1','2017-07-31 20:58:15'),(25614,1,1,0.91323125,'1','2017-07-31 20:59:15'),(25615,2,1,33.960293,'1','2017-07-31 20:59:15'),(25616,3,1,33.72619,'1','2017-07-31 20:59:16'),(25617,4,1,0.16456543,'1','2017-07-31 20:59:16'),(25618,5,1,0.09242747,'1','2017-07-31 20:59:16'),(25619,6,1,0.14918084,'1','2017-07-31 20:59:16'),(25620,1,1,0.13309148,'1','2017-07-31 21:00:16'),(25621,2,1,27.479914,'1','2017-07-31 21:00:16'),(25622,3,1,34.073303,'1','2017-07-31 21:00:16'),(25623,4,1,0.1779547,'1','2017-07-31 21:00:16'),(25624,5,1,0.17659673,'1','2017-07-31 21:00:16'),(25625,6,1,0.19735622,'1','2017-07-31 21:00:16'),(25626,1,1,0.6702462,'1','2017-07-31 21:01:16'),(25627,2,1,33.393223,'1','2017-07-31 21:01:16'),(25628,3,1,31.6372,'1','2017-07-31 21:01:16'),(25629,4,1,0.3132285,'1','2017-07-31 21:01:16'),(25630,5,1,0.039817676,'1','2017-07-31 21:01:16'),(25631,6,1,0.09928217,'1','2017-07-31 21:01:16'),(25632,1,1,0.29691747,'1','2017-07-31 21:02:16'),(25633,2,1,28.76186,'1','2017-07-31 21:02:16'),(25634,3,1,30.246157,'1','2017-07-31 21:02:16'),(25635,4,1,0.008554856,'1','2017-07-31 21:02:16'),(25636,5,1,0.3684362,'1','2017-07-31 21:02:16'),(25637,6,1,0.22746667,'1','2017-07-31 21:02:16'),(25638,1,1,0.96757674,'1','2017-07-31 21:03:16'),(25639,2,1,29.220718,'1','2017-07-31 21:03:17'),(25640,3,1,31.410198,'1','2017-07-31 21:03:17'),(25641,4,1,0.37956917,'1','2017-07-31 21:03:17'),(25642,5,1,0.10516771,'1','2017-07-31 21:03:17'),(25643,6,1,0.1195898,'1','2017-07-31 21:03:17'),(25644,1,1,0.15365003,'1','2017-07-31 21:04:17'),(25645,2,1,31.854813,'1','2017-07-31 21:04:17'),(25646,3,1,34.959084,'1','2017-07-31 21:04:17'),(25647,4,1,0.02042429,'1','2017-07-31 21:04:17'),(25648,5,1,0.20257391,'1','2017-07-31 21:04:17'),(25649,6,1,0.09638857,'1','2017-07-31 21:04:17'),(25650,1,1,0.99402905,'1','2017-07-31 21:05:17'),(25651,2,1,32.751133,'1','2017-07-31 21:05:17'),(25652,3,1,29.44794,'1','2017-07-31 21:05:17'),(25653,4,1,0.26710036,'1','2017-07-31 21:05:17'),(25654,5,1,0.09413166,'1','2017-07-31 21:05:17'),(25655,6,1,0.21219312,'1','2017-07-31 21:05:17'),(25656,1,1,0.59031767,'1','2017-07-31 21:06:17'),(25657,2,1,30.175589,'1','2017-07-31 21:06:17'),(25658,3,1,29.335487,'1','2017-07-31 21:06:17'),(25659,4,1,0.07811945,'1','2017-07-31 21:06:17'),(25660,5,1,0.09699107,'1','2017-07-31 21:06:17'),(25661,6,1,0.029825486,'1','2017-07-31 21:06:17'),(25662,1,1,0.9852182,'1','2017-07-31 21:07:17'),(25663,2,1,26.873062,'1','2017-07-31 21:07:18'),(25664,3,1,26.22846,'1','2017-07-31 21:07:18'),(25665,4,1,0.16167526,'1','2017-07-31 21:07:18'),(25666,5,1,0.30701882,'1','2017-07-31 21:07:18'),(25667,6,1,0.2626574,'1','2017-07-31 21:07:18'),(25668,1,1,0.8299356,'1','2017-07-31 21:08:18'),(25669,2,1,33.119484,'1','2017-07-31 21:08:18'),(25670,3,1,30.16517,'1','2017-07-31 21:08:18'),(25671,4,1,0.48656595,'1','2017-07-31 21:08:18'),(25672,5,1,0.37671104,'1','2017-07-31 21:08:18'),(25673,6,1,0.078202076,'1','2017-07-31 21:08:18'),(25674,1,1,0.60573226,'1','2017-07-31 21:09:18'),(25675,2,1,31.347023,'1','2017-07-31 21:09:18'),(25676,3,1,34.224945,'1','2017-07-31 21:09:18'),(25677,4,1,0.3889518,'1','2017-07-31 21:09:18'),(25678,5,1,0.46255815,'1','2017-07-31 21:09:18'),(25679,6,1,0.25841886,'1','2017-07-31 21:09:18'),(25680,1,1,0.07147484,'1','2017-07-31 21:10:18'),(25681,2,1,31.864447,'1','2017-07-31 21:10:18'),(25682,3,1,33.66163,'1','2017-07-31 21:10:18'),(25683,4,1,0.18302064,'1','2017-07-31 21:10:19'),(25684,5,1,0.13390839,'1','2017-07-31 21:10:19'),(25685,6,1,0.2497311,'1','2017-07-31 21:10:19'),(25686,1,3,0.5907037,'1','2017-07-31 21:11:19'),(25687,2,1,31.320234,'1','2017-07-31 21:11:19'),(25688,3,1,25.449917,'1','2017-07-31 21:11:19'),(25689,4,1,0.20474933,'1','2017-07-31 21:11:19'),(25690,5,1,0.27970272,'1','2017-07-31 21:11:19'),(25691,6,1,0.012452302,'1','2017-07-31 21:11:19'),(25692,1,1,0.18647152,'1','2017-09-06 17:07:40'),(25693,1,3,0.36187735,'1','2017-09-06 17:07:40'),(25694,2,1,26.936424,'1','2017-09-06 17:07:41'),(25695,2,3,25.30277,'1','2017-09-06 17:07:41'),(25696,3,1,27.24847,'1','2017-09-06 17:07:41'),(25697,3,3,30.314205,'1','2017-09-06 17:07:41'),(25698,4,1,0.4826928,'1','2017-09-06 17:07:41'),(25699,4,3,0.07040745,'1','2017-09-06 17:07:41'),(25700,5,1,0.16143951,'1','2017-09-06 17:07:41'),(25701,5,3,0.09305528,'1','2017-09-06 17:07:41'),(25702,6,1,0.24590212,'1','2017-09-06 17:07:41'),(25703,6,3,0.09430838,'1','2017-09-06 17:07:41'),(25704,1,1,0.9577865,'1','2017-09-06 17:08:41'),(25705,1,3,0.16746536,'1','2017-09-06 17:08:41'),(25706,2,1,32.276512,'1','2017-09-06 17:08:41'),(25707,2,3,28.8671,'1','2017-09-06 17:08:41'),(25708,3,1,25.217205,'1','2017-09-06 17:08:41'),(25709,3,3,31.484442,'1','2017-09-06 17:08:41'),(25710,4,1,0.1743716,'1','2017-09-06 17:08:41'),(25711,4,3,0.04673033,'1','2017-09-06 17:08:41'),(25712,5,1,0.31419578,'1','2017-09-06 17:08:41'),(25713,5,3,0.24167338,'1','2017-09-06 17:08:41'),(25714,6,1,0.20957345,'1','2017-09-06 17:08:41'),(25715,6,3,0.23074351,'1','2017-09-06 17:08:41'),(25716,1,1,0.4746305,'1','2017-09-06 17:09:42'),(25717,1,3,0.45307595,'1','2017-09-06 17:09:42'),(25718,2,1,34.614563,'1','2017-09-06 17:09:42'),(25719,2,3,27.653425,'1','2017-09-06 17:09:42'),(25720,3,1,33.03542,'1','2017-09-06 17:09:42'),(25721,3,3,32.583336,'1','2017-09-06 17:09:42'),(25722,4,1,0.02264905,'1','2017-09-06 17:09:42'),(25723,4,3,0.28682604,'1','2017-09-06 17:09:42'),(25724,5,1,0.40688276,'1','2017-09-06 17:09:42'),(25725,5,3,0.19386695,'1','2017-09-06 17:09:42'),(25726,6,1,0.23714297,'1','2017-09-06 17:09:42'),(25727,6,3,0.016329734,'1','2017-09-06 17:09:42'),(25728,1,1,0.43845832,'1','2017-09-06 17:10:42'),(25729,1,3,0.7934809,'1','2017-09-06 17:10:42'),(25730,2,1,33.38672,'1','2017-09-06 17:10:42'),(25731,2,3,31.185074,'1','2017-09-06 17:10:42'),(25732,3,1,32.779648,'1','2017-09-06 17:10:42'),(25733,3,3,31.44173,'1','2017-09-06 17:10:42'),(25734,4,1,0.021927087,'1','2017-09-06 17:10:42'),(25735,4,3,0.3432872,'1','2017-09-06 17:10:42'),(25736,5,1,0.05587082,'1','2017-09-06 17:10:43'),(25737,5,3,0.14622976,'1','2017-09-06 17:10:43'),(25738,6,1,0.2894208,'1','2017-09-06 17:10:43'),(25739,6,3,0.07795313,'1','2017-09-06 17:10:43'),(25740,1,1,0.33795744,'1','2017-09-06 17:11:43'),(25741,1,3,0.99468964,'1','2017-09-06 17:11:43'),(25742,2,1,29.165045,'1','2017-09-06 17:11:43'),(25743,2,3,34.754726,'1','2017-09-06 17:11:43'),(25744,3,1,33.932865,'1','2017-09-06 17:11:43'),(25745,3,3,33.503574,'1','2017-09-06 17:11:43'),(25746,4,1,0.13968778,'1','2017-09-06 17:11:43'),(25747,4,3,0.29582447,'1','2017-09-06 17:11:43'),(25748,5,1,0.34538573,'1','2017-09-06 17:11:43'),(25749,5,3,0.44553038,'1','2017-09-06 17:11:43'),(25750,6,1,0.22874627,'1','2017-09-06 17:11:43'),(25751,6,3,0.28491646,'1','2017-09-06 17:11:43'),(25752,1,1,0.38022476,'1','2017-09-06 17:12:43'),(25753,1,3,0.7418576,'1','2017-09-06 17:12:43'),(25754,2,1,26.038755,'1','2017-09-06 17:12:43'),(25755,2,3,25.945543,'1','2017-09-06 17:12:43'),(25756,3,1,27.834997,'1','2017-09-06 17:12:43'),(25757,3,3,33.023132,'1','2017-09-06 17:12:43'),(25758,4,1,0.12537405,'1','2017-09-06 17:12:43'),(25759,4,3,0.4496659,'1','2017-09-06 17:12:43'),(25760,5,1,0.3430266,'1','2017-09-06 17:12:44'),(25761,5,3,0.4751005,'1','2017-09-06 17:12:44'),(25762,6,1,0.12270376,'1','2017-09-06 17:12:44'),(25763,6,3,0.071196854,'1','2017-09-06 17:12:44'),(25764,1,1,0.77658105,'1','2017-09-06 17:13:44'),(25765,1,3,0.35773003,'1','2017-09-06 17:13:44'),(25766,2,1,29.76971,'1','2017-09-06 17:13:44'),(25767,2,3,29.706553,'1','2017-09-06 17:13:44'),(25768,3,1,29.181063,'1','2017-09-06 17:13:44'),(25769,3,3,26.283377,'1','2017-09-06 17:13:44'),(25770,4,1,0.14266948,'1','2017-09-06 17:13:44'),(25771,4,3,0.39246973,'1','2017-09-06 17:13:44'),(25772,5,1,0.0533755,'1','2017-09-06 17:13:44'),(25773,5,3,0.05575006,'1','2017-09-06 17:13:44'),(25774,6,1,0.07626274,'1','2017-09-06 17:13:44'),(25775,6,3,0.2065855,'1','2017-09-06 17:13:44'),(25776,1,1,0.92852545,'1','2017-09-06 17:14:44'),(25777,1,3,0.4336761,'1','2017-09-06 17:14:44'),(25778,2,1,30.473177,'1','2017-09-06 17:14:44'),(25779,2,3,33.17213,'1','2017-09-06 17:14:44'),(25780,3,1,25.598198,'1','2017-09-06 17:14:44'),(25781,3,3,34.954166,'1','2017-09-06 17:14:44'),(25782,4,1,0.027469099,'1','2017-09-06 17:14:44'),(25783,4,3,0.017584095,'1','2017-09-06 17:14:44'),(25784,5,1,0.18694182,'1','2017-09-06 17:14:44'),(25785,5,3,0.21391633,'1','2017-09-06 17:14:44'),(25786,6,1,0.17068873,'1','2017-09-06 17:14:44'),(25787,6,3,0.21353823,'1','2017-09-06 17:14:45'),(25788,1,1,0.013432819,'1','2017-09-06 17:15:45'),(25789,1,3,0.7760313,'1','2017-09-06 17:15:45'),(25790,2,1,28.271978,'1','2017-09-06 17:15:45'),(25791,2,3,34.62839,'1','2017-09-06 17:15:45'),(25792,3,1,28.686213,'1','2017-09-06 17:15:45'),(25793,3,3,29.82792,'1','2017-09-06 17:15:45'),(25794,4,1,0.3493211,'1','2017-09-06 17:15:45'),(25795,4,3,0.2977578,'1','2017-09-06 17:15:45'),(25796,5,1,0.37998542,'1','2017-09-06 17:15:45'),(25797,5,3,0.04133545,'1','2017-09-06 17:15:45'),(25798,6,1,0.047241542,'1','2017-09-06 17:15:45'),(25799,6,3,0.14170317,'1','2017-09-06 17:15:45'),(25800,1,1,0.26744944,'1','2017-09-06 17:16:45'),(25801,1,3,0.38488147,'1','2017-09-06 17:16:45'),(25802,2,1,33.507027,'1','2017-09-06 17:16:45'),(25803,2,3,25.179625,'1','2017-09-06 17:16:45'),(25804,3,1,30.697447,'1','2017-09-06 17:16:45'),(25805,3,3,33.227207,'1','2017-09-06 17:16:45'),(25806,4,1,0.0014832834,'1','2017-09-06 17:16:46'),(25807,4,3,0.31654927,'1','2017-09-06 17:16:46'),(25808,5,1,0.18093781,'1','2017-09-06 17:16:46'),(25809,5,3,0.03898271,'1','2017-09-06 17:16:46'),(25810,6,1,0.036469337,'1','2017-09-06 17:16:46'),(25811,6,3,0.25535297,'1','2017-09-06 17:16:46'),(25812,1,1,0.9046424,'1','2017-09-06 17:17:46'),(25813,1,3,0.05058375,'1','2017-09-06 17:17:46'),(25814,2,1,29.659416,'1','2017-09-06 17:17:46'),(25815,2,3,26.75584,'1','2017-09-06 17:17:46'),(25816,3,1,30.260109,'1','2017-09-06 17:17:46'),(25817,3,3,32.372696,'1','2017-09-06 17:17:46'),(25818,4,1,0.2639756,'1','2017-09-06 17:17:46'),(25819,4,3,0.33470163,'1','2017-09-06 17:17:46'),(25820,5,1,0.22119212,'1','2017-09-06 17:17:46'),(25821,5,3,0.3033596,'1','2017-09-06 17:17:46'),(25822,6,1,0.09982525,'1','2017-09-06 17:17:46'),(25823,6,3,0.16033617,'1','2017-09-06 17:17:46'),(25824,1,1,0.09681194,'1','2017-09-06 17:18:46'),(25825,1,3,0.615237,'1','2017-09-06 17:18:46'),(25826,2,1,27.149063,'1','2017-09-06 17:18:46'),(25827,2,3,26.127853,'1','2017-09-06 17:18:46'),(25828,3,1,28.215412,'1','2017-09-06 17:18:46'),(25829,3,3,25.931686,'1','2017-09-06 17:18:46'),(25830,4,1,0.17512392,'1','2017-09-06 17:18:46'),(25831,4,3,0.48564568,'1','2017-09-06 17:18:46'),(25832,5,1,0.0119576985,'1','2017-09-06 17:18:46'),(25833,5,3,0.17541243,'1','2017-09-06 17:18:46'),(25834,6,1,0.2193761,'1','2017-09-06 17:18:47'),(25835,6,3,0.2966735,'1','2017-09-06 17:18:47'),(25836,1,1,0.76747495,'1','2017-09-06 17:19:47'),(25837,1,3,0.0019746777,'1','2017-09-06 17:19:47'),(25838,2,1,29.62215,'1','2017-09-06 17:19:47'),(25839,2,3,31.559252,'1','2017-09-06 17:19:47'),(25840,3,1,30.742214,'1','2017-09-06 17:19:47'),(25841,3,3,31.836472,'1','2017-09-06 17:19:47'),(25842,4,1,0.11007844,'1','2017-09-06 17:19:47'),(25843,4,3,0.058062557,'1','2017-09-06 17:19:47'),(25844,5,1,0.2546765,'1','2017-09-06 17:19:47'),(25845,5,3,0.031449817,'1','2017-09-06 17:19:47'),(25846,6,1,0.14354101,'1','2017-09-06 17:19:47'),(25847,6,3,0.2505624,'1','2017-09-06 17:19:47'),(25848,1,1,0.12638173,'1','2017-09-06 17:20:47'),(25849,1,3,0.7643701,'1','2017-09-06 17:20:47'),(25850,2,1,31.22437,'1','2017-09-06 17:20:47'),(25851,2,3,26.624979,'1','2017-09-06 17:20:47'),(25852,3,1,31.483986,'1','2017-09-06 17:20:47'),(25853,3,3,26.268488,'1','2017-09-06 17:20:47'),(25854,4,1,0.199653,'1','2017-09-06 17:20:47'),(25855,4,3,0.23408177,'1','2017-09-06 17:20:47'),(25856,5,1,0.42017394,'1','2017-09-06 17:20:47'),(25857,5,3,0.25138292,'1','2017-09-06 17:20:47'),(25858,6,1,0.07209029,'1','2017-09-06 17:20:47'),(25859,6,3,0.29531366,'1','2017-09-06 17:20:48'),(25860,1,1,0.88752824,'1','2017-09-06 17:21:48'),(25861,1,3,0.15140656,'1','2017-09-06 17:21:48'),(25862,2,1,33.67924,'1','2017-09-06 17:21:48'),(25863,2,3,34.564117,'1','2017-09-06 17:21:48'),(25864,3,1,27.371384,'1','2017-09-06 17:21:48'),(25865,3,3,31.448315,'1','2017-09-06 17:21:48'),(25866,4,1,0.12957038,'1','2017-09-06 17:21:48'),(25867,4,3,0.10921038,'1','2017-09-06 17:21:48'),(25868,5,1,0.14126772,'1','2017-09-06 17:21:48'),(25869,5,3,0.052444812,'1','2017-09-06 17:21:48'),(25870,6,1,0.14205337,'1','2017-09-06 17:21:48'),(25871,6,3,0.2546321,'1','2017-09-06 17:21:48'),(25872,1,1,0.97397804,'1','2017-09-06 17:22:48'),(25873,1,3,0.5203793,'1','2017-09-06 17:22:48'),(25874,2,1,25.750555,'1','2017-09-06 17:22:48'),(25875,2,3,26.30992,'1','2017-09-06 17:22:48'),(25876,3,1,34.249756,'1','2017-09-06 17:22:48'),(25877,3,3,33.553253,'1','2017-09-06 17:22:48'),(25878,4,1,0.43881157,'1','2017-09-06 17:22:48'),(25879,4,3,0.3244835,'1','2017-09-06 17:22:48'),(25880,5,1,0.17498384,'1','2017-09-06 17:22:48'),(25881,5,3,0.32625186,'1','2017-09-06 17:22:48'),(25882,6,1,0.1577271,'1','2017-09-06 17:22:48'),(25883,6,3,0.29366386,'1','2017-09-06 17:22:48'),(25884,1,1,0.21690948,'1','2017-09-06 17:23:48'),(25885,1,3,0.3607602,'1','2017-09-06 17:23:48'),(25886,2,1,34.865246,'1','2017-09-06 17:23:48'),(25887,2,3,26.052942,'1','2017-09-06 17:23:48'),(25888,3,1,28.274397,'1','2017-09-06 17:23:49'),(25889,3,3,31.703333,'1','2017-09-06 17:23:49'),(25890,4,1,0.18625559,'1','2017-09-06 17:23:49'),(25891,4,3,0.19259562,'1','2017-09-06 17:23:49'),(25892,5,1,0.32383007,'1','2017-09-06 17:23:49'),(25893,5,3,0.36365262,'1','2017-09-06 17:23:49'),(25894,6,1,0.19264424,'1','2017-09-06 17:23:49'),(25895,6,3,0.18337,'1','2017-09-06 17:23:49'),(25896,1,1,0.104156174,'1','2017-09-06 17:24:49'),(25897,1,3,0.21647091,'1','2017-09-06 17:24:49'),(25898,2,1,31.307745,'1','2017-09-06 17:24:49'),(25899,2,3,29.8436,'1','2017-09-06 17:24:49'),(25900,3,1,27.327408,'1','2017-09-06 17:24:49'),(25901,3,3,34.513245,'1','2017-09-06 17:24:49'),(25902,4,1,0.2771592,'1','2017-09-06 17:24:49'),(25903,4,3,0.29791695,'1','2017-09-06 17:24:49'),(25904,5,1,0.26075247,'1','2017-09-06 17:24:49'),(25905,5,3,0.39526606,'1','2017-09-06 17:24:49'),(25906,6,1,0.17915402,'1','2017-09-06 17:24:49'),(25907,6,3,0.25204793,'1','2017-09-06 17:24:49'),(25908,1,1,0.025108922,'1','2017-09-06 17:25:49'),(25909,1,3,0.41217223,'1','2017-09-06 17:25:49'),(25910,2,1,29.469177,'1','2017-09-06 17:25:49'),(25911,2,3,25.328287,'1','2017-09-06 17:25:49'),(25912,3,1,33.438515,'1','2017-09-06 17:25:49'),(25913,3,3,32.20184,'1','2017-09-06 17:25:49'),(25914,4,1,0.335265,'1','2017-09-06 17:25:49'),(25915,4,3,0.19531877,'1','2017-09-06 17:25:50'),(25916,5,1,0.17945182,'1','2017-09-06 17:25:50'),(25917,5,3,0.21594383,'1','2017-09-06 17:25:50'),(25918,6,1,0.192186,'1','2017-09-06 17:25:50'),(25919,6,3,0.1342089,'1','2017-09-06 17:25:50'),(25920,1,1,0.69419986,'1','2017-09-06 17:26:50'),(25921,1,3,0.70109457,'1','2017-09-06 17:26:50'),(25922,2,1,28.144506,'1','2017-09-06 17:26:50'),(25923,2,3,34.23868,'1','2017-09-06 17:26:50'),(25924,3,1,32.35822,'1','2017-09-06 17:26:50'),(25925,3,3,29.682486,'1','2017-09-06 17:26:50'),(25926,4,1,0.27243844,'1','2017-09-06 17:26:50'),(25927,4,3,0.024625333,'1','2017-09-06 17:26:50'),(25928,5,1,0.090662204,'1','2017-09-06 17:26:50'),(25929,5,3,0.29859748,'1','2017-09-06 17:26:50'),(25930,6,1,0.22780985,'1','2017-09-06 17:26:50'),(25931,6,3,0.2515312,'1','2017-09-06 17:26:50'),(25932,1,1,0.5142909,'1','2017-09-06 17:27:50'),(25933,1,3,0.75759536,'1','2017-09-06 17:27:50'),(25934,2,1,32.817966,'1','2017-09-06 17:27:50'),(25935,2,3,33.716625,'1','2017-09-06 17:27:50'),(25936,3,1,30.035208,'1','2017-09-06 17:27:50'),(25937,3,3,29.426653,'1','2017-09-06 17:27:50'),(25938,4,1,0.14572397,'1','2017-09-06 17:27:50'),(25939,4,3,0.09628104,'1','2017-09-06 17:27:50'),(25940,5,1,0.4057952,'1','2017-09-06 17:27:51'),(25941,5,3,0.23691425,'1','2017-09-06 17:27:51'),(25942,6,1,0.274373,'1','2017-09-06 17:27:51'),(25943,6,3,0.01324571,'1','2017-09-06 17:27:51'),(25944,1,1,0.56413984,'1','2017-09-06 17:28:51'),(25945,1,3,0.8370456,'1','2017-09-06 17:28:51'),(25946,2,1,27.261948,'1','2017-09-06 17:28:51'),(25947,2,3,27.957497,'1','2017-09-06 17:28:51'),(25948,3,1,27.79085,'1','2017-09-06 17:28:51'),(25949,3,3,32.199863,'1','2017-09-06 17:28:51'),(25950,4,1,0.0015728176,'1','2017-09-06 17:28:51'),(25951,4,3,0.2894643,'1','2017-09-06 17:28:51'),(25952,5,1,0.19202822,'1','2017-09-06 17:28:51'),(25953,5,3,0.08744134,'1','2017-09-06 17:28:51'),(25954,6,1,0.27429014,'1','2017-09-06 17:28:51'),(25955,6,3,0.10407195,'1','2017-09-06 17:28:51'),(25956,1,1,0.6607196,'1','2017-09-06 17:29:51'),(25957,1,3,0.91881055,'1','2017-09-06 17:29:51'),(25958,2,1,29.596714,'1','2017-09-06 17:29:51'),(25959,2,3,27.992758,'1','2017-09-06 17:29:51'),(25960,3,1,28.462305,'1','2017-09-06 17:29:51'),(25961,3,3,29.013147,'1','2017-09-06 17:29:51'),(25962,4,1,0.18873337,'1','2017-09-06 17:29:51'),(25963,4,3,0.4364005,'1','2017-09-06 17:29:51'),(25964,5,1,0.1474674,'1','2017-09-06 17:29:51'),(25965,5,3,0.20935169,'1','2017-09-06 17:29:51'),(25966,6,1,0.27797723,'1','2017-09-06 17:29:51'),(25967,6,3,0.23671012,'1','2017-09-06 17:29:51'),(25968,1,1,0.5575168,'1','2017-09-06 17:30:51'),(25969,1,3,0.23500383,'1','2017-09-06 17:30:52'),(25970,2,1,29.218136,'1','2017-09-06 17:30:52'),(25971,2,3,34.70785,'1','2017-09-06 17:30:52'),(25972,3,1,34.7016,'1','2017-09-06 17:30:52'),(25973,3,3,28.814857,'1','2017-09-06 17:30:52'),(25974,4,1,0.074908786,'1','2017-09-06 17:30:52'),(25975,4,3,0.24602023,'1','2017-09-06 17:30:52'),(25976,5,1,0.43143973,'1','2017-09-06 17:30:52'),(25977,5,3,0.024910005,'1','2017-09-06 17:30:52'),(25978,6,1,0.09796469,'1','2017-09-06 17:30:52'),(25979,6,3,0.18290517,'1','2017-09-06 17:30:52'),(25980,1,1,0.79403883,'1','2017-09-06 17:31:52'),(25981,1,3,0.26835924,'1','2017-09-06 17:31:52'),(25982,2,1,25.697851,'1','2017-09-06 17:31:52'),(25983,2,3,28.404438,'1','2017-09-06 17:31:52'),(25984,3,1,27.971676,'1','2017-09-06 17:31:52'),(25985,3,3,33.566845,'1','2017-09-06 17:31:52'),(25986,4,1,0.22777426,'1','2017-09-06 17:31:52'),(25987,4,3,0.24637851,'1','2017-09-06 17:31:52'),(25988,5,1,0.49327168,'1','2017-09-06 17:31:52'),(25989,5,3,0.24524094,'1','2017-09-06 17:31:52'),(25990,6,1,0.1808939,'1','2017-09-06 17:31:52'),(25991,6,3,0.16223684,'1','2017-09-06 17:31:52'),(25992,1,1,0.009607878,'1','2017-09-06 17:32:52'),(25993,1,3,0.07697678,'1','2017-09-06 17:32:53'),(25994,2,1,28.89506,'1','2017-09-06 17:32:53'),(25995,2,3,27.366398,'1','2017-09-06 17:32:53'),(25996,3,1,32.57135,'1','2017-09-06 17:32:53'),(25997,3,3,25.4056,'1','2017-09-06 17:32:53'),(25998,4,1,0.4183101,'1','2017-09-06 17:32:53'),(25999,4,3,0.19839577,'1','2017-09-06 17:32:53'),(26000,5,1,0.47308567,'1','2017-09-06 17:32:53'),(26001,5,3,0.024457695,'1','2017-09-06 17:32:53'),(26002,6,1,0.12789237,'1','2017-09-06 17:32:53'),(26003,6,3,0.26105073,'1','2017-09-06 17:32:53'),(26004,1,1,0.67612493,'1','2017-09-06 17:33:53'),(26005,1,3,0.1718652,'1','2017-09-06 17:33:53'),(26006,2,1,31.091423,'1','2017-09-06 17:33:53'),(26007,2,3,27.976904,'1','2017-09-06 17:33:53'),(26008,3,1,33.24969,'1','2017-09-06 17:33:53'),(26009,3,3,29.58313,'1','2017-09-06 17:33:53'),(26010,4,1,0.27364463,'1','2017-09-06 17:33:53'),(26011,4,3,0.45350033,'1','2017-09-06 17:33:53'),(26012,5,1,0.10019778,'1','2017-09-06 17:33:53'),(26013,5,3,0.22054155,'1','2017-09-06 17:33:53'),(26014,6,1,0.20974231,'1','2017-09-06 17:33:53'),(26015,6,3,0.07533195,'1','2017-09-06 17:33:53'),(26016,1,1,0.18983519,'1','2017-09-06 17:34:53'),(26017,1,3,0.13511682,'1','2017-09-06 17:34:53'),(26018,2,1,26.97028,'1','2017-09-06 17:34:54'),(26019,2,3,29.959248,'1','2017-09-06 17:34:54'),(26020,3,1,27.636328,'1','2017-09-06 17:34:54'),(26021,3,3,31.813965,'1','2017-09-06 17:34:54'),(26022,4,1,0.047714498,'1','2017-09-06 17:34:54'),(26023,4,3,0.29464683,'1','2017-09-06 17:34:54'),(26024,5,1,0.2886249,'1','2017-09-06 17:34:54'),(26025,5,3,0.45356992,'1','2017-09-06 17:34:54'),(26026,6,1,0.14229952,'1','2017-09-06 17:34:54'),(26027,6,3,0.12083565,'1','2017-09-06 17:34:54'),(26028,1,1,0.09123068,'1','2017-09-06 17:35:54'),(26029,1,3,0.72221375,'1','2017-09-06 17:35:54'),(26030,2,1,25.708677,'1','2017-09-06 17:35:54'),(26031,2,3,32.277008,'1','2017-09-06 17:35:54'),(26032,3,1,25.817636,'1','2017-09-06 17:35:54'),(26033,3,3,29.52386,'1','2017-09-06 17:35:54'),(26034,4,1,0.2910382,'1','2017-09-06 17:35:54'),(26035,4,3,0.41395482,'1','2017-09-06 17:35:54'),(26036,5,1,0.32501137,'1','2017-09-06 17:35:54'),(26037,5,3,0.46097258,'1','2017-09-06 17:35:54'),(26038,6,1,0.009787828,'1','2017-09-06 17:35:54'),(26039,6,3,0.031423867,'1','2017-09-06 17:35:54'),(26040,1,1,0.85507524,'1','2017-09-06 17:36:54'),(26041,1,3,0.3413803,'1','2017-09-06 17:36:54'),(26042,2,1,31.335493,'1','2017-09-06 17:36:54'),(26043,2,3,28.129536,'1','2017-09-06 17:36:54'),(26044,3,1,28.92995,'1','2017-09-06 17:36:54'),(26045,3,3,33.302353,'1','2017-09-06 17:36:54'),(26046,4,1,0.18576178,'1','2017-09-06 17:36:54'),(26047,4,3,0.34085578,'1','2017-09-06 17:36:55'),(26048,5,1,0.16195968,'1','2017-09-06 17:36:55'),(26049,5,3,0.35545224,'1','2017-09-06 17:36:55'),(26050,6,1,0.04888702,'1','2017-09-06 17:36:55'),(26051,6,3,0.07232151,'1','2017-09-06 17:36:55'),(26052,1,1,0.20913996,'1','2017-09-06 17:37:55'),(26053,1,3,0.5460581,'1','2017-09-06 17:37:55'),(26054,2,1,32.831142,'1','2017-09-06 17:37:55'),(26055,2,3,31.316622,'1','2017-09-06 17:37:55'),(26056,3,1,26.619236,'1','2017-09-06 17:37:55'),(26057,3,3,27.605515,'1','2017-09-06 17:37:55'),(26058,4,1,0.46887425,'1','2017-09-06 17:37:55'),(26059,4,3,0.34215707,'1','2017-09-06 17:37:55'),(26060,5,1,0.36930174,'1','2017-09-06 17:37:55'),(26061,5,3,0.2940389,'1','2017-09-06 17:37:55'),(26062,6,1,0.23495056,'1','2017-09-06 17:37:55'),(26063,6,3,0.028889757,'1','2017-09-06 17:37:55'),(26064,1,1,0.30058816,'1','2017-09-06 17:38:55'),(26065,1,3,0.5134978,'1','2017-09-06 17:38:55'),(26066,2,1,34.20419,'1','2017-09-06 17:38:55'),(26067,2,3,31.021599,'1','2017-09-06 17:38:55'),(26068,3,1,29.632862,'1','2017-09-06 17:38:55'),(26069,3,3,28.436865,'1','2017-09-06 17:38:55'),(26070,4,1,0.19510296,'1','2017-09-06 17:38:55'),(26071,4,3,0.06982481,'1','2017-09-06 17:38:55'),(26072,5,1,0.25727233,'1','2017-09-06 17:38:55'),(26073,5,3,0.26645264,'1','2017-09-06 17:38:56'),(26074,6,1,0.14323184,'1','2017-09-06 17:38:56'),(26075,6,3,0.19352745,'1','2017-09-06 17:38:56'),(26076,1,1,0.23305088,'1','2017-09-06 17:39:56'),(26077,1,3,0.41312096,'1','2017-09-06 17:39:56'),(26078,2,1,26.9774,'1','2017-09-06 17:39:56'),(26079,2,3,27.775023,'1','2017-09-06 17:39:56'),(26080,3,1,28.662521,'1','2017-09-06 17:39:56'),(26081,3,3,30.353554,'1','2017-09-06 17:39:56'),(26082,4,1,0.091488324,'1','2017-09-06 17:39:56'),(26083,4,3,0.033558637,'1','2017-09-06 17:39:56'),(26084,5,1,0.068847105,'1','2017-09-06 17:39:56'),(26085,5,3,0.20753339,'1','2017-09-06 17:39:56'),(26086,6,1,0.09266625,'1','2017-09-06 17:39:56'),(26087,6,3,0.063447855,'1','2017-09-06 17:39:56'),(26088,1,1,0.54528487,'1','2017-09-06 17:40:56'),(26089,1,3,0.09272438,'1','2017-09-06 17:40:56'),(26090,2,1,33.15057,'1','2017-09-06 17:40:56'),(26091,2,3,30.011475,'1','2017-09-06 17:40:56'),(26092,3,1,33.8484,'1','2017-09-06 17:40:56'),(26093,3,3,25.701553,'1','2017-09-06 17:40:56'),(26094,4,1,0.42799965,'1','2017-09-06 17:40:56'),(26095,4,3,0.32337412,'1','2017-09-06 17:40:56'),(26096,5,1,0.44368404,'1','2017-09-06 17:40:57'),(26097,5,3,0.43195194,'1','2017-09-06 17:40:57'),(26098,6,1,0.117548764,'1','2017-09-06 17:40:57'),(26099,6,3,0.18033944,'1','2017-09-06 17:40:57'),(26100,1,1,0.0939072,'1','2017-09-06 17:41:57'),(26101,1,3,0.6287599,'1','2017-09-06 17:41:57'),(26102,2,1,25.779703,'1','2017-09-06 17:41:57'),(26103,2,3,28.219921,'1','2017-09-06 17:41:57'),(26104,3,1,31.083197,'1','2017-09-06 17:41:57'),(26105,3,3,25.477745,'1','2017-09-06 17:41:57'),(26106,4,1,0.1727927,'1','2017-09-06 17:41:57'),(26107,4,3,0.40242985,'1','2017-09-06 17:41:57'),(26108,5,1,0.08315683,'1','2017-09-06 17:41:57'),(26109,5,3,0.47974908,'1','2017-09-06 17:41:57'),(26110,6,1,0.053365164,'1','2017-09-06 17:41:57'),(26111,6,3,0.18930642,'1','2017-09-06 17:41:57'),(26112,1,1,0.5380519,'1','2017-09-06 17:42:57'),(26113,1,3,0.99883777,'1','2017-09-06 17:42:57'),(26114,2,1,26.821922,'1','2017-09-06 17:42:57'),(26115,2,3,32.213406,'1','2017-09-06 17:42:57'),(26116,3,1,31.420658,'1','2017-09-06 17:42:57'),(26117,3,3,33.648453,'1','2017-09-06 17:42:57'),(26118,4,1,0.21682297,'1','2017-09-06 17:42:57'),(26119,4,3,0.23222929,'1','2017-09-06 17:42:57'),(26120,5,1,0.19489552,'1','2017-09-06 17:42:57'),(26121,5,3,0.3484566,'1','2017-09-06 17:42:58'),(26122,6,1,0.06707778,'1','2017-09-06 17:42:58'),(26123,6,3,0.26899654,'1','2017-09-06 17:42:58'),(26124,1,1,0.5679023,'1','2017-09-08 17:39:25'),(26125,1,3,0.95230895,'1','2017-09-08 17:39:25'),(26126,2,1,33.60857,'1','2017-09-08 17:39:25'),(26127,2,3,29.524862,'1','2017-09-08 17:39:25'),(26128,3,1,34.41787,'1','2017-09-08 17:39:25'),(26129,3,3,31.352116,'1','2017-09-08 17:39:25'),(26130,4,1,0.46388397,'1','2017-09-08 17:39:25'),(26131,4,3,0.31465024,'1','2017-09-08 17:39:25'),(26132,5,1,0.4895732,'1','2017-09-08 17:39:25'),(26133,5,3,0.29885143,'1','2017-09-08 17:39:25'),(26134,6,1,0.25809518,'1','2017-09-08 17:39:25'),(26135,6,3,0.09652182,'1','2017-09-08 17:39:25'),(26136,1,1,0.03132139,'1','2017-09-08 17:40:25'),(26137,1,3,0.77145034,'1','2017-09-08 17:40:25'),(26138,2,1,33.194878,'1','2017-09-08 17:40:25'),(26139,2,3,33.316757,'1','2017-09-08 17:40:26'),(26140,3,1,27.104212,'1','2017-09-08 17:40:26'),(26141,3,3,34.316162,'1','2017-09-08 17:40:26'),(26142,4,1,0.2554664,'1','2017-09-08 17:40:26'),(26143,4,3,0.12329577,'1','2017-09-08 17:40:26'),(26144,5,1,0.25183606,'1','2017-09-08 17:40:26'),(26145,5,3,0.31211254,'1','2017-09-08 17:40:26'),(26146,6,1,0.09166033,'1','2017-09-08 17:40:26'),(26147,6,3,0.2756218,'1','2017-09-08 17:40:26'),(26148,1,1,0.4213137,'1','2017-09-08 17:41:26'),(26149,1,3,0.9973542,'1','2017-09-08 17:41:26'),(26150,2,1,25.530733,'1','2017-09-08 17:41:26'),(26151,2,3,25.78609,'1','2017-09-08 17:41:26'),(26152,3,1,30.774872,'1','2017-09-08 17:41:26'),(26153,3,3,25.55958,'1','2017-09-08 17:41:26'),(26154,4,1,0.43587494,'1','2017-09-08 17:41:26'),(26155,4,3,0.049546942,'1','2017-09-08 17:41:26'),(26156,5,1,0.18898728,'1','2017-09-08 17:41:26'),(26157,5,3,0.33680105,'1','2017-09-08 17:41:26'),(26158,6,1,0.033403665,'1','2017-09-08 17:41:26'),(26159,6,3,0.15175255,'1','2017-09-08 17:41:26'),(26160,1,1,0.29431027,'1','2017-09-08 17:42:26'),(26161,1,3,0.28912246,'1','2017-09-08 17:42:26'),(26162,2,1,31.340946,'1','2017-09-08 17:42:26'),(26163,2,3,31.896343,'1','2017-09-08 17:42:26'),(26164,3,1,25.407042,'1','2017-09-08 17:42:27'),(26165,3,3,30.921904,'1','2017-09-08 17:42:27'),(26166,4,1,0.2674405,'1','2017-09-08 17:42:27'),(26167,4,3,0.20911731,'1','2017-09-08 17:42:27'),(26168,5,1,0.1691873,'1','2017-09-08 17:42:27'),(26169,5,3,0.32949924,'1','2017-09-08 17:42:27'),(26170,6,1,0.1293485,'1','2017-09-08 17:42:27'),(26171,6,3,0.20040041,'1','2017-09-08 17:42:27'),(26172,1,1,0.8513074,'1','2017-09-08 17:43:27'),(26173,1,3,0.937755,'1','2017-09-08 17:43:27'),(26174,2,1,29.930552,'1','2017-09-08 17:43:27'),(26175,2,3,34.99661,'1','2017-09-08 17:43:27'),(26176,3,1,28.081198,'1','2017-09-08 17:43:27'),(26177,3,3,27.034023,'1','2017-09-08 17:43:27'),(26178,4,1,0.22766393,'1','2017-09-08 17:43:27'),(26179,4,3,0.34399337,'1','2017-09-08 17:43:28'),(26180,5,1,0.393311,'1','2017-09-08 17:43:28'),(26181,5,3,0.05097559,'1','2017-09-08 17:43:28'),(26182,6,1,0.28666353,'1','2017-09-08 17:43:28'),(26183,6,3,0.024521036,'1','2017-09-08 17:43:28'),(26184,1,1,0.6308342,'1','2017-09-08 17:44:28'),(26185,1,3,0.18704881,'1','2017-09-08 17:44:28'),(26186,2,1,31.764448,'1','2017-09-08 17:44:28'),(26187,2,3,27.180449,'1','2017-09-08 17:44:28'),(26188,3,1,29.946285,'1','2017-09-08 17:44:28'),(26189,3,3,29.14877,'1','2017-09-08 17:44:28'),(26190,4,1,0.46781594,'1','2017-09-08 17:44:28'),(26191,4,3,0.27228615,'1','2017-09-08 17:44:28'),(26192,5,1,0.28091642,'1','2017-09-08 17:44:28'),(26193,5,3,0.4540999,'1','2017-09-08 17:44:28'),(26194,6,1,0.16859351,'1','2017-09-08 17:44:28'),(26195,6,3,0.21392117,'1','2017-09-08 17:44:28'),(26196,1,1,0.07954575,'1','2017-09-08 17:45:28'),(26197,1,3,0.42636186,'1','2017-09-08 17:45:28'),(26198,2,1,26.25654,'1','2017-09-08 17:45:28'),(26199,2,3,32.996124,'1','2017-09-08 17:45:28'),(26200,3,1,34.595737,'1','2017-09-08 17:45:28'),(26201,3,3,28.85258,'1','2017-09-08 17:45:28'),(26202,4,1,0.42375147,'1','2017-09-08 17:45:28'),(26203,4,3,0.48979777,'1','2017-09-08 17:45:29'),(26204,5,1,0.1761604,'1','2017-09-08 17:45:29'),(26205,5,3,0.22988938,'1','2017-09-08 17:45:29'),(26206,6,1,0.24105528,'1','2017-09-08 17:45:29'),(26207,6,3,0.19191875,'1','2017-09-08 17:45:29'),(26208,1,1,0.77812076,'1','2017-09-08 17:46:29'),(26209,1,3,0.7709592,'1','2017-09-08 17:46:29'),(26210,2,1,28.614544,'1','2017-09-08 17:46:29'),(26211,2,3,26.445625,'1','2017-09-08 17:46:29'),(26212,3,1,31.12917,'1','2017-09-08 17:46:29'),(26213,3,3,29.110325,'1','2017-09-08 17:46:29'),(26214,4,1,0.069584906,'1','2017-09-08 17:46:29'),(26215,4,3,0.49585825,'1','2017-09-08 17:46:29'),(26216,5,1,0.23418002,'1','2017-09-08 17:46:29'),(26217,5,3,0.2959115,'1','2017-09-08 17:46:29'),(26218,6,1,0.047415137,'1','2017-09-08 17:46:29'),(26219,6,3,0.26634955,'1','2017-09-08 17:46:29'),(26220,1,1,0.2808079,'1','2017-09-08 17:47:29'),(26221,1,3,0.01538382,'1','2017-09-08 17:47:29'),(26222,2,1,27.799429,'1','2017-09-08 17:47:29'),(26223,2,3,28.563478,'1','2017-09-08 17:47:29'),(26224,3,1,32.293736,'1','2017-09-08 17:47:29'),(26225,3,3,26.605137,'1','2017-09-08 17:47:29'),(26226,4,1,0.23114224,'1','2017-09-08 17:47:29'),(26227,4,3,0.42428893,'1','2017-09-08 17:47:29'),(26228,5,1,0.4700421,'1','2017-09-08 17:47:29'),(26229,5,3,0.027382025,'1','2017-09-08 17:47:29'),(26230,6,1,0.25310177,'1','2017-09-08 17:47:29'),(26231,6,3,0.29134494,'1','2017-09-08 17:47:30'),(26232,1,1,0.3013782,'1','2017-09-08 17:48:30'),(26233,1,3,0.7587722,'1','2017-09-08 17:48:30'),(26234,2,1,26.808964,'1','2017-09-08 17:48:30'),(26235,2,3,28.657295,'1','2017-09-08 17:48:30'),(26236,3,1,31.155766,'1','2017-09-08 17:48:30'),(26237,3,3,27.282364,'1','2017-09-08 17:48:30'),(26238,4,1,0.3492502,'1','2017-09-08 17:48:30'),(26239,4,3,0.4905248,'1','2017-09-08 17:48:30'),(26240,5,1,0.37081847,'1','2017-09-08 17:48:30'),(26241,5,3,0.21928556,'1','2017-09-08 17:48:30'),(26242,6,1,0.2949693,'1','2017-09-08 17:48:30'),(26243,6,3,0.28878418,'1','2017-09-08 17:48:30'),(26244,1,1,0.34640473,'1','2017-09-08 17:49:30'),(26245,1,3,0.6582606,'1','2017-09-08 17:49:30'),(26246,2,1,26.582626,'1','2017-09-08 17:49:30'),(26247,2,3,26.52053,'1','2017-09-08 17:49:30'),(26248,3,1,28.74746,'1','2017-09-08 17:49:30'),(26249,3,3,30.391531,'1','2017-09-08 17:49:30'),(26250,4,1,0.10294277,'1','2017-09-08 17:49:30'),(26251,4,3,0.11797844,'1','2017-09-08 17:49:30'),(26252,5,1,0.18667795,'1','2017-09-08 17:49:30'),(26253,5,3,0.1277086,'1','2017-09-08 17:49:30'),(26254,6,1,0.29171255,'1','2017-09-08 17:49:30'),(26255,6,3,0.27393234,'1','2017-09-08 17:49:30'),(26256,1,1,0.85870606,'1','2017-09-08 17:50:31'),(26257,1,3,0.26760516,'1','2017-09-08 17:50:31'),(26258,2,1,25.850576,'1','2017-09-08 17:50:31'),(26259,2,3,25.593983,'1','2017-09-08 17:50:31'),(26260,3,1,30.065008,'1','2017-09-08 17:50:31'),(26261,3,3,29.142475,'1','2017-09-08 17:50:31'),(26262,4,1,0.3695592,'1','2017-09-08 17:50:31'),(26263,4,3,0.38065413,'1','2017-09-08 17:50:31'),(26264,5,1,0.029092433,'1','2017-09-08 17:50:31'),(26265,5,3,0.4703139,'1','2017-09-08 17:50:31'),(26266,6,1,0.02114844,'1','2017-09-08 17:50:31'),(26267,6,3,0.07850313,'1','2017-09-08 17:50:31'),(26268,1,1,0.48945227,'1','2017-09-08 17:51:31'),(26269,1,3,0.762865,'1','2017-09-08 17:51:31'),(26270,2,1,31.2123,'1','2017-09-08 17:51:31'),(26271,2,3,28.156012,'1','2017-09-08 17:51:31'),(26272,3,1,26.663738,'1','2017-09-08 17:51:31'),(26273,3,3,32.35154,'1','2017-09-08 17:51:31'),(26274,4,1,0.1124778,'1','2017-09-08 17:51:31'),(26275,4,3,0.09482204,'1','2017-09-08 17:51:31'),(26276,5,1,0.21333669,'1','2017-09-08 17:51:31'),(26277,5,3,0.46949807,'1','2017-09-08 17:51:31'),(26278,6,1,0.14781304,'1','2017-09-08 17:51:31'),(26279,6,3,0.16624315,'1','2017-09-08 17:51:31'),(26280,1,1,0.26684827,'1','2017-09-08 17:52:31'),(26281,1,3,0.04547419,'1','2017-09-08 17:52:31'),(26282,2,1,34.63087,'1','2017-09-08 17:52:31'),(26283,2,3,33.162563,'1','2017-09-08 17:52:31'),(26284,3,1,30.90241,'1','2017-09-08 17:52:32'),(26285,3,3,31.151043,'1','2017-09-08 17:52:32'),(26286,4,1,0.44787383,'1','2017-09-08 17:52:32'),(26287,4,3,0.010237136,'1','2017-09-08 17:52:32'),(26288,5,1,0.38841838,'1','2017-09-08 17:52:32'),(26289,5,3,0.39726225,'1','2017-09-08 17:52:32'),(26290,6,1,0.19008723,'1','2017-09-08 17:52:32'),(26291,6,3,0.09111353,'1','2017-09-08 17:52:32'),(26292,1,1,0.17247161,'1','2017-09-08 17:53:32'),(26293,1,3,0.24525514,'1','2017-09-08 17:53:32'),(26294,2,1,29.366707,'1','2017-09-08 17:53:32'),(26295,2,3,25.336489,'1','2017-09-08 17:53:32'),(26296,3,1,29.633043,'1','2017-09-08 17:53:32'),(26297,3,3,27.969933,'1','2017-09-08 17:53:32'),(26298,4,1,0.34940988,'1','2017-09-08 17:53:32'),(26299,4,3,0.09093922,'1','2017-09-08 17:53:32'),(26300,5,1,0.4004071,'1','2017-09-08 17:53:32'),(26301,5,3,0.12818962,'1','2017-09-08 17:53:32'),(26302,6,1,0.14994904,'1','2017-09-08 17:53:32'),(26303,6,3,0.056250867,'1','2017-09-08 17:53:32'),(26304,1,1,0.9732571,'1','2017-09-08 17:54:32'),(26305,1,3,0.52190274,'1','2017-09-08 17:54:32'),(26306,2,1,30.150084,'1','2017-09-08 17:54:32'),(26307,2,3,30.52176,'1','2017-09-08 17:54:32'),(26308,3,1,33.814186,'1','2017-09-08 17:54:32'),(26309,3,3,31.56587,'1','2017-09-08 17:54:32'),(26310,4,1,0.20416091,'1','2017-09-08 17:54:32'),(26311,4,3,0.3370958,'1','2017-09-08 17:54:32'),(26312,5,1,0.034837883,'1','2017-09-08 17:54:32'),(26313,5,3,0.42616138,'1','2017-09-08 17:54:33'),(26314,6,1,0.29046354,'1','2017-09-08 17:54:33'),(26315,6,3,0.29311958,'1','2017-09-08 17:54:33'),(26316,1,1,0.087784216,'1','2017-09-08 17:55:33'),(26317,1,3,0.2831942,'1','2017-09-08 17:55:33'),(26318,2,1,29.104525,'1','2017-09-08 17:55:33'),(26319,2,3,27.171667,'1','2017-09-08 17:55:33'),(26320,3,1,25.144804,'1','2017-09-08 17:55:33'),(26321,3,3,31.89871,'1','2017-09-08 17:55:33'),(26322,4,1,0.23434655,'1','2017-09-08 17:55:33'),(26323,4,3,0.48265028,'1','2017-09-08 17:55:33'),(26324,5,1,0.28044704,'1','2017-09-08 17:55:33'),(26325,5,3,0.08155602,'1','2017-09-08 17:55:33'),(26326,6,1,0.03625718,'1','2017-09-08 17:55:33'),(26327,6,3,0.1946236,'1','2017-09-08 17:55:33'),(26328,1,1,0.789937,'1','2017-09-08 17:56:33'),(26329,1,3,0.5016577,'1','2017-09-08 17:56:33'),(26330,2,1,25.583641,'1','2017-09-08 17:56:33'),(26331,2,3,27.131042,'1','2017-09-08 17:56:33'),(26332,3,1,31.372442,'1','2017-09-08 17:56:33'),(26333,3,3,32.0826,'1','2017-09-08 17:56:33'),(26334,4,1,0.1475871,'1','2017-09-08 17:56:33'),(26335,4,3,0.20871389,'1','2017-09-08 17:56:33'),(26336,5,1,0.049954895,'1','2017-09-08 17:56:33'),(26337,5,3,0.078665316,'1','2017-09-08 17:56:33'),(26338,6,1,0.19048588,'1','2017-09-08 17:56:33'),(26339,6,3,0.0034251113,'1','2017-09-08 17:56:33'),(26340,1,1,0.17117132,'1','2017-09-08 17:57:33'),(26341,1,3,0.71865743,'1','2017-09-08 17:57:34'),(26342,2,1,25.671818,'1','2017-09-08 17:57:34'),(26343,2,3,30.601196,'1','2017-09-08 17:57:34'),(26344,3,1,28.423655,'1','2017-09-08 17:57:34'),(26345,3,3,31.53876,'1','2017-09-08 17:57:34'),(26346,4,1,0.27341935,'1','2017-09-08 17:57:34'),(26347,4,3,0.23969056,'1','2017-09-08 17:57:34'),(26348,5,1,0.38394248,'1','2017-09-08 17:57:34'),(26349,5,3,0.20792367,'1','2017-09-08 17:57:34'),(26350,6,1,0.00819197,'1','2017-09-08 17:57:34'),(26351,6,3,0.27732465,'1','2017-09-08 17:57:34'),(26352,1,1,0.9945368,'1','2017-09-08 17:58:34'),(26353,1,3,0.57583165,'1','2017-09-08 17:58:34'),(26354,2,1,25.624584,'1','2017-09-08 17:58:34'),(26355,2,3,30.342127,'1','2017-09-08 17:58:34'),(26356,3,1,29.936134,'1','2017-09-08 17:58:34'),(26357,3,3,34.793137,'1','2017-09-08 17:58:34'),(26358,4,1,0.3857032,'1','2017-09-08 17:58:34'),(26359,4,3,0.3380494,'1','2017-09-08 17:58:34'),(26360,5,1,0.051075418,'1','2017-09-08 17:58:34'),(26361,5,3,0.4442854,'1','2017-09-08 17:58:34'),(26362,6,1,0.14045785,'1','2017-09-08 17:58:34'),(26363,6,3,0.2272859,'1','2017-09-08 17:58:34'),(26364,1,1,0.8792665,'1','2017-09-08 17:59:34'),(26365,1,3,0.30854443,'1','2017-09-08 17:59:34'),(26366,2,1,32.98736,'1','2017-09-08 17:59:34'),(26367,2,3,28.770172,'1','2017-09-08 17:59:34'),(26368,3,1,33.14128,'1','2017-09-08 17:59:35'),(26369,3,3,34.12308,'1','2017-09-08 17:59:35'),(26370,4,1,0.39931923,'1','2017-09-08 17:59:35'),(26371,4,3,0.28446096,'1','2017-09-08 17:59:35'),(26372,5,1,0.14201145,'1','2017-09-08 17:59:35'),(26373,5,3,0.49169838,'1','2017-09-08 17:59:35'),(26374,6,1,0.2664001,'1','2017-09-08 17:59:35'),(26375,6,3,0.050545655,'1','2017-09-08 17:59:35'),(26376,1,1,0.15415968,'1','2017-09-08 18:00:35'),(26377,1,3,0.5744902,'1','2017-09-08 18:00:35'),(26378,2,1,29.531696,'1','2017-09-08 18:00:35'),(26379,2,3,28.650278,'1','2017-09-08 18:00:35'),(26380,3,1,34.35248,'1','2017-09-08 18:00:35'),(26381,3,3,31.454239,'1','2017-09-08 18:00:35'),(26382,4,1,0.1652018,'1','2017-09-08 18:00:35'),(26383,4,3,0.4226881,'1','2017-09-08 18:00:35'),(26384,5,1,0.23528397,'1','2017-09-08 18:00:35'),(26385,5,3,0.14411023,'1','2017-09-08 18:00:35'),(26386,6,1,0.0608099,'1','2017-09-08 18:00:35'),(26387,6,3,0.16122784,'1','2017-09-08 18:00:35'),(26388,1,1,0.21114945,'1','2017-09-08 18:01:35'),(26389,1,3,0.2728159,'1','2017-09-08 18:01:35'),(26390,2,1,31.485983,'1','2017-09-08 18:01:35'),(26391,2,3,33.560516,'1','2017-09-08 18:01:35'),(26392,3,1,27.558567,'1','2017-09-08 18:01:35'),(26393,3,3,25.54381,'1','2017-09-08 18:01:35'),(26394,4,1,0.17027256,'1','2017-09-08 18:01:35'),(26395,4,3,0.26317433,'1','2017-09-08 18:01:35'),(26396,5,1,0.49128667,'1','2017-09-08 18:01:36'),(26397,5,3,0.035806693,'1','2017-09-08 18:01:36'),(26398,6,1,0.20413248,'1','2017-09-08 18:01:36'),(26399,6,3,0.1539884,'1','2017-09-08 18:01:36'),(26400,1,1,0.2773583,'1','2017-09-08 18:02:36'),(26401,1,3,0.63510257,'1','2017-09-08 18:02:36'),(26402,2,1,34.813007,'1','2017-09-08 18:02:36'),(26403,2,3,28.22258,'1','2017-09-08 18:02:36'),(26404,3,1,25.80353,'1','2017-09-08 18:02:36'),(26405,3,3,34.55849,'1','2017-09-08 18:02:36'),(26406,4,1,0.078232646,'1','2017-09-08 18:02:36'),(26407,4,3,0.47569737,'1','2017-09-08 18:02:36'),(26408,5,1,0.10519114,'1','2017-09-08 18:02:36'),(26409,5,3,0.44812047,'1','2017-09-08 18:02:36'),(26410,6,1,0.22848938,'1','2017-09-08 18:02:36'),(26411,6,3,0.02244597,'1','2017-09-08 18:02:36'),(26412,1,1,0.20461072,'1','2017-09-08 18:03:36'),(26413,1,3,0.8392735,'1','2017-09-08 18:03:36'),(26414,2,1,26.499653,'1','2017-09-08 18:03:36'),(26415,2,3,31.14544,'1','2017-09-08 18:03:36'),(26416,3,1,27.152737,'1','2017-09-08 18:03:36'),(26417,3,3,31.665173,'1','2017-09-08 18:03:36'),(26418,4,1,0.22344227,'1','2017-09-08 18:03:36'),(26419,4,3,0.3597567,'1','2017-09-08 18:03:36'),(26420,5,1,0.4212115,'1','2017-09-08 18:03:37'),(26421,5,3,0.10566147,'1','2017-09-08 18:03:37'),(26422,6,1,0.008584943,'1','2017-09-08 18:03:37'),(26423,6,3,0.09351036,'1','2017-09-08 18:03:37'),(26424,1,1,0.14978571,'1','2017-09-08 18:04:37'),(26425,1,3,0.7109753,'1','2017-09-08 18:04:37'),(26426,2,1,26.974356,'1','2017-09-08 18:04:37'),(26427,2,3,32.820374,'1','2017-09-08 18:04:37'),(26428,3,1,25.102526,'1','2017-09-08 18:04:37'),(26429,3,3,32.19982,'1','2017-09-08 18:04:37'),(26430,4,1,0.3932606,'1','2017-09-08 18:04:37'),(26431,4,3,0.06154002,'1','2017-09-08 18:04:37'),(26432,5,1,0.17908671,'1','2017-09-08 18:04:37'),(26433,5,3,0.333208,'1','2017-09-08 18:04:37'),(26434,6,1,0.14959936,'1','2017-09-08 18:04:37'),(26435,6,3,0.23120062,'1','2017-09-08 18:04:37'),(26436,1,1,0.8875551,'1','2017-09-08 18:05:37'),(26437,1,3,0.7342013,'1','2017-09-08 18:05:37'),(26438,2,1,33.855938,'1','2017-09-08 18:05:37'),(26439,2,3,31.934153,'1','2017-09-08 18:05:37'),(26440,3,1,27.284155,'1','2017-09-08 18:05:37'),(26441,3,3,25.364613,'1','2017-09-08 18:05:37'),(26442,4,1,0.0042382996,'1','2017-09-08 18:05:37'),(26443,4,3,0.40836343,'1','2017-09-08 18:05:37'),(26444,5,1,0.32898393,'1','2017-09-08 18:05:37'),(26445,5,3,0.05426194,'1','2017-09-08 18:05:37'),(26446,6,1,0.2955578,'1','2017-09-08 18:05:37'),(26447,6,3,0.20915002,'1','2017-09-08 18:05:37'),(26448,1,1,0.9589692,'1','2017-09-08 18:06:37'),(26449,1,3,0.5939066,'1','2017-09-08 18:06:38'),(26450,2,1,33.262695,'1','2017-09-08 18:06:38'),(26451,2,3,29.73305,'1','2017-09-08 18:06:38'),(26452,3,1,26.244825,'1','2017-09-08 18:06:38'),(26453,3,3,31.225773,'1','2017-09-08 18:06:38'),(26454,4,1,0.09444983,'1','2017-09-08 18:06:38'),(26455,4,3,0.25540727,'1','2017-09-08 18:06:38'),(26456,5,1,0.11323267,'1','2017-09-08 18:06:38'),(26457,5,3,0.39400876,'1','2017-09-08 18:06:38'),(26458,6,1,0.28117678,'1','2017-09-08 18:06:38'),(26459,6,3,0.24972586,'1','2017-09-08 18:06:38'),(26460,1,1,0.91501343,'1','2017-09-08 18:07:38'),(26461,1,3,0.81808805,'1','2017-09-08 18:07:38'),(26462,2,1,31.873602,'1','2017-09-08 18:07:38'),(26463,2,3,28.774035,'1','2017-09-08 18:07:38'),(26464,3,1,31.957497,'1','2017-09-08 18:07:38'),(26465,3,3,25.044254,'1','2017-09-08 18:07:38'),(26466,4,1,0.41802192,'1','2017-09-08 18:07:38'),(26467,4,3,0.18536882,'1','2017-09-08 18:07:38'),(26468,5,1,0.17238213,'1','2017-09-08 18:07:38'),(26469,5,3,0.10303685,'1','2017-09-08 18:07:38'),(26470,6,1,0.2778253,'1','2017-09-08 18:07:38'),(26471,6,3,0.17954746,'1','2017-09-08 18:07:38'),(26472,1,1,0.5636764,'1','2017-09-08 18:08:38'),(26473,1,3,0.77528083,'1','2017-09-08 18:08:38'),(26474,2,1,30.833864,'1','2017-09-08 18:08:38'),(26475,2,3,26.840366,'1','2017-09-08 18:08:38'),(26476,3,1,27.517998,'1','2017-09-08 18:08:39'),(26477,3,3,25.668701,'1','2017-09-08 18:08:39'),(26478,4,1,0.3385593,'1','2017-09-08 18:08:39'),(26479,4,3,0.26933017,'1','2017-09-08 18:08:39'),(26480,5,1,0.2890304,'1','2017-09-08 18:08:39'),(26481,5,3,0.1436588,'1','2017-09-08 18:08:39'),(26482,6,1,0.24000074,'1','2017-09-08 18:08:39'),(26483,6,3,0.15616605,'1','2017-09-08 18:08:39'),(26484,1,1,0.3722304,'1','2017-09-08 18:09:39'),(26485,1,3,0.3156486,'1','2017-09-08 18:09:39'),(26486,2,1,31.43493,'1','2017-09-08 18:09:39'),(26487,2,3,29.777418,'1','2017-09-08 18:09:39'),(26488,3,1,27.231962,'1','2017-09-08 18:09:39'),(26489,3,3,32.85488,'1','2017-09-08 18:09:39'),(26490,4,1,0.1756883,'1','2017-09-08 18:09:39'),(26491,4,3,0.3866893,'1','2017-09-08 18:09:39'),(26492,5,1,0.035706986,'1','2017-09-08 18:09:39'),(26493,5,3,0.07804055,'1','2017-09-08 18:09:39'),(26494,6,1,0.1426053,'1','2017-09-08 18:09:39'),(26495,6,3,0.17877583,'1','2017-09-08 18:09:39'),(26496,1,1,0.013342816,'1','2017-09-08 18:10:39'),(26497,1,3,0.71982163,'1','2017-09-08 18:10:39'),(26498,2,1,32.27445,'1','2017-09-08 18:10:39'),(26499,2,3,28.420527,'1','2017-09-08 18:10:39'),(26500,3,1,29.975824,'1','2017-09-08 18:10:39'),(26501,3,3,29.948076,'1','2017-09-08 18:10:39'),(26502,4,1,0.1633334,'1','2017-09-08 18:10:39'),(26503,4,3,0.31342912,'1','2017-09-08 18:10:40'),(26504,5,1,0.04279669,'1','2017-09-08 18:10:40'),(26505,5,3,0.36658266,'1','2017-09-08 18:10:40'),(26506,6,1,0.11132135,'1','2017-09-08 18:10:40'),(26507,6,3,0.0070561017,'1','2017-09-08 18:10:40'),(26508,1,1,0.4742985,'1','2017-09-08 18:11:40'),(26509,1,3,0.33936343,'1','2017-09-08 18:11:40'),(26510,2,1,28.314583,'1','2017-09-08 18:11:40'),(26511,2,3,34.640217,'1','2017-09-08 18:11:40'),(26512,3,1,30.33523,'1','2017-09-08 18:11:40'),(26513,3,3,33.374622,'1','2017-09-08 18:11:40'),(26514,4,1,0.22961141,'1','2017-09-08 18:11:40'),(26515,4,3,0.42129907,'1','2017-09-08 18:11:40'),(26516,5,1,0.34907505,'1','2017-09-08 18:11:40'),(26517,5,3,0.32611117,'1','2017-09-08 18:11:40'),(26518,6,1,0.18852004,'1','2017-09-08 18:11:40'),(26519,6,3,0.07659931,'1','2017-09-08 18:11:40'),(26520,1,1,0.17302874,'1','2017-09-08 18:12:40'),(26521,1,3,0.3762227,'1','2017-09-08 18:12:40'),(26522,2,1,33.907482,'1','2017-09-08 18:12:40'),(26523,2,3,29.821136,'1','2017-09-08 18:12:40'),(26524,3,1,25.580866,'1','2017-09-08 18:12:40'),(26525,3,3,28.836117,'1','2017-09-08 18:12:40'),(26526,4,1,0.4063724,'1','2017-09-08 18:12:40'),(26527,4,3,0.38566062,'1','2017-09-08 18:12:41'),(26528,5,1,0.34088257,'1','2017-09-08 18:12:41'),(26529,5,3,0.31042376,'1','2017-09-08 18:12:41'),(26530,6,1,0.14539991,'1','2017-09-08 18:12:41'),(26531,6,3,0.21686108,'1','2017-09-08 18:12:41'),(26532,1,1,0.14280555,'1','2017-09-08 18:13:41'),(26533,1,3,0.6557551,'1','2017-09-08 18:13:41'),(26534,2,1,34.444557,'1','2017-09-08 18:13:41'),(26535,2,3,25.819548,'1','2017-09-08 18:13:41'),(26536,3,1,28.035828,'1','2017-09-08 18:13:41'),(26537,3,3,25.984554,'1','2017-09-08 18:13:41'),(26538,4,1,0.32143608,'1','2017-09-08 18:13:41'),(26539,4,3,0.27679777,'1','2017-09-08 18:13:41'),(26540,5,1,0.12629695,'1','2017-09-08 18:13:41'),(26541,5,3,0.1606004,'1','2017-09-08 18:13:41'),(26542,6,1,0.14743836,'1','2017-09-08 18:13:41'),(26543,6,3,0.24817315,'1','2017-09-08 18:13:41'),(26544,1,1,0.55937487,'1','2017-09-08 18:14:41'),(26545,1,3,0.99887437,'1','2017-09-08 18:14:41'),(26546,2,1,34.811646,'1','2017-09-08 18:14:41'),(26547,2,3,33.610287,'1','2017-09-08 18:14:41'),(26548,3,1,29.82032,'1','2017-09-08 18:14:41'),(26549,3,3,28.678896,'1','2017-09-08 18:14:41'),(26550,4,1,0.41846702,'1','2017-09-08 18:14:41'),(26551,4,3,0.30842063,'1','2017-09-08 18:14:41'),(26552,5,1,0.32786968,'1','2017-09-08 18:14:41'),(26553,5,3,0.12922576,'1','2017-09-08 18:14:41'),(26554,6,1,0.20475097,'1','2017-09-08 18:14:42'),(26555,6,3,0.2580907,'1','2017-09-08 18:14:42'),(26556,1,1,0.68996555,'1','2017-09-08 18:15:42'),(26557,1,3,0.8936201,'1','2017-09-08 18:15:42'),(26558,2,1,27.295025,'1','2017-09-08 18:15:42'),(26559,2,3,28.437544,'1','2017-09-08 18:15:42'),(26560,3,1,30.328617,'1','2017-09-08 18:15:42'),(26561,3,3,26.68338,'1','2017-09-08 18:15:42'),(26562,4,1,0.28820118,'1','2017-09-08 18:15:42'),(26563,4,3,0.3378895,'1','2017-09-08 18:15:42'),(26564,5,1,0.21157524,'1','2017-09-08 18:15:42'),(26565,5,3,0.311284,'1','2017-09-08 18:15:42'),(26566,6,1,0.091590226,'1','2017-09-08 18:15:42'),(26567,6,3,0.13420163,'1','2017-09-08 18:15:42'),(26568,1,1,0.7430255,'1','2017-09-08 18:16:42'),(26569,1,3,0.6049055,'1','2017-09-08 18:16:42'),(26570,2,1,26.983633,'1','2017-09-08 18:16:42'),(26571,2,3,32.32491,'1','2017-09-08 18:16:42'),(26572,3,1,26.099808,'1','2017-09-08 18:16:42'),(26573,3,3,26.865135,'1','2017-09-08 18:16:42'),(26574,4,1,0.2803815,'1','2017-09-08 18:16:42'),(26575,4,3,0.4553642,'1','2017-09-08 18:16:42'),(26576,5,1,0.30057833,'1','2017-09-08 18:16:42'),(26577,5,3,0.11497482,'1','2017-09-08 18:16:42'),(26578,6,1,0.09997691,'1','2017-09-08 18:16:42'),(26579,6,3,0.26050454,'1','2017-09-08 18:16:42'),(26580,1,1,0.09070081,'1','2017-09-08 18:17:42'),(26581,1,3,0.6434351,'1','2017-09-08 18:17:42'),(26582,2,1,29.050692,'1','2017-09-08 18:17:43'),(26583,2,3,25.278574,'1','2017-09-08 18:17:43'),(26584,3,1,27.988075,'1','2017-09-08 18:17:43'),(26585,3,3,27.583382,'1','2017-09-08 18:17:43'),(26586,4,1,0.39827868,'1','2017-09-08 18:17:43'),(26587,4,3,0.16363275,'1','2017-09-08 18:17:43'),(26588,5,1,0.1502563,'1','2017-09-08 18:17:43'),(26589,5,3,0.47806293,'1','2017-09-08 18:17:43'),(26590,6,1,0.20134412,'1','2017-09-08 18:17:43'),(26591,6,3,0.067569315,'1','2017-09-08 18:17:43'),(26592,1,1,0.9229869,'1','2017-09-08 18:18:43'),(26593,1,3,0.6407589,'1','2017-09-08 18:18:43'),(26594,2,1,29.573427,'1','2017-09-08 18:18:43'),(26595,2,3,25.433641,'1','2017-09-08 18:18:43'),(26596,3,1,31.719809,'1','2017-09-08 18:18:43'),(26597,3,3,29.03487,'1','2017-09-08 18:18:43'),(26598,4,1,0.3570695,'1','2017-09-08 18:18:43'),(26599,4,3,0.23680043,'1','2017-09-08 18:18:43'),(26600,5,1,0.2856217,'1','2017-09-08 18:18:43'),(26601,5,3,0.3796116,'1','2017-09-08 18:18:43'),(26602,6,1,0.22708575,'1','2017-09-08 18:18:43'),(26603,6,3,0.26292315,'1','2017-09-08 18:18:43'),(26604,1,1,0.5731449,'1','2017-09-08 18:19:43'),(26605,1,3,0.14715627,'1','2017-09-08 18:19:43'),(26606,2,1,29.762365,'1','2017-09-08 18:19:43'),(26607,2,3,25.747015,'1','2017-09-08 18:19:43'),(26608,3,1,25.044062,'1','2017-09-08 18:19:44'),(26609,3,3,34.829838,'1','2017-09-08 18:19:44'),(26610,4,1,0.11361247,'1','2017-09-08 18:19:44'),(26611,4,3,0.35432026,'1','2017-09-08 18:19:44'),(26612,5,1,0.4238705,'1','2017-09-08 18:19:44'),(26613,5,3,0.21306375,'1','2017-09-08 18:19:44'),(26614,6,1,0.044037785,'1','2017-09-08 18:19:44'),(26615,6,3,0.25746125,'1','2017-09-08 18:19:44'),(26616,1,1,0.52839166,'1','2017-09-08 18:20:44'),(26617,1,3,0.6825191,'1','2017-09-08 18:20:44'),(26618,2,1,32.622112,'1','2017-09-08 18:20:44'),(26619,2,3,30.631308,'1','2017-09-08 18:20:44'),(26620,3,1,27.739445,'1','2017-09-08 18:20:44'),(26621,3,3,26.020164,'1','2017-09-08 18:20:44'),(26622,4,1,0.14830722,'1','2017-09-08 18:20:44'),(26623,4,3,0.037022125,'1','2017-09-08 18:20:44'),(26624,5,1,0.023240654,'1','2017-09-08 18:20:44'),(26625,5,3,0.27462274,'1','2017-09-08 18:20:44'),(26626,6,1,0.19418262,'1','2017-09-08 18:20:44'),(26627,6,3,0.04616145,'1','2017-09-08 18:20:44'),(26628,1,1,0.5080344,'1','2017-09-08 18:21:44'),(26629,1,3,0.5276304,'1','2017-09-08 18:21:44'),(26630,2,1,31.15346,'1','2017-09-08 18:21:44'),(26631,2,3,30.15278,'1','2017-09-08 18:21:44'),(26632,3,1,29.73476,'1','2017-09-08 18:21:44'),(26633,3,3,28.186083,'1','2017-09-08 18:21:44'),(26634,4,1,0.29974183,'1','2017-09-08 18:21:44'),(26635,4,3,0.26384842,'1','2017-09-08 18:21:44'),(26636,5,1,0.41469514,'1','2017-09-08 18:21:44'),(26637,5,3,0.48074833,'1','2017-09-08 18:21:45'),(26638,6,1,0.18925321,'1','2017-09-08 18:21:45'),(26639,6,3,0.19698796,'1','2017-09-08 18:21:45'),(26640,1,1,0.9531356,'1','2017-09-08 18:22:45'),(26641,1,3,0.24421144,'1','2017-09-08 18:22:45'),(26642,2,1,28.231949,'1','2017-09-08 18:22:45'),(26643,2,3,32.0823,'1','2017-09-08 18:22:45'),(26644,3,1,27.532246,'1','2017-09-08 18:22:45'),(26645,3,3,25.010075,'1','2017-09-08 18:22:45'),(26646,4,1,0.019728165,'1','2017-09-08 18:22:45'),(26647,4,3,0.42192984,'1','2017-09-08 18:22:45'),(26648,5,1,0.28515333,'1','2017-09-08 18:22:45'),(26649,5,3,0.46032095,'1','2017-09-08 18:22:45'),(26650,6,1,0.10042574,'1','2017-09-08 18:22:45'),(26651,6,3,0.15059912,'1','2017-09-08 18:22:45'),(26652,1,1,0.82745874,'1','2017-09-08 18:23:45'),(26653,1,3,0.75683653,'1','2017-09-08 18:23:45'),(26654,2,1,30.261055,'1','2017-09-08 18:23:45'),(26655,2,3,33.191814,'1','2017-09-08 18:23:45'),(26656,3,1,29.99148,'1','2017-09-08 18:23:45'),(26657,3,3,28.026423,'1','2017-09-08 18:23:45'),(26658,4,1,0.030093694,'1','2017-09-08 18:23:45'),(26659,4,3,0.43843573,'1','2017-09-08 18:23:45'),(26660,5,1,0.09007429,'1','2017-09-08 18:23:45'),(26661,5,3,0.3706418,'1','2017-09-08 18:23:45'),(26662,6,1,0.060926158,'1','2017-09-08 18:23:45'),(26663,6,3,0.03533054,'1','2017-09-08 18:23:45'),(26664,1,1,0.77885735,'1','2017-09-08 18:24:45'),(26665,1,3,0.018291293,'1','2017-09-08 18:24:45'),(26666,2,1,29.598377,'1','2017-09-08 18:24:46'),(26667,2,3,30.72996,'1','2017-09-08 18:24:46'),(26668,3,1,31.33865,'1','2017-09-08 18:24:46'),(26669,3,3,31.932037,'1','2017-09-08 18:24:46'),(26670,4,1,0.023243913,'1','2017-09-08 18:24:46'),(26671,4,3,0.060309384,'1','2017-09-08 18:24:46'),(26672,5,1,0.07915405,'1','2017-09-08 18:24:46'),(26673,5,3,0.16192323,'1','2017-09-08 18:24:46'),(26674,6,1,0.20513737,'1','2017-09-08 18:24:46'),(26675,6,3,0.25690436,'1','2017-09-08 18:24:46'),(26676,1,1,0.4534367,'1','2017-09-08 18:25:46'),(26677,1,3,0.8121772,'1','2017-09-08 18:25:46'),(26678,2,1,34.591278,'1','2017-09-08 18:25:46'),(26679,2,3,32.9887,'1','2017-09-08 18:25:46'),(26680,3,1,32.009995,'1','2017-09-08 18:25:46'),(26681,3,3,27.979052,'1','2017-09-08 18:25:46'),(26682,4,1,0.25602794,'1','2017-09-08 18:25:46'),(26683,4,3,0.2875492,'1','2017-09-08 18:25:46'),(26684,5,1,0.021730395,'1','2017-09-08 18:25:46'),(26685,5,3,0.06228845,'1','2017-09-08 18:25:46'),(26686,6,1,0.101681225,'1','2017-09-08 18:25:46'),(26687,6,3,0.13042183,'1','2017-09-08 18:25:46'),(26688,1,1,0.09172891,'1','2017-09-08 18:26:46'),(26689,1,3,0.1225414,'1','2017-09-08 18:26:46'),(26690,2,1,30.83367,'1','2017-09-08 18:26:47'),(26691,2,3,34.28923,'1','2017-09-08 18:26:47'),(26692,3,1,26.61988,'1','2017-09-08 18:26:47'),(26693,3,3,34.541878,'1','2017-09-08 18:26:47'),(26694,4,1,0.14083518,'1','2017-09-08 18:26:47'),(26695,4,3,0.4271223,'1','2017-09-08 18:26:47'),(26696,5,1,0.41819584,'1','2017-09-08 18:26:47'),(26697,5,3,0.27453676,'1','2017-09-08 18:26:47'),(26698,6,1,0.19996041,'1','2017-09-08 18:26:47'),(26699,6,3,0.18342625,'1','2017-09-08 18:26:47'),(26700,1,1,0.46678826,'1','2017-09-08 18:27:47'),(26701,1,3,0.72003716,'1','2017-09-08 18:27:47'),(26702,2,1,32.968628,'1','2017-09-08 18:27:47'),(26703,2,3,34.568592,'1','2017-09-08 18:27:47'),(26704,3,1,32.96314,'1','2017-09-08 18:27:47'),(26705,3,3,33.961197,'1','2017-09-08 18:27:47'),(26706,4,1,0.23912029,'1','2017-09-08 18:27:47'),(26707,4,3,0.11789867,'1','2017-09-08 18:27:47'),(26708,5,1,0.4803014,'1','2017-09-08 18:27:47'),(26709,5,3,0.26704466,'1','2017-09-08 18:27:47'),(26710,6,1,0.19978271,'1','2017-09-08 18:27:47'),(26711,6,3,0.17317891,'1','2017-09-08 18:27:47'),(26712,1,1,0.74852616,'1','2017-09-08 18:28:47'),(26713,1,3,0.17759731,'1','2017-09-08 18:28:47'),(26714,2,1,33.011864,'1','2017-09-08 18:28:48'),(26715,2,3,27.03968,'1','2017-09-08 18:28:48'),(26716,3,1,26.517902,'1','2017-09-08 18:28:48'),(26717,3,3,28.214636,'1','2017-09-08 18:28:48'),(26718,4,1,0.4106977,'1','2017-09-08 18:28:48'),(26719,4,3,0.4821686,'1','2017-09-08 18:28:48'),(26720,5,1,0.45669106,'1','2017-09-08 18:28:48'),(26721,5,3,0.10416119,'1','2017-09-08 18:28:48'),(26722,6,1,0.27195135,'1','2017-09-08 18:28:48'),(26723,6,3,0.12877141,'1','2017-09-08 18:28:48'),(26724,1,1,0.9967707,'1','2017-09-08 18:29:48'),(26725,1,3,0.43582955,'1','2017-09-08 18:29:48'),(26726,2,1,28.758963,'1','2017-09-08 18:29:48'),(26727,2,3,29.12568,'1','2017-09-08 18:29:48'),(26728,3,1,31.40931,'1','2017-09-08 18:29:48'),(26729,3,3,32.84865,'1','2017-09-08 18:29:48'),(26730,4,1,0.26716733,'1','2017-09-08 18:29:48'),(26731,4,3,0.286358,'1','2017-09-08 18:29:48'),(26732,5,1,0.4703383,'1','2017-09-08 18:29:48'),(26733,5,3,0.4963184,'1','2017-09-08 18:29:48'),(26734,6,1,0.20409216,'1','2017-09-08 18:29:48'),(26735,6,3,0.2493028,'1','2017-09-08 18:29:48'),(26736,1,1,0.6974477,'1','2017-09-08 18:30:48'),(26737,1,3,0.28931856,'1','2017-09-08 18:30:48'),(26738,2,1,34.364727,'1','2017-09-08 18:30:48'),(26739,2,3,32.03615,'1','2017-09-08 18:30:48'),(26740,3,1,31.22615,'1','2017-09-08 18:30:48'),(26741,3,3,28.928362,'1','2017-09-08 18:30:48'),(26742,4,1,0.01972709,'1','2017-09-08 18:30:48'),(26743,4,3,0.14248127,'1','2017-09-08 18:30:48'),(26744,5,1,0.42176428,'1','2017-09-08 18:30:49'),(26745,5,3,0.15681769,'1','2017-09-08 18:30:49'),(26746,6,1,0.22049998,'1','2017-09-08 18:30:49'),(26747,6,3,0.16308069,'1','2017-09-08 18:30:49'),(26748,1,1,0.061947368,'1','2017-09-08 18:31:49'),(26749,1,3,0.7597472,'1','2017-09-08 18:31:49'),(26750,2,1,34.64584,'1','2017-09-08 18:31:49'),(26751,2,3,32.95531,'1','2017-09-08 18:31:49'),(26752,3,1,31.451576,'1','2017-09-08 18:31:49'),(26753,3,3,26.521906,'1','2017-09-08 18:31:49'),(26754,4,1,0.3003974,'1','2017-09-08 18:31:49'),(26755,4,3,0.35267258,'1','2017-09-08 18:31:49'),(26756,5,1,0.19599716,'1','2017-09-08 18:31:49'),(26757,5,3,0.13086453,'1','2017-09-08 18:31:49'),(26758,6,1,0.027423108,'1','2017-09-08 18:31:49'),(26759,6,3,0.27966103,'1','2017-09-08 18:31:49'),(26760,1,1,0.70915085,'1','2017-09-08 18:32:49'),(26761,1,3,0.26022494,'1','2017-09-08 18:32:49'),(26762,2,1,25.058397,'1','2017-09-08 18:32:49'),(26763,2,3,30.854212,'1','2017-09-08 18:32:49'),(26764,3,1,29.57571,'1','2017-09-08 18:32:49'),(26765,3,3,30.43311,'1','2017-09-08 18:32:49'),(26766,4,1,0.071327455,'1','2017-09-08 18:32:49'),(26767,4,3,0.49181178,'1','2017-09-08 18:32:49'),(26768,5,1,0.39219207,'1','2017-09-08 18:32:49'),(26769,5,3,0.012913107,'1','2017-09-08 18:32:49'),(26770,6,1,0.16596687,'1','2017-09-08 18:32:49'),(26771,6,3,0.24652137,'1','2017-09-08 18:32:49'),(26772,1,1,0.84275866,'1','2017-09-08 18:33:49'),(26773,1,3,0.7374385,'1','2017-09-08 18:33:49'),(26774,2,1,30.639883,'1','2017-09-08 18:33:50'),(26775,2,3,32.417023,'1','2017-09-08 18:33:50'),(26776,3,1,29.202105,'1','2017-09-08 18:33:50'),(26777,3,3,29.531044,'1','2017-09-08 18:33:50'),(26778,4,1,0.3193727,'1','2017-09-08 18:33:50'),(26779,4,3,0.23781268,'1','2017-09-08 18:33:50'),(26780,5,1,0.07266,'1','2017-09-08 18:33:50'),(26781,5,3,0.39074567,'1','2017-09-08 18:33:50'),(26782,6,1,0.21368365,'1','2017-09-08 18:33:50'),(26783,6,3,0.05526842,'1','2017-09-08 18:33:50'),(26784,1,1,0.55867386,'1','2017-09-08 18:45:18'),(26785,1,2,0.35858855,'1','2017-09-08 18:45:18'),(26786,1,3,0.28562987,'1','2017-09-08 18:45:18'),(26787,2,1,31.443094,'1','2017-09-08 18:45:18'),(26788,2,2,34.92816,'1','2017-09-08 18:45:18'),(26789,2,3,25.680336,'1','2017-09-08 18:45:18'),(26790,3,1,30.638763,'1','2017-09-08 18:45:18'),(26791,3,2,33.07698,'1','2017-09-08 18:45:18'),(26792,3,3,26.95993,'1','2017-09-08 18:45:18'),(26793,4,1,0.23779264,'1','2017-09-08 18:45:18'),(26794,4,2,0.30384314,'1','2017-09-08 18:45:18'),(26795,4,3,0.10157847,'1','2017-09-08 18:45:18'),(26796,5,1,0.4554514,'1','2017-09-08 18:45:18'),(26797,5,2,0.20358236,'1','2017-09-08 18:45:18'),(26798,5,3,0.08787569,'1','2017-09-08 18:45:18'),(26799,6,1,0.08931499,'1','2017-09-08 18:45:18'),(26800,6,2,0.27052644,'1','2017-09-08 18:45:18'),(26801,6,3,0.1800715,'1','2017-09-08 18:45:18'),(26802,1,1,0.6139227,'1','2017-09-08 18:46:18'),(26803,1,2,0.766191,'1','2017-09-08 18:46:18'),(26804,1,3,0.5871972,'1','2017-09-08 18:46:18'),(26805,2,1,31.429657,'1','2017-09-08 18:46:18'),(26806,2,2,28.714396,'1','2017-09-08 18:46:18'),(26807,2,3,29.281776,'1','2017-09-08 18:46:18'),(26808,3,1,33.342636,'1','2017-09-08 18:46:18'),(26809,3,2,25.298496,'1','2017-09-08 18:46:18'),(26810,3,3,34.94477,'1','2017-09-08 18:46:19'),(26811,4,1,0.11978204,'1','2017-09-08 18:46:19'),(26812,4,2,0.004536543,'1','2017-09-08 18:46:19'),(26813,4,3,0.232022,'1','2017-09-08 18:46:19'),(26814,5,1,0.23333555,'1','2017-09-08 18:46:19'),(26815,5,2,0.4904514,'1','2017-09-08 18:46:19'),(26816,5,3,0.092840016,'1','2017-09-08 18:46:19'),(26817,6,1,0.18936205,'1','2017-09-08 18:46:19'),(26818,6,2,0.06377161,'1','2017-09-08 18:46:19'),(26819,6,3,0.19361208,'1','2017-09-08 18:46:19'),(26820,1,1,0.7513876,'1','2017-09-08 18:47:19'),(26821,1,2,0.5457559,'1','2017-09-08 18:47:19'),(26822,1,3,0.5575099,'1','2017-09-08 18:47:19'),(26823,2,1,26.706486,'1','2017-09-08 18:47:19'),(26824,2,2,30.149984,'1','2017-09-08 18:47:19'),(26825,2,3,27.27616,'1','2017-09-08 18:47:19'),(26826,3,1,34.461525,'1','2017-09-08 18:47:19'),(26827,3,2,25.818302,'1','2017-09-08 18:47:19'),(26828,3,3,33.23894,'1','2017-09-08 18:47:19'),(26829,4,1,0.45301008,'1','2017-09-08 18:47:19'),(26830,4,2,0.38103437,'1','2017-09-08 18:47:19'),(26831,4,3,0.40836596,'1','2017-09-08 18:47:19'),(26832,5,1,0.06324841,'1','2017-09-08 18:47:19'),(26833,5,2,0.08332911,'1','2017-09-08 18:47:19'),(26834,5,3,0.08095248,'1','2017-09-08 18:47:20'),(26835,6,1,0.297038,'1','2017-09-08 18:47:20'),(26836,6,2,0.26357403,'1','2017-09-08 18:47:20'),(26837,6,3,0.1378302,'1','2017-09-08 18:47:20'),(26838,1,1,0.94031364,'1','2017-09-08 18:48:20'),(26839,1,2,0.6201827,'1','2017-09-08 18:48:20'),(26840,1,3,0.68506354,'1','2017-09-08 18:48:20'),(26841,2,1,26.663303,'1','2017-09-08 18:48:20'),(26842,2,2,25.755724,'1','2017-09-08 18:48:20'),(26843,2,3,28.881662,'1','2017-09-08 18:48:20'),(26844,3,1,25.933342,'1','2017-09-08 18:48:20'),(26845,3,2,34.92349,'1','2017-09-08 18:48:20'),(26846,3,3,27.708616,'1','2017-09-08 18:48:20'),(26847,4,1,0.16579245,'1','2017-09-08 18:48:20'),(26848,4,2,0.25490397,'1','2017-09-08 18:48:20'),(26849,4,3,0.39361003,'1','2017-09-08 18:48:20'),(26850,5,1,0.25123164,'1','2017-09-08 18:48:20'),(26851,5,2,0.4906517,'1','2017-09-08 18:48:20'),(26852,5,3,0.14917602,'1','2017-09-08 18:48:20'),(26853,6,1,0.00946841,'1','2017-09-08 18:48:20'),(26854,6,2,0.09410417,'1','2017-09-08 18:48:20'),(26855,6,3,0.25342748,'1','2017-09-08 18:48:20'),(26856,1,1,0.23736076,'1','2017-09-08 18:49:20'),(26857,1,2,0.12837656,'1','2017-09-08 18:49:20'),(26858,1,3,0.35206714,'1','2017-09-08 18:49:20'),(26859,2,1,28.102566,'1','2017-09-08 18:49:20'),(26860,2,2,26.61683,'1','2017-09-08 18:49:20'),(26861,2,3,28.29278,'1','2017-09-08 18:49:21'),(26862,3,1,29.375954,'1','2017-09-08 18:49:21'),(26863,3,2,30.014393,'1','2017-09-08 18:49:21'),(26864,3,3,32.96271,'1','2017-09-08 18:49:21'),(26865,4,1,0.29726577,'1','2017-09-08 18:49:21'),(26866,4,2,0.13533945,'1','2017-09-08 18:49:21'),(26867,4,3,0.17317317,'1','2017-09-08 18:49:21'),(26868,5,1,0.25016418,'1','2017-09-08 18:49:21'),(26869,5,2,0.46850258,'1','2017-09-08 18:49:21'),(26870,5,3,0.3707539,'1','2017-09-08 18:49:21'),(26871,6,1,0.042635117,'1','2017-09-08 18:49:21'),(26872,6,2,0.26517144,'1','2017-09-08 18:49:21'),(26873,6,3,0.24969767,'1','2017-09-08 18:49:21'),(26874,1,1,0.68594044,'1','2017-09-08 18:50:21'),(26875,1,2,0.19421722,'1','2017-09-08 18:50:21'),(26876,1,3,0.03329316,'1','2017-09-08 18:50:21'),(26877,2,1,25.910265,'1','2017-09-08 18:50:21'),(26878,2,2,33.48236,'1','2017-09-08 18:50:21'),(26879,2,3,31.881792,'1','2017-09-08 18:50:21'),(26880,3,1,28.872538,'1','2017-09-08 18:50:21'),(26881,3,2,26.831978,'1','2017-09-08 18:50:21'),(26882,3,3,32.57205,'1','2017-09-08 18:50:21'),(26883,4,1,0.40609923,'1','2017-09-08 18:50:21'),(26884,4,2,0.07150068,'1','2017-09-08 18:50:21'),(26885,4,3,0.19105963,'1','2017-09-08 18:50:22'),(26886,5,1,0.09994028,'1','2017-09-08 18:50:22'),(26887,5,2,0.14526345,'1','2017-09-08 18:50:22'),(26888,5,3,0.21952854,'1','2017-09-08 18:50:22'),(26889,6,1,0.07517822,'1','2017-09-08 18:50:22'),(26890,6,2,0.29568866,'1','2017-09-08 18:50:22'),(26891,6,3,0.27313802,'1','2017-09-08 18:50:22'),(26892,1,1,0.4614781,'1','2017-09-08 18:51:22'),(26893,1,2,0.9321679,'1','2017-09-08 18:51:22'),(26894,1,3,0.73361975,'1','2017-09-08 18:51:22'),(26895,2,1,28.298111,'1','2017-09-08 18:51:22'),(26896,2,2,25.506462,'1','2017-09-08 18:51:22'),(26897,2,3,29.291504,'1','2017-09-08 18:51:22'),(26898,3,1,29.879025,'1','2017-09-08 18:51:22'),(26899,3,2,29.371208,'1','2017-09-08 18:51:22'),(26900,3,3,28.477066,'1','2017-09-08 18:51:22'),(26901,4,1,0.27516574,'1','2017-09-08 18:51:22'),(26902,4,2,0.033424027,'1','2017-09-08 18:51:22'),(26903,4,3,0.40172553,'1','2017-09-08 18:51:22'),(26904,5,1,0.25645784,'1','2017-09-08 18:51:22'),(26905,5,2,0.24675399,'1','2017-09-08 18:51:22'),(26906,5,3,0.09375885,'1','2017-09-08 18:51:22'),(26907,6,1,0.09373917,'1','2017-09-08 18:51:22'),(26908,6,2,0.17176981,'1','2017-09-08 18:51:22'),(26909,6,3,0.027426014,'1','2017-09-08 18:51:22'),(26910,1,1,0.7422755,'1','2017-09-08 18:52:45'),(26911,1,2,0.9907621,'1','2017-09-08 18:52:45'),(26912,1,3,0.040468495,'1','2017-09-08 18:52:45'),(26913,2,1,27.956888,'1','2017-09-08 18:52:45'),(26914,2,2,31.766657,'1','2017-09-08 18:52:45'),(26915,2,3,31.603155,'1','2017-09-08 18:52:45'),(26916,3,1,28.662085,'1','2017-09-08 18:52:45'),(26917,3,2,30.196133,'1','2017-09-08 18:52:45'),(26918,3,3,27.026104,'1','2017-09-08 18:52:45'),(26919,4,1,0.28532562,'1','2017-09-08 18:52:45'),(26920,4,2,0.2874444,'1','2017-09-08 18:52:45'),(26921,4,3,0.09766459,'1','2017-09-08 18:52:45'),(26922,5,1,0.32802877,'1','2017-09-08 18:52:45'),(26923,5,2,0.122310705,'1','2017-09-08 18:52:45'),(26924,5,3,0.14177494,'1','2017-09-08 18:52:45'),(26925,6,1,0.0105526,'1','2017-09-08 18:52:45'),(26926,6,2,0.07127139,'1','2017-09-08 18:52:45'),(26927,6,3,0.014322956,'1','2017-09-08 18:52:45'),(26928,1,1,0.8721005,'1','2017-09-08 18:53:45'),(26929,1,2,0.1531236,'1','2017-09-08 18:53:46'),(26930,1,3,0.028161375,'1','2017-09-08 18:53:46'),(26931,2,1,28.080692,'1','2017-09-08 18:53:46'),(26932,2,2,28.758955,'1','2017-09-08 18:53:46'),(26933,2,3,32.22108,'1','2017-09-08 18:53:46'),(26934,3,1,27.098198,'1','2017-09-08 18:53:46'),(26935,3,2,34.85685,'1','2017-09-08 18:53:46'),(26936,3,3,26.325375,'1','2017-09-08 18:53:46'),(26937,4,1,0.31892195,'1','2017-09-08 18:53:46'),(26938,4,2,0.2906262,'1','2017-09-08 18:53:46'),(26939,4,3,0.016670564,'1','2017-09-08 18:53:46'),(26940,5,1,0.15353929,'1','2017-09-08 18:53:46'),(26941,5,2,0.059122346,'1','2017-09-08 18:53:46'),(26942,5,3,0.22036636,'1','2017-09-08 18:53:46'),(26943,6,1,0.042447712,'1','2017-09-08 18:53:46'),(26944,6,2,0.25631028,'1','2017-09-08 18:53:46'),(26945,6,3,0.089227915,'1','2017-09-08 18:53:46'),(26946,1,1,0.04570611,'1','2017-09-08 18:54:46'),(26947,1,2,0.5190135,'1','2017-09-08 18:54:46'),(26948,1,3,0.56811094,'1','2017-09-08 18:54:46'),(26949,2,1,34.094234,'1','2017-09-08 18:54:46'),(26950,2,2,26.527122,'1','2017-09-08 18:54:47'),(26951,2,3,32.25131,'1','2017-09-08 18:54:47'),(26952,3,1,31.132824,'1','2017-09-08 18:54:47'),(26953,3,2,25.99121,'1','2017-09-08 18:54:47'),(26954,3,3,30.913937,'1','2017-09-08 18:54:47'),(26955,4,1,0.16930299,'1','2017-09-08 18:54:47'),(26956,4,2,0.17092063,'1','2017-09-08 18:54:47'),(26957,4,3,0.12327294,'1','2017-09-08 18:54:47'),(26958,5,1,0.21639983,'1','2017-09-08 18:54:47'),(26959,5,2,0.21348828,'1','2017-09-08 18:54:47'),(26960,5,3,0.12564176,'1','2017-09-08 18:54:47'),(26961,6,1,0.13365951,'1','2017-09-08 18:54:47'),(26962,6,2,0.022468358,'1','2017-09-08 18:54:47'),(26963,6,3,0.10849605,'1','2017-09-08 18:54:47'),(26964,1,1,0.66137713,'1','2017-09-08 18:55:47'),(26965,1,2,0.93891984,'1','2017-09-08 18:55:47'),(26966,1,3,0.4871194,'1','2017-09-08 18:55:47'),(26967,2,1,30.139462,'1','2017-09-08 18:55:47'),(26968,2,2,25.56497,'1','2017-09-08 18:55:47'),(26969,2,3,28.798285,'1','2017-09-08 18:55:47'),(26970,3,1,34.310566,'1','2017-09-08 18:55:47'),(26971,3,2,32.625847,'1','2017-09-08 18:55:47'),(26972,3,3,25.692999,'1','2017-09-08 18:55:47'),(26973,4,1,0.13108112,'1','2017-09-08 18:55:47'),(26974,4,2,0.3528443,'1','2017-09-08 18:55:47'),(26975,4,3,0.27253425,'1','2017-09-08 18:55:47'),(26976,5,1,0.38302344,'1','2017-09-08 18:55:47'),(26977,5,2,0.12170717,'1','2017-09-08 18:55:47'),(26978,5,3,0.4267186,'1','2017-09-08 18:55:47'),(26979,6,1,0.11795546,'1','2017-09-08 18:55:48'),(26980,6,2,0.07041124,'1','2017-09-08 18:55:48'),(26981,6,3,0.11068446,'1','2017-09-08 18:55:48'),(26982,1,1,0.30712056,'1','2017-09-08 18:56:48'),(26983,1,2,0.5072852,'1','2017-09-08 18:56:48'),(26984,1,3,0.47401905,'1','2017-09-08 18:56:48'),(26985,2,1,28.993258,'1','2017-09-08 18:56:48'),(26986,2,2,31.581518,'1','2017-09-08 18:56:48'),(26987,2,3,34.444298,'1','2017-09-08 18:56:48'),(26988,3,1,27.350939,'1','2017-09-08 18:56:48'),(26989,3,2,30.40885,'1','2017-09-08 18:56:48'),(26990,3,3,30.82755,'1','2017-09-08 18:56:48'),(26991,4,1,0.21112995,'1','2017-09-08 18:56:48'),(26992,4,2,0.3882731,'1','2017-09-08 18:56:48'),(26993,4,3,0.44232506,'1','2017-09-08 18:56:48'),(26994,5,1,0.48783422,'1','2017-09-08 18:56:48'),(26995,5,2,0.2867325,'1','2017-09-08 18:56:48'),(26996,5,3,0.23008248,'1','2017-09-08 18:56:48'),(26997,6,1,0.23093775,'1','2017-09-08 18:56:48'),(26998,6,2,0.0029238646,'1','2017-09-08 18:56:48'),(26999,6,3,0.21749282,'1','2017-09-08 18:56:48');
+/*!40000 ALTER TABLE `sensor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `solicitudes`
+--
+
+DROP TABLE IF EXISTS `solicitudes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `solicitudes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `usuario_id_solicitante` int(11) NOT NULL,
+  `usuario_id_solicitado` int(11) NOT NULL,
+  `estado` enum('1','2','3','4') NOT NULL DEFAULT '1' COMMENT 'Campo que almacena el estado de la solicitud, 1: Enviada; 2: Aceptada; 3: Rechazada; 4: Cancelada',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `SOLICITUDES_FK0_idx` (`usuario_id_solicitante`),
+  KEY `SOLCIITUDES_FK1_idx` (`usuario_id_solicitado`),
+  CONSTRAINT `SOLCIITUDES_FK1` FOREIGN KEY (`usuario_id_solicitado`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `SOLICITUDES_FK0` FOREIGN KEY (`usuario_id_solicitante`) REFERENCES `usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `solicitudes`
+--
+
+LOCK TABLES `solicitudes` WRITE;
+/*!40000 ALTER TABLE `solicitudes` DISABLE KEYS */;
+INSERT INTO `solicitudes` VALUES (6,3,1,'2','2017-09-04 15:29:05','2017-09-04 15:29:26');
+/*!40000 ALTER TABLE `solicitudes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_acceso`
+--
+
+DROP TABLE IF EXISTS `tipo_acceso`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipo_acceso` (
+  `id` enum('1','2','3') NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `nombre_UNIQUE` (`nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_acceso`
+--
+
+LOCK TABLES `tipo_acceso` WRITE;
+/*!40000 ALTER TABLE `tipo_acceso` DISABLE KEYS */;
+INSERT INTO `tipo_acceso` VALUES ('1','Publico','1','2017-07-31 13:06:18','2017-07-31 13:06:18'),('2','Protegido','1','2017-07-31 13:06:18','2017-07-31 13:06:18'),('3','Privado','1','2017-07-31 13:06:18','2017-07-31 13:06:18');
+/*!40000 ALTER TABLE `tipo_acceso` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_sensor`
+--
+
+DROP TABLE IF EXISTS `tipo_sensor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipo_sensor` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `unidad` varchar(45) NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_sensor`
+--
+
+LOCK TABLES `tipo_sensor` WRITE;
+/*!40000 ALTER TABLE `tipo_sensor` DISABLE KEYS */;
+INSERT INTO `tipo_sensor` VALUES (1,'CAUDAL','q','1','2017-04-21 16:45:49','2017-04-21 16:45:49'),(2,'TEMPERATURA AGUA','°c','1','2017-04-21 16:45:49','2017-04-21 16:45:49'),(3,'TEMPERATURA AMBIENTE','°c','1','2017-04-21 16:45:49','2017-04-21 16:45:49'),(4,'pH','pH','1','2017-04-21 16:45:49','2017-04-21 16:45:49'),(5,'AMONIO','mg/l','1','2017-04-21 16:45:49','2017-04-21 16:45:49'),(6,'FLUJO','m³/s','1','2017-05-10 03:08:57','2017-05-10 03:08:57');
+/*!40000 ALTER TABLE `tipo_sensor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_usuario`
+--
+
+DROP TABLE IF EXISTS `tipo_usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipo_usuario` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_usuario`
+--
+
+LOCK TABLES `tipo_usuario` WRITE;
+/*!40000 ALTER TABLE `tipo_usuario` DISABLE KEYS */;
+INSERT INTO `tipo_usuario` VALUES (1,'user','1','2017-07-01 18:33:42','2017-07-01 18:33:42'),(2,'admin','1','2017-07-01 18:33:42','2017-07-01 18:33:42'),(3,'superadmin','1','2017-07-01 18:33:42','2017-07-01 18:33:42');
+/*!40000 ALTER TABLE `tipo_usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuario`
+--
+
+DROP TABLE IF EXISTS `usuario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tacceso_id` enum('1','2','3') NOT NULL DEFAULT '3',
+  `tusuario_id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `primer_nombre` varchar(100) NOT NULL,
+  `segundo_nombre` varchar(100) DEFAULT NULL,
+  `primer_apellido` varchar(100) NOT NULL,
+  `segundo_apellido` varchar(100) DEFAULT NULL,
+  `avatar` varchar(100) DEFAULT NULL,
+  `extension` varchar(5) DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
+  `estado` enum('1','2') NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `USUARIO_FK0_idx` (`tusuario_id`),
+  KEY `USUARIO_FK1_idx` (`tacceso_id`),
+  CONSTRAINT `USUARIO_FK0` FOREIGN KEY (`tusuario_id`) REFERENCES `tipo_usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `USUARIO_FK1` FOREIGN KEY (`tacceso_id`) REFERENCES `tipo_acceso` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuario`
+--
+
+LOCK TABLES `usuario` WRITE;
+/*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'1',1,'CHRIS','$2y$10$HIGrMlct5ndrnj7YWLOmwef.PoyIxys1gBF4EiqkYWnCUcT16t9XW','chris3154@gmail.com','CHRISTHIAN','HERNANDO','TORRES','NIÑO','447f85f0-8e92-11e7-b826-4ccc6a8ac90b','jpg','dCbv6oY5ZtZHc5kYfszhJNL7RpISqFglSS04zfqc3XnlF7weMlGruUKzSt2j','1','2017-04-17 17:41:04','2017-09-08 18:14:31'),(3,'1',3,'CHRIS_ADMIN','$2y$10$qLeqmWW1N4H.0A0Wz6iHPeVLN9F8Px93nxqc7085g7z94jXyN6aQy','chris3157@gmail.com','CHRISTOBULO','HERNANDO','TORRES','NIÑO','d33b8763-8c4a-11e7-825c-4ccc6a8ac90b','jpg','RaCLAF4Yy6P9VbMljZMmPKMBdhlI2XUYCcqleLTedj3UadRjpjC9tvqmGWg5','1','2017-04-21 21:34:59','2017-09-08 18:45:48'),(34,'3',2,'MAMA','$2y$10$UlQoY.8omRBD3Ozy/xrm3e6TZBQMqzp7A/cqwqyhMbgMG2rDyR0ma','mama@mam.ma','mama','mama','mama','mama',NULL,NULL,NULL,'1','2017-07-20 18:39:40','2017-07-20 18:39:40'),(35,'1',2,'HOLA','$2y$10$Rw8c2Z86VYRKFb2mJcNKO.itPTRytMbx.TBRalVFrg9C/MkDJ7PHW','holag@d.l','hola','hola','hola','hola',NULL,NULL,NULL,'1','2017-07-20 18:40:45','2017-07-20 18:40:45'),(36,'1',3,'COMO','$2y$10$LpRwNAvTFfKx8cRYJvnKy.l2HlXsDtiIX4o262jrz9xAIDZF5Jie.','como@coms.co','como','como','como','como',NULL,NULL,NULL,'1','2017-07-20 18:41:51','2017-07-20 18:41:51');
+/*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'aquaweb'
+--
+
+--
+-- Dumping routines for database 'aquaweb'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `getConteoSolicitud` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getConteoSolicitud`(
+IN _usuarioidsolicitante int,
+IN _usuarioidsolicitado int
+)
+BEGIN
+    SELECT 
+		COUNT(1) AS conteo
+    FROM 
+		solicitudes 
+    WHERE 
+		usuario_id_solicitante = _usuarioidsolicitante AND 
+		usuario_id_solicitado = _usuarioidsolicitado; 
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getDataDropdownArgTest` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getDataDropdownArgTest`(
+IN _idEstado INT
+)
+BEGIN
+	SELECT
+		id AS id,
+		CONCAT( '(' , sigla , ') ', nombre ) AS nombre
+    FROM 
+		aquaweb.tipo_sensor 
+	WHERE
+		estado = _idEstado 
+	ORDER BY 
+		nombre ASC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getDataDropdownTest` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getDataDropdownTest`()
+BEGIN
+	SELECT
+		id AS id,
+		CONCAT( '(' , sigla , ') ', nombre ) AS nombre
+    FROM 
+		aquaweb.tipo_sensor
+	ORDER BY 
+		nombre ASC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getDataGridTest` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getDataGridTest`(
+IN _idUsuario INT
+)
+BEGIN
+SELECT
+	proc.id as idproceso,
+    proc.codigo as codigo,
+    proc.fecha_implementacion as fechaimplementacion,
+    proc.area_cultivo as areacultivo,
+    proc.volumen_cultivo as volumencultivo,
+    case proc.estado when 1 then 'Activo' else 'Inactivo' end as estado    
+FROM
+	proceso AS proc
+WHERE
+	proc.usuario_id = _idUsuario;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getGaleriaPezById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getGaleriaPezById`(
+IN _idPez INT
+)
+BEGIN
+SELECT 
+	concat(gal.codigo,'.',gal.extension) as imagen,
+	UPPER(gal.titulo) as titulo, 
+	gal.descripcion as descripcion,
+	case gal.estado when 1 then 'Activo' else 'Inactivo' end as estado ,
+	gal.created_at as creacion, 
+	gal.updated_at as actualizacion 
+FROM
+	aquaweb.galeria as gal 
+WHERE
+	gal.pez_id = _idPez AND gal.estado = 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getGaleriaPlantaById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getGaleriaPlantaById`(
+IN _idPlanta INT
+)
+BEGIN
+SELECT 
+	concat(gal.codigo,'.',gal.extension) as imagen,
+	UPPER(gal.titulo) as titulo, 
+	gal.descripcion as descripcion,
+	case gal.estado when 1 then 'Activo' else 'Inactivo' end as estado ,
+	gal.created_at as creacion, 
+	gal.updated_at as actualizacion 
+FROM
+	aquaweb.galeria as gal 
+WHERE
+	gal.planta_id = _idPlanta AND gal.estado = 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoAsociacionElementos` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoAsociacionElementos`(
+IN _elementoid int,
+IN _elementotipo int
+)
+BEGIN
+	IF _elementotipo = 1 THEN
+
+		SELECT 
+			usu.id,
+            _elementotipo as elementotipo,
+            "Usuario" as elemento,
+			ucase(usu.username) as nombre,
+            usu.estado estadoactual,
+            CASE usu.estado when 1 then 'Desactivar' else 'Activar' end as estado,
+			count(proc.id) as relacion
+		FROM aquaweb.usuario as usu
+		LEFT JOIN proceso as proc ON proc.usuario_id = usu.id
+		WHERE usu.id=_elementoid and proc.estado=1;
+		
+	ELSEIF _elementotipo = 2 THEN
+
+		SELECT 
+			pla.id,
+            _elementotipo as elementotipo,
+            "Planta" as elemento,
+			ucase(pla.nombre) as nombre,
+            pla.estado estadoactual,
+			CASE pla.estado when 1 then 'Desactivar' else 'Activar' end as estado,
+			count(proc.id) as relacion
+		FROM aquaweb.planta as pla
+		LEFT JOIN proceso_planta as proc_pla ON pla.id = proc_pla.planta_id  and proc_pla.estado = 1
+		LEFT JOIN proceso as proc ON proc.id = proc_pla.proceso_id
+		WHERE pla.id=_elementoid and proc.estado=1;
+		
+	ELSEIF _elementotipo = 3 THEN
+
+		SELECT 
+			pez.id,
+            _elementotipo as elementotipo,
+            "Pez" as elemento,
+			ucase(pez.nombre) as nombre,
+            pez.estado estadoactual,
+			CASE pez.estado when 1 then 'Desactivar' else 'Activar' end as estado,
+			count(proc.id) as relacion
+		FROM aquaweb.pez as pez
+		LEFT JOIN proceso_pez as proc_pez ON pez.id = proc_pez.pez_id and proc_pez.estado = 1
+		LEFT JOIN proceso as proc ON proc.id = proc_pez.proceso_id
+		WHERE pez.id=_elementoid and proc.estado=1;
+	
+    ELSE
+		SELECT 
+			pro.id,
+			_elementotipo as elementotipo,
+			"Proceso" as elemento,
+			ucase(pro.nombre) as nombre,
+			pro.estado estadoactual,
+			CASE pro.estado when 1 then 'Desactivar' else 'Activar' end as estado,
+			0 as relacion
+		FROM aquaweb.proceso as pro
+		WHERE pro.id=_elementoid;
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoAsociacionElementosForProceso` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoAsociacionElementosForProceso`(
+IN _elementoid int,
+IN _procesoid int,
+IN _elementotipo int,
+IN _asociado int
+)
+BEGIN
+	IF _elementotipo = 1 THEN
+
+		SELECT 
+			pla.id,
+            _elementotipo as elementotipo,
+            _procesoid as procesoid,            
+			_asociado as asociado,
+            "Planta" as elemento,
+			ucase(pla.nombre) as nombre,
+            proc_pla.porcentaje as porcentaje
+		FROM aquaweb.planta as pla
+		LEFT JOIN proceso_planta as proc_pla ON pla.id = proc_pla.planta_id AND proc_pla.proceso_id = _procesoid
+		WHERE pla.id=_elementoid;
+		
+	ELSEIF _elementotipo = 2 THEN
+
+		SELECT 
+			pez.id,
+			_elementotipo as elementotipo,
+            _procesoid as procesoid,            
+			_asociado as asociado,
+            "Pez" as elemento,
+			ucase(pez.nombre) as nombre,
+            proc_pez.porcentaje as porcentaje
+		FROM aquaweb.pez as pez
+		LEFT JOIN proceso_pez as proc_pez ON pez.id = proc_pez.pez_id AND proc_pez.proceso_id = _procesoid
+		WHERE pez.id=_elementoid;
+		
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoColegasByUsuarioId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoColegasByUsuarioId`(
+IN _idUsuario INT
+)
+BEGIN
+SELECT
+	usu.id as idusuario,
+	UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombreusuario,
+	usu.email as correo,
+    CASE usu.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    (SELECT COUNT(1) FROM proceso AS proc WHERE proc.usuario_id = usu.id) AS procesos,
+    (SELECT COUNT(1) FROM pez AS pez WHERE pez.usuario_id = usu.id) AS peces,
+    (SELECT COUNT(1) FROM planta AS pla WHERE pla.usuario_id = usu.id) AS plantas,
+    concat(usu.avatar,'.',usu.extension) as avatar
+FROM
+	aquaweb.usuario usu
+    INNER JOIN aquaweb.tipo_usuario tus ON usu.tusuario_id = tus.id 
+WHERE
+    usu.id IN (
+    SELECT
+		aux_col.colega_id
+	FROM
+		aquaweb.colegas as aux_col
+	WHERE
+		aux_col.usuario_id = _idUsuario and 
+		aux_col.estado = 1
+
+	UNION ALL
+
+	SELECT
+		aux_col.usuario_id
+	FROM
+		aquaweb.colegas as aux_col
+	WHERE
+		aux_col.colega_id = _idUsuario and 
+        aux_col.estado = 1
+    );
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoEventosRegistrados` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoEventosRegistrados`(
+IN _usuarioid INT
+)
+BEGIN
+SELECT
+	log.tipo, 
+	log.id,
+    log.nombre,
+    log.usuario_id,
+    UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombreusuario,
+    IFNULL(log.imagen,"") as imagen,
+    log.creado 
+FROM (
+		SELECT
+			"1" AS tipo, 
+			pla.id as id, 
+            pla.nombre as nombre,
+            pla.usuario_id as usuario_id,
+			(
+				SELECT 
+					CONCAT(aux_gal_pla.codigo,".",aux_gal_pla.extension)
+				FROM 
+					aquaweb.galeria as aux_gal_pla 
+				WHERE 
+					pla.id = aux_gal_pla.planta_id AND
+                    pla.estado = 1
+				ORDER BY 
+					RAND() 
+				LIMIT 
+					1
+			) as imagen, 
+			pla.created_at AS creado 
+		FROM 
+			aquaweb.planta AS pla
+		WHERE
+			pla.estado = 1 AND
+			pla.usuario_id IN (
+		SELECT
+			aux_col.colega_id
+		FROM
+			aquaweb.colegas as aux_col
+		WHERE
+			aux_col.usuario_id = _usuarioid and 
+			aux_col.estado = 1
+
+		UNION ALL
+
+		SELECT
+			aux_col.usuario_id
+		FROM
+			aquaweb.colegas AS aux_col
+		WHERE
+			aux_col.colega_id = _usuarioid and 
+			aux_col.estado = 1
+		)
+	UNION ALL
+		SELECT 
+			"2" AS tipo, 
+			pez.id AS id, 
+            pez.nombre as nombre,
+            pez.usuario_id as usuario_id,
+			(
+				SELECT 
+					CONCAT(aux_gal_pez.codigo,".",aux_gal_pez.extension) 
+				FROM 
+					aquaweb.galeria as aux_gal_pez 
+				WHERE 
+					pez.id = aux_gal_pez.pez_id
+				ORDER BY 
+					RAND() 
+				LIMIT 
+					1
+			) as imagen, 
+			pez.created_at AS creado 
+		FROM 
+			aquaweb.pez AS pez
+		WHERE
+			pez.estado = 1 AND
+			pez.usuario_id IN (
+		SELECT
+			aux_col.colega_id
+		FROM
+			aquaweb.colegas as aux_col
+		WHERE
+			aux_col.usuario_id = _usuarioid  and 
+			aux_col.estado = 1
+
+		UNION ALL
+
+		SELECT
+			aux_col.usuario_id
+		FROM
+			aquaweb.colegas as aux_col
+		WHERE
+			aux_col.colega_id = _usuarioid  and 
+			aux_col.estado = 1
+		)
+	UNION ALL
+		SELECT 
+			"3" AS tipo, 
+			proc.id AS id,
+            proc.nombre as nombre,
+            proc.usuario_id as usuario_id,
+            "" as imagen, 
+			proc.created_at as creado 
+		FROM 
+			aquaweb.proceso AS proc
+		WHERE
+			proc.estado = 1 AND
+			proc.usuario_id IN (
+		SELECT
+			aux_col.colega_id
+		FROM
+			aquaweb.colegas as aux_col
+		WHERE
+			aux_col.usuario_id = _usuarioid  and 
+			aux_col.estado = 1
+
+		UNION ALL
+
+		SELECT
+			aux_col.usuario_id
+		FROM
+			aquaweb.colegas as aux_col
+		WHERE
+			aux_col.colega_id = _usuarioid  and 
+			aux_col.estado = 1
+		)
+	) AS log
+INNER JOIN usuario as usu ON log.usuario_id = usu.id
+ORDER BY
+	log.creado DESC
+LIMIT 20;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoGaleriaById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoGaleriaById`(
+IN _idGaleria INT
+)
+BEGIN
+	SELECT 
+		id as idGaleria,
+        titulo as titulo, 
+        descripcion as descripcion
+	FROM 
+        aquaweb.galeria
+	WHERE
+		id = _idGaleria;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoGaleriaPezById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoGaleriaPezById`(
+IN _idUsuario INT,
+IN _idPez INT
+)
+BEGIN
+	SELECT 
+		id as idGaleria,
+        concat(codigo,".",extension) as imagen,
+        titulo as titulo, 
+        descripcion as descripcion, 
+        estado as estado, 
+        created_at as creado, 
+        updated_at as actualizado
+	FROM 
+        aquaweb.galeria
+	WHERE
+		pez_id = _idPez AND
+        usuario_id = _idUsuario
+	ORDER BY 
+    id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoGaleriaPlantaById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoGaleriaPlantaById`(
+IN _idUsuario INT,
+IN _idPlanta INT
+)
+BEGIN
+	SELECT 
+		id as idGaleria,
+        concat(codigo,".",extension) as imagen,
+        titulo as titulo, 
+        descripcion as descripcion, 
+        estado as estado,
+        created_at as creado, 
+        updated_at as actualizado
+	FROM 
+        aquaweb.galeria
+	WHERE
+		planta_id = _idPlanta AND
+        usuario_id = _idUsuario
+	ORDER BY 
+    id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoPezById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoPezById`(
+IN _idPez INT
+)
+BEGIN
+SELECT
+	pez.id as idpez,
+	concat(gal.codigo,'.',gal.extension) as imagen,
+    UPPER(pez.nombre) as nombre,
+    pez.temperatura_vital_min as tempvitalmin,
+    pez.temperatura_vital_max as tempvitalmax,
+    pez.temperatura_optima_min as tempoptimamin,
+    pez.temperatura_optima_max as tempoptimamax,
+    pez.nitrogeno_nat as nitrogeno,
+    pez.nitrito as nitrito,
+    pez.oxigeno as oxigeno,
+    pez.porcentaje_proteina_min as porcprotmin,
+    pez.porcentaje_proteina_max as porcprotmax,
+    pez.crecimiento_peso as crecpeso,
+    pez.crecimiento_tiempo as crectiempo,
+    case pez.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    count(proc.id) as relacion,
+    tac.nombre as tipoacceso
+FROM
+    aquaweb.pez AS pez
+    INNER JOIN aquaweb.tipo_acceso AS tac ON  pez.tacceso_id = tac.id
+    INNER JOIN aquaweb.galeria AS gal ON pez.id = gal.pez_id
+	LEFT JOIN proceso_pez as proc_pez ON pez.id = proc_pez.pez_id
+	LEFT JOIN proceso as proc ON proc.id = proc_pez.proceso_id and proc.estado = 1
+WHERE 
+	pez.id = _idPez
+ORDER BY 
+	RAND()
+LIMIT
+	1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoPezByProcesoId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoPezByProcesoId`(
+IN _idProceso INT
+)
+BEGIN
+SELECT
+	pez.id as idpez,
+    pez.nombre as nombre,
+    concat(proc_pez.porcentaje,' %') as porcentaje,
+	proc_pez.updated_at as actualizacion
+FROM
+	aquaweb.proceso as proc
+    INNER JOIN aquaweb.proceso_pez as proc_pez ON proc.id = proc_pez.proceso_id
+    INNER JOIN aquaweb.pez as pez ON pez.id = proc_pez.pez_id
+WHERE 
+	proc.id=_idProceso  and proc_pez.estado=1
+ORDER BY 
+	nombre;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoPlantaById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoPlantaById`(
+IN _idPlanta INT
+)
+BEGIN
+SELECT
+	plant.id as idplanta,
+	concat(gal.codigo,'.',gal.extension) as imagen,
+    UPPER(plant.nombre) as nombre,
+    plant.ph_min as phmin,
+    plant.ph_max as phmax,
+    plant.planta_m2_min as plantmin,
+    plant.planta_m2_max as plantmax,
+    plant.tiempo_germinacion_min as tiempogermmin,
+    plant.tiempo_germinacion_max as tiempogermax,
+    plant.tiempo_crecimiento_min as tiempocrecmin,
+    plant.tiempo_crecimiento_max as tiempocrecmax,
+    plant.temperatura_min as tempmin,
+    plant.temperatura_max as tempmax,
+    exp.nombre as expsolar,
+    exp.id as expsolarid,
+    case plant.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    count(proc.id) as relacion,
+    tac.nombre as tipoacceso
+FROM
+    aquaweb.planta AS plant
+    INNER JOIN aquaweb.tipo_acceso AS tac ON  plant.tacceso_id = tac.id
+    LEFT JOIN aquaweb.galeria AS gal ON plant.id = gal.planta_id
+    INNER JOIN aquaweb.exposicion_solar AS exp ON plant.solar_id = exp.id
+	LEFT JOIN proceso_planta as proc_pla ON plant.id = proc_pla.planta_id
+	LEFT JOIN proceso as proc ON proc.id = proc_pla.proceso_id and proc.estado = 1
+WHERE 
+	plant.id = _idPlanta
+ORDER BY 
+	RAND()
+LIMIT
+	1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoPlantaByProcesoId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoPlantaByProcesoId`(
+IN _idProceso INT
+)
+BEGIN
+SELECT
+	plant.id as idplanta,
+    plant.nombre as nombre,
+    concat(proc_plant.porcentaje,' %') as porcentaje,
+    proc_plant.updated_at as actualizacion
+FROM
+	aquaweb.proceso as proc
+    INNER JOIN aquaweb.proceso_planta as proc_plant ON proc.id = proc_plant.proceso_id
+    INNER JOIN aquaweb.planta as plant ON plant.id = proc_plant.planta_id
+WHERE 
+	proc.id=_idProceso and proc_plant.estado=1
+ORDER BY 
+	nombre;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoProcesoById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoProcesoById`(
+IN _idProceso INT
+)
+BEGIN
+SELECT
+	proc.id as idproceso,
+	proc.codigo,
+	proc.nombre,
+	proc.descripcion,
+	proc.fecha_implementacion as fechaimplementacion,
+	proc.area_cultivo as areacultivo,
+	proc.volumen_cultivo as volumencultivo,
+	case proc.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    tac.nombre as tipoacceso
+FROM
+	aquaweb.proceso proc
+    INNER JOIN aquaweb.tipo_acceso AS tac ON  proc.tacceso_id = tac.id
+WHERE	
+    proc.id = _idProceso;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoResumenProcesoById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoResumenProcesoById`(
+IN _idProceso INT
+)
+BEGIN
+SELECT 
+	pro.id as procesoid,
+    pro.area_cultivo AS areacultivo,
+    pro.volumen_cultivo AS volumencultivo,
+    (SELECT 
+		COUNT(aux_pro_pez.id) 
+	FROM 
+		aquaweb.proceso_pez AS aux_pro_pez 
+    WHERE
+		aux_pro_pez.proceso_id = pro.id AND 
+        aux_pro_pez.estado=1 ) AS peces,
+    (SELECT 
+		COUNT(aux_pro_pla.id) 
+	FROM
+		aquaweb.proceso_planta AS aux_pro_pla 
+	WHERE
+		aux_pro_pla.proceso_id = pro.id AND
+		aux_pro_pla.estado=1 ) AS plantas
+FROM 
+	aquaweb.proceso AS pro
+WHERE 
+	pro.id=_idProceso;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoUsuarioById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoUsuarioById`(
+IN _idUsuario INT
+)
+BEGIN
+SELECT
+	usu.id as idusuario,
+	usu.username as usuario,
+	tus.nombre as rol,
+	UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombreusuario,
+    UPPER(usu.primer_nombre) AS primer_nombre,
+    UPPER(usu.segundo_nombre) AS segundo_nombre,
+    UPPER(usu.primer_apellido) AS primer_apellido,
+    UPPER(usu.segundo_apellido) AS segundo_apellido,
+	usu.email as correo,
+    CASE usu.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    usu.estado as tipoestado,
+    (SELECT COUNT(1) FROM proceso AS proc WHERE proc.usuario_id = usu.id) AS procesos,
+    (SELECT COUNT(1) FROM pez AS pez WHERE pez.usuario_id = usu.id) AS peces,
+    (SELECT COUNT(1) FROM planta AS pla WHERE pla.usuario_id = usu.id) AS plantas,
+    concat(usu.avatar,'.',usu.extension) as avatar
+FROM
+	aquaweb.usuario usu
+    INNER JOIN aquaweb.tipo_usuario tus ON usu.tusuario_id = tus.id 
+WHERE
+    usu.id = _idUsuario;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoUsuarioPublicoById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoUsuarioPublicoById`(
+IN _idUsuario INT
+)
+BEGIN
+SELECT
+	usu.id as idusuario,
+	usu.username as usuario,
+	tus.nombre as rol,
+	UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombreusuario,
+    UPPER(usu.primer_nombre) AS primer_nombre,
+    UPPER(usu.segundo_nombre) AS segundo_nombre,
+    UPPER(usu.primer_apellido) AS primer_apellido,
+    UPPER(usu.segundo_apellido) AS segundo_apellido,
+	usu.email as correo,
+    CASE usu.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    usu.estado as tipoestado,
+    (SELECT COUNT(1) FROM proceso AS proc WHERE proc.usuario_id = usu.id and proc.tacceso_id <> 3) AS procesos,
+    (SELECT COUNT(1) FROM pez AS pez WHERE pez.usuario_id = usu.id and pez.tacceso_id <> 3) AS peces,
+    (SELECT COUNT(1) FROM planta AS pla WHERE pla.usuario_id = usu.id and pla.tacceso_id <> 3) AS plantas,
+    concat(usu.avatar,'.',usu.extension) as avatar
+FROM
+	aquaweb.usuario usu
+    INNER JOIN aquaweb.tipo_usuario tus ON usu.tusuario_id = tus.id 
+WHERE
+    usu.id = _idUsuario;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getInfoUsuariosRegistrados` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getInfoUsuariosRegistrados`(
+IN _idUsuario INT
+)
+BEGIN
+SELECT
+	usu.created_at,
+	usu.id as idusuario,
+	usu.username as usuario,
+	tus.nombre as rol,
+	UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombreusuario,
+    UPPER(usu.primer_nombre) AS primer_nombre,
+    UPPER(usu.segundo_nombre) AS segundo_nombre,
+    UPPER(usu.primer_apellido) AS primer_apellido,
+    UPPER(usu.segundo_apellido) AS segundo_apellido,
+	usu.email as correo,
+    CASE usu.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    usu.estado as tipoestado,
+    (SELECT COUNT(1) FROM proceso AS proc WHERE proc.usuario_id = usu.id and proc.tacceso_id <> 3) AS procesos,
+    (SELECT COUNT(1) FROM pez AS pez WHERE pez.usuario_id = usu.id and pez.tacceso_id <> 3) AS peces,
+    (SELECT COUNT(1) FROM planta AS pla WHERE pla.usuario_id = usu.id and pla.tacceso_id <> 3) AS plantas,
+    concat(usu.avatar,'.',usu.extension) as avatar
+FROM
+	aquaweb.usuario usu
+    INNER JOIN aquaweb.tipo_usuario tus ON usu.tusuario_id = tus.id 
+WHERE
+    usu.tacceso_id <> 3 AND
+    usu.estado = 1 AND 
+    usu.id <> _idUsuario AND
+    usu.id NOT IN ( 
+    SELECT
+		aux_col.colega_id
+	FROM
+		aquaweb.colegas as aux_col
+	WHERE
+		aux_col.usuario_id = _idUsuario and 
+		aux_col.estado = 1
+
+	UNION ALL
+
+	SELECT
+		aux_col.usuario_id
+	FROM
+		aquaweb.colegas as aux_col
+	WHERE
+		aux_col.colega_id = _idUsuario and 
+        aux_col.estado = 1) AND
+	 usu.id NOT IN (
+     SELECT
+		aux_sol.usuario_id_solicitado
+	FROM
+		aquaweb.solicitudes as aux_sol
+	WHERE
+		aux_sol.usuario_id_solicitante = _idUsuario and 
+		aux_sol.estado = 1
+
+	UNION ALL
+
+	SELECT
+		aux_sol.usuario_id_solicitante
+	FROM
+		aquaweb.solicitudes as aux_sol
+	WHERE
+		aux_sol.usuario_id_solicitado = _idUsuario and 
+		aux_sol.estado = 1)
+ORDER BY 
+	usu.created_at desc
+LIMIT 
+	20;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getListColegasByUsuarioId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getListColegasByUsuarioId`(
+IN _idUsuario INT
+)
+BEGIN
+SELECT
+	usu.id as idusuario,
+    concat(usu.avatar,'.',usu.extension) as avatar,
+	UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombreusuario    
+FROM
+	aquaweb.usuario usu
+WHERE
+    usu.id IN (
+    SELECT
+		aux_col.colega_id
+	FROM
+		aquaweb.colegas as aux_col
+	WHERE
+		aux_col.usuario_id = _idUsuario and 
+		aux_col.estado = 1
+
+	UNION ALL
+
+	SELECT
+		aux_col.usuario_id
+	FROM
+		aquaweb.colegas as aux_col
+	WHERE
+		aux_col.colega_id = _idUsuario and 
+        aux_col.estado = 1
+    )
+ORDER BY nombreusuario DESC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getListProcesoByColegaId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getListProcesoByColegaId`(
+IN _idUsuario INT
+)
+BEGIN
+	SELECT 
+		id as idproceso, 
+        nombre as nombreproceso 
+	FROM 
+		aquaweb.proceso 
+    WHERE 
+		usuario_id= _idUsuario and
+        estado = 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getPeces` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPeces`()
+BEGIN
+SELECT
+	pez.id as idpez,
+    UPPER(usu.username) as usuario,
+	UPPER(pez.nombre) as nombre,
+    pez.created_at as registro,
+    pez.updated_at as actualizacion,
+    case pez.estado when 1 then 'Activo' else 'Inactivo' end as estado
+FROM aquaweb.pez AS pez
+INNER JOIN aquaweb.usuario AS usu ON pez.usuario_id = usu.id
+ORDER BY 
+	nombre;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getPecesByUsuarioId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPecesByUsuarioId`(
+IN _usuarioid int
+)
+BEGIN
+SELECT
+	pez.id as idpez,
+    UPPER(usu.username) as usuario,
+	UPPER(pez.nombre) as nombre,
+    pez.created_at as registro,
+    pez.updated_at as actualizacion,
+    case pez.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    count(gal.id) as conteogaleria
+FROM aquaweb.pez AS pez
+	INNER JOIN aquaweb.usuario AS usu ON pez.usuario_id = usu.id
+	LEFT JOIN aquaweb.galeria AS gal ON pez.id = gal.pez_id
+WHERE
+	pez.usuario_id = _usuarioid
+GROUP BY
+	pez.id
+ORDER BY 
+	nombre;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getPecesByUsuarioIdForProceso` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPecesByUsuarioIdForProceso`(
+IN _usuarioid int,
+IN _procesoid int
+)
+BEGIN
+
+
+SELECT
+	pez.id as id,
+    UPPER(pez.nombre) as nombre,
+    UPPER(usu.username) as usuario,
+    UPPER(pez.updated_at) as actualizacion,
+    UPPER(acce.nombre) as acceso,
+    concat(gal.codigo,'.',gal.extension) as imagen, 
+    
+    CASE (SELECT COUNT(1) FROM proceso_pez AS pro_pez WHERE pro_pez.proceso_id = _procesoid AND pro_pez.pez_id = pez.id AND pro_pez.estado = 1)
+    when 1 then '2' 
+    else '1' end as estado,  
+    
+    CASE (SELECT COUNT(1) FROM proceso_pez AS pro_pez WHERE pro_pez.proceso_id = _procesoid AND pro_pez.pez_id = pez.id)
+    when 1 then (SELECT porcentaje FROM proceso_pez AS pro_pez WHERE pro_pez.proceso_id = _procesoid AND pro_pez.pez_id = pez.id) 
+    else '0' end as porcentaje,
+    
+    2 as tipoespecimen    
+    
+FROM aquaweb.pez AS pez
+	INNER JOIN aquaweb.usuario AS usu ON pez.usuario_id = usu.id
+    INNER JOIN aquaweb.tipo_acceso AS acce ON pez.tacceso_id = acce.id
+	LEFT JOIN aquaweb.galeria AS gal ON pez.id = gal.pez_id
+WHERE
+    pez.estado = 1
+GROUP BY
+	pez.id
+ORDER BY 
+	pez.nombre;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getPlantas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPlantas`()
+BEGIN
+SELECT
+	pla.id as idplanta,
+    UPPER(usu.username) as usuario,
+	UPPER(pla.nombre) as nombre,
+    pla.created_at as registro,
+    pla.updated_at as actualizacion,
+    case pla.estado when 1 then 'Activo' else 'Inactivo' end as estado
+FROM aquaweb.planta AS pla
+INNER JOIN aquaweb.usuario AS usu ON pla.usuario_id = usu.id
+ORDER BY 
+	nombre;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getPlantasByUsuarioId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPlantasByUsuarioId`(
+IN _usuarioid int
+)
+BEGIN
+SELECT
+	pla.id as idplanta,
+    UPPER(usu.username) as usuario,
+	UPPER(pla.nombre) as nombre,
+    pla.created_at as registro,
+    pla.updated_at as actualizacion,
+    case pla.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    count(gal.id) as conteogaleria
+FROM aquaweb.planta AS pla
+	INNER JOIN aquaweb.usuario AS usu ON pla.usuario_id = usu.id
+	LEFT JOIN aquaweb.galeria AS gal ON pla.id = gal.planta_id
+WHERE
+	pla.usuario_id = _usuarioid
+GROUP BY
+	pla.id
+ORDER BY 
+	nombre;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getPlantasByUsuarioIdForProceso` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPlantasByUsuarioIdForProceso`(
+IN _usuarioid int,
+IN _procesoid int
+)
+BEGIN
+
+
+SELECT
+	pla.id as id,
+    UPPER(pla.nombre) as nombre,
+    UPPER(usu.username) as usuario,
+    UPPER(pla.updated_at) as actualizacion,
+    UPPER(acce.nombre) as acceso,
+    concat(gal.codigo,'.',gal.extension) as imagen,  
+    
+    CASE (SELECT COUNT(1) FROM proceso_planta AS pro_pla WHERE pro_pla.proceso_id = _procesoid AND pro_pla.planta_id = pla.id AND pro_pla.estado = 1)
+    when 1 then '2' 
+    else '1' end as estado,
+    
+	CASE (SELECT COUNT(1) FROM proceso_planta AS pro_pla WHERE pro_pla.proceso_id = _procesoid AND pro_pla.planta_id = pla.id)
+    when 1 then (SELECT porcentaje FROM proceso_planta AS pro_pla WHERE pro_pla.proceso_id = _procesoid AND pro_pla.planta_id = pla.id) 
+    else '0' end as porcentaje,
+    
+    1 as tipoespecimen    
+    
+FROM aquaweb.planta AS pla
+	INNER JOIN aquaweb.usuario AS usu ON pla.usuario_id = usu.id
+    INNER JOIN aquaweb.tipo_acceso AS acce ON pla.tacceso_id = acce.id
+	LEFT JOIN aquaweb.galeria AS gal ON pla.id = gal.planta_id
+WHERE
+    pla.estado = 1
+GROUP BY
+	pla.id
+ORDER BY 
+	pla.nombre;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getProcesosByIdUsuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getProcesosByIdUsuario`(
+IN _idUsuario INT
+)
+BEGIN
+SELECT
+	proc.id as idproceso,
+    proc.nombre as nombre,
+    proc.fecha_implementacion as fechaimplementacion,
+    case proc.estado when 1 then 'Activo' else 'Inactivo' end as estado    
+FROM
+	proceso AS proc
+WHERE
+	proc.usuario_id = _idUsuario;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getSolicitudesRealizadas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getSolicitudesRealizadas`(
+IN _idusuario INT
+)
+BEGIN
+SELECT
+	usu.id as idusuario,
+	UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombreusuario,
+    CASE usu.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    (SELECT COUNT(1) FROM proceso AS proc WHERE proc.usuario_id = usu.id) AS procesos,
+    (SELECT COUNT(1) FROM pez AS pez WHERE pez.usuario_id = usu.id) AS peces,
+    (SELECT COUNT(1) FROM planta AS pla WHERE pla.usuario_id = usu.id) AS plantas,
+    concat(usu.avatar,'.',usu.extension) as avatar
+FROM
+	aquaweb.solicitudes as sol
+    INNER JOIN aquaweb.usuario as usu ON sol.usuario_id_solicitado = usu.id
+WHERE	
+	sol.usuario_id_solicitante = _idusuario and sol.estado=1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getSolicitudesRecibidas` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getSolicitudesRecibidas`(
+IN _idusuario INT
+)
+BEGIN
+SELECT
+	usu.id as idusuario,
+	UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombreusuario,
+    CASE usu.estado when 1 then 'Activo' else 'Inactivo' end as estado,
+    (SELECT COUNT(1) FROM proceso AS proc WHERE proc.usuario_id = usu.id) AS procesos,
+    (SELECT COUNT(1) FROM pez AS pez WHERE pez.usuario_id = usu.id) AS peces,
+    (SELECT COUNT(1) FROM planta AS pla WHERE pla.usuario_id = usu.id) AS plantas,
+    concat(usu.avatar,'.',usu.extension) as avatar
+FROM
+	aquaweb.solicitudes as sol
+    INNER JOIN aquaweb.usuario as usu ON sol.usuario_id_solicitante = usu.id
+WHERE	
+	sol.usuario_id_solicitado = _idusuario and sol.estado=1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getTiposExpoSolar` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTiposExpoSolar`()
+BEGIN
+SELECT
+	exp.id as id,
+	UPPER(exp.nombre) as nombre	
+FROM
+	aquaweb.exposicion_solar exp
+WHERE
+	exp.estado = 1
+ORDER BY 
+	id ASC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getTiposSensores` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTiposSensores`()
+BEGIN
+SELECT
+	sen.id as id,
+	UPPER(sen.nombre) as nombre,
+    sen.unidad
+FROM
+	aquaweb.tipo_sensor as sen
+WHERE
+	sen.estado = 1
+ORDER BY 
+	nombre ASC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getTiposUsuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTiposUsuario`()
+BEGIN
+SELECT
+	tus.id as id,
+	UPPER(tus.nombre) as nombre	
+FROM
+	aquaweb.tipo_usuario tus
+WHERE
+	tus.estado = 1
+ORDER BY 
+	nombre ASC;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getUsuarios` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUsuarios`()
+BEGIN
+SELECT
+	usu.id as idusuario,
+	usu.username as usuario,
+    UPPER(usu.username) as usuario,
+    usu.email,
+    UPPER(tus.nombre) as rol,
+    UPPER(CONCAT(usu.primer_nombre, ' ',usu.segundo_nombre, ' ',usu.primer_apellido, ' ',usu.segundo_apellido, ' ')) As nombre,
+    case usu.estado when 1 then 'Activo' else 'Inactivo' end as estado 
+FROM 
+	aquaweb.usuario AS usu
+    INNER JOIN aquaweb.tipo_usuario tus ON usu.tusuario_id = tus.id
+ORDER BY 
+	rol;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getValuesComparativaProcesoById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getValuesComparativaProcesoById`(
+IN _idProcesoUsuario INT,
+IN _idProcesoColega INT,
+IN _idTipoSensor INT
+)
+BEGIN
+
+	SELECT
+		DATE(sen.captured_at) as fecha,
+		(SELECT 
+			AVG(valor) AS valor
+		FROM
+			aquaweb.sensor AS aux_sen 
+		WHERE
+			DATE(aux_sen.captured_at) = fecha AND
+			aux_sen.proceso_id = _idProcesoUsuario AND
+			aux_sen.tsensor_id = sen.tsensor_id) as valorUsuario,
+		(SELECT 
+			AVG(valor) AS valor 
+		FROM
+			aquaweb.sensor AS aux_sen 
+		WHERE
+			DATE(aux_sen.captured_at) = fecha AND
+			aux_sen.proceso_id = _idProcesoColega AND
+			aux_sen.tsensor_id = sen.tsensor_id) as valorColega
+	FROM
+		aquaweb.sensor AS sen
+	WHERE		
+			(sen.proceso_id = _idProcesoUsuario OR sen.proceso_id = _idProcesoColega)  AND
+			sen.tsensor_id = _idTipoSensor
+	GROUP BY  
+		DATE(sen.captured_at)
+	ORDER BY
+		fecha DESC
+	LIMIT 5;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getValuesProcesoById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getValuesProcesoById`(
+IN _idTipoSensor INT,
+IN _idProceso INT
+)
+BEGIN
+
+	SELECT 
+		sen.captured_at AS fecha, 
+		sen.valor as valor
+	FROM
+		aquaweb.sensor AS sen
+	WHERE
+		sen.tsensor_id  = _idTipoSensor AND
+		sen.proceso_id = _idProceso
+	ORDER BY 
+		fecha DESC
+	LIMIT
+		5;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `getValuesReporteProcesoById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getValuesReporteProcesoById`(
+IN _idProceso INT,
+IN _idTipoSensor INT
+)
+BEGIN
+
+	SELECT
+		DATE(sen.captured_at) as fecha,
+		TRUNCATE((SELECT 
+			AVG(valor) AS valor
+		FROM
+			aquaweb.sensor AS aux_sen 
+		WHERE
+			DATE(aux_sen.captured_at) = fecha AND
+			aux_sen.proceso_id = _idProceso AND
+			aux_sen.tsensor_id = sen.tsensor_id),2) as valor
+	FROM
+		aquaweb.sensor AS sen
+	WHERE		
+			sen.proceso_id = _idProceso  AND
+			sen.tsensor_id = _idTipoSensor
+	GROUP BY  
+		DATE(sen.captured_at)
+	ORDER BY
+		fecha DESC
+	LIMIT 30;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insDatosPez` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insDatosPez`(
+IN _usuarioid int,
+IN _nombre varchar(100),
+IN _tempvitmin int,
+IN _tempvitmax int,
+IN _tempoptmin int,
+IN _tempoptmax int,
+IN _porcpromin int,
+IN _porcpromax int,
+IN _nitnat int,
+IN _nitri int,
+IN _oxi int,
+IN _crepeso int,
+IN _cretiemp int
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+    INSERT INTO pez (usuario_id, 
+						nombre, 
+						temperatura_vital_min,
+						temperatura_vital_max,
+						temperatura_optima_min,
+						temperatura_optima_max,
+						nitrogeno_nat,
+						nitrito,
+						oxigeno,
+						porcentaje_proteina_min,
+						porcentaje_proteina_max,
+						crecimiento_peso,
+						crecimiento_tiempo) 
+    VALUES(_usuarioid,
+			_nombre,		
+			_tempvitmin,
+			_tempvitmax,
+			_tempoptmin,
+			_tempoptmax,
+			_nitnat,
+			_nitri,
+			_oxi,            
+			_porcpromin,
+			_porcpromax,
+			_crepeso,
+			_cretiemp);
+    
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insDatosPlanta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insDatosPlanta`(
+IN _usuarioid int,
+IN _nombre varchar(100),
+IN _phmin double,
+IN _phmax double,
+IN _plantmin int,
+IN _plantmax int,
+IN _germin int,
+IN _germax int,
+IN _cremin int,
+IN _cremax int,
+IN _tempmin int,
+IN _tempmax int,
+IN _expsolar int
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+    INSERT INTO planta (usuario_id, 
+						nombre, 
+						ph_min, 
+						ph_max, 
+						planta_m2_min,
+						planta_m2_max,
+						tiempo_germinacion_min,
+						tiempo_germinacion_max,
+						tiempo_crecimiento_min,
+						tiempo_crecimiento_max,
+						temperatura_min,
+						temperatura_max,
+						solar_id) 
+    VALUES(_usuarioid,
+			_nombre,		
+			_phmin,
+			_phmax,
+			_plantmin,
+			_plantmax,
+			_germin,
+			_germax,
+			_cremin,
+			_cremax,
+			_tempmin,
+			_tempmax,
+			_expsolar);
+    
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insDatosProceso` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insDatosProceso`(
+IN _idUsuario int,
+IN _nombre varchar(100),
+IN _descripcion varchar(1000),
+IN _fecha date,
+IN _areaCultivo double,
+IN _volumenCultivo double
+)
+BEGIN
+
+DECLARE _idProceso INT;
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+    INSERT INTO 
+		proceso (
+			usuario_id,
+			nombre,
+			descripcion, 
+			fecha_implementacion, 
+			area_cultivo, 
+			volumen_cultivo
+		)
+	VALUES (
+		_idUsuario,
+		_nombre, 
+		_descripcion, 
+		_fecha, 
+		_areaCultivo, 
+		_volumenCultivo
+    );
+	
+    
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insDatosUsuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insDatosUsuario`(
+IN _usuario varchar(100),
+IN _pass varchar(100),
+IN _email varchar(200),
+IN _primernombre varchar(100),
+IN _segundonombre varchar(100),
+IN _primerapellido varchar(100),
+IN _segundoapellido varchar(100),
+IN _tiposusuario int
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+    INSERT INTO usuario (username, password, email, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tusuario_id)
+	VALUES (_usuario, _pass, _email, _primernombre, _segundonombre, _primerapellido, _segundoapellido, _tiposusuario);
+	 
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insImagenGaleria` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insImagenGaleria`(
+IN _usuarioid int,
+IN _id int,
+IN _tipo int,
+IN _titulo varchar(100),
+IN _descripcion varchar(1000),
+IN _extension varchar(100)
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+	SET @codigo:=UUID();
+    
+    IF _tipo=1 THEN
+    
+		INSERT INTO galeria (
+			usuario_id, 
+			planta_id, 
+			codigo, 
+			extension, 
+			titulo, 
+			descripcion
+		)
+		VALUES (
+			_usuarioid,
+            _id,
+            @codigo,
+            _extension,
+            _titulo,
+            _descripcion
+		);
+        
+    ELSE
+    
+		INSERT INTO galeria (
+			usuario_id, 
+			pez_id, 
+			codigo, 
+			extension, 
+			titulo, 
+			descripcion
+		)
+		VALUES (
+			_usuarioid,
+            _id,
+            @codigo,
+            _extension,
+            _titulo,
+            _descripcion
+		);
+        
+    END IF;
+            
+    SELECT 1 AS IMAGE_STATUS, codigo AS CODIGO FROM galeria where id = LAST_INSERT_ID();
+    
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insSolicitud` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insSolicitud`(
+IN _usuarioidsolicitante int,
+IN _usuarioidsolicitado int
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+    INSERT INTO solicitudes (usuario_id_solicitante,usuario_id_solicitado) 
+    VALUES(_usuarioidsolicitante,_usuarioidsolicitado);
+    
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `regEspecimenesForProceso` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `regEspecimenesForProceso`(
+IN _especimenid int,
+IN _tipoelemento int,
+IN _procesoid int,
+IN _asociado int,
+IN _porcentaje int
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+	
+    /*Si el tipo de elemento es una Planta*/
+	IF _tipoelemento = 1 THEN 
+    
+		/*Si desea agregarlo*/
+		IF _asociado = 1 THEN 
+			
+            /*Valida la existencia del elemento*/
+			IF EXISTS(
+				SELECT pro_pla.id 
+                FROM aquaweb.proceso_planta AS pro_pla 
+                WHERE pro_pla.proceso_id = _procesoid AND
+                pro_pla.planta_id=_especimenid
+			) THEN
+				
+                /*Si existe lo actualizara*/
+				UPDATE 
+					aquaweb.proceso_planta AS pro_pla
+				SET 
+					pro_pla.estado = 1, 
+					pro_pla.porcentaje = _porcentaje,
+                    pro_pla.updated_at = now()
+				WHERE 
+					pro_pla.proceso_id = _procesoid AND
+					pro_pla.planta_id=_especimenid;
+			
+            ELSE 
+			
+				/*Si no existe lo insertara*/
+				INSERT INTO aquaweb.proceso_planta (proceso_id, planta_id, porcentaje)
+				VALUES(_procesoid,_especimenid,_porcentaje);
+                
+			END IF;
+		
+        /*Si desea retirarlo*/
+		ELSE
+        
+				/*Actualiza el estado a 2*/
+				UPDATE 
+					aquaweb.proceso_planta AS pro_pla
+				SET 
+					pro_pla.estado = 2,
+                    pro_pla.updated_at = now()
+				WHERE 
+					pro_pla.proceso_id = _procesoid AND
+					pro_pla.planta_id=_especimenid;
+                
+		END IF;
+	
+    /*Si el especimen es un pez*/
+	ELSE
+		
+        /*Si desea agregarlo*/
+		IF _asociado = 1 THEN 
+        
+			 /*Valida la existencia del elemento*/
+			IF EXISTS(
+				SELECT pro_pez.id 
+                FROM aquaweb.proceso_pez AS pro_pez 
+                WHERE pro_pez.proceso_id = _procesoid AND
+                pro_pez.pez_id = _especimenid
+			) THEN
+				
+                /*Si existe lo actualizara*/
+				UPDATE 
+					aquaweb.proceso_pez AS pro_pez
+				SET 
+					pro_pez.estado = 1, 
+                    pro_pez.porcentaje = _porcentaje,
+                    pro_pez.updated_at = now()
+				WHERE 
+                pro_pez.proceso_id = _procesoid AND
+				pro_pez.pez_id = _especimenid;
+			
+            ELSE 
+			
+				/*Si no existe lo insertara*/
+				INSERT INTO aquaweb.proceso_pez (proceso_id, pez_id, porcentaje)
+				VALUES(_procesoid, _especimenid, _porcentaje);
+                
+			END IF;
+		
+        /*Si desea retirarlo*/
+		ELSE
+        
+			/*Actualiza el estado a 2*/
+				UPDATE
+					aquaweb.proceso_pez AS pro_pez
+				SET 
+					pro_pez.estado = 2,
+                    pro_pez.updated_at = now()
+				WHERE
+					pro_pez.proceso_id = _procesoid AND
+					pro_pez.pez_id=_especimenid;
+                
+		END IF;
+        
+	END IF;
+    
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updAvatarUsuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updAvatarUsuario`(
+IN _usuarioid int,
+IN _extension varchar(100)
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+	SET @codigo:=UUID();
+    
+	UPDATE
+		usuario 
+    SET 
+		avatar = @codigo,
+        extension = _extension,
+        updated_at = now()
+	WHERE id = _usuarioid;
+        
+    SELECT
+		1 AS AVATAR_STATUS,
+		avatar AS CODIGO 
+    FROM usuario 
+    WHERE id = _usuarioid;
+    
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updDatosPez` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updDatosPez`(
+IN _pezid int,
+IN _nombre varchar(100),
+IN _tempvitmin int,
+IN _tempvitmax int,
+IN _tempoptmin int,
+IN _tempoptmax int,
+IN _porcpromin int,
+IN _porcpromax int,
+IN _nitnat int,
+IN _nitri int,
+IN _oxi int,
+IN _crepeso int,
+IN _cretiemp int
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+UPDATE
+	pez 
+SET    
+	nombre = _nombre,
+	temperatura_vital_min = _tempvitmin,
+	temperatura_vital_max = _tempvitmax,
+	temperatura_optima_min = _tempoptmin,
+	temperatura_optima_max = _tempoptmax,
+	nitrogeno_nat = _nitnat,
+	nitrito = _nitri,
+	oxigeno = _oxi,      
+	porcentaje_proteina_min = _porcpromin,
+	porcentaje_proteina_max= _porcpromax,
+	crecimiento_peso = _crepeso,
+	crecimiento_tiempo = _cretiemp,
+    updated_at = NOW()
+WHERE
+	pez.id = _pezid;
+
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updDatosPlanta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updDatosPlanta`(
+IN _plantaid int,
+IN _nombre varchar(100),
+IN _phmin double,
+IN _phmax double,
+IN _plantmin int,
+IN _plantmax int,
+IN _germin int,
+IN _germax int,
+IN _cremin int,
+IN _cremax int,
+IN _tempmin int,
+IN _tempmax int,
+IN _expsolar int
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+UPDATE
+	planta
+SET
+	nombre = _nombre,
+	ph_min = _phmin,
+	ph_max = _phmax,
+	planta_m2_min = _plantmin,
+	planta_m2_max = _plantmax,
+	tiempo_germinacion_min = _germin,
+	tiempo_germinacion_max = _germax,
+	tiempo_crecimiento_min = _cremin,
+	tiempo_crecimiento_max = _cremax,
+	temperatura_min = _tempmin,
+	temperatura_max = _tempmax,
+	solar_id = _expsolar,
+    updated_at = NOW()
+WHERE
+	planta.id = _plantaid;
+
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updDatosProceso` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updDatosProceso`(
+IN _procesoid int,
+IN _nombre varchar(100),
+IN _descripcion varchar(1000),
+IN _fecha date,
+IN _areaCultivo double,
+IN _volumenCultivo double
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+	UPDATE
+		proceso 
+	SET
+		nombre = _nombre,
+		descripcion =  _descripcion,
+		fecha_implementacion = _fecha,
+		area_cultivo =   _areaCultivo,  
+		volumen_cultivo =  _volumenCultivo,
+        updated_at = now()
+	WHERE
+		id = _procesoid;
+	
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updDatosUsuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updDatosUsuario`(
+IN _usuarioid INT,
+IN _usuario varchar(100),
+IN _email varchar(200),
+IN _primernombre varchar(100),
+IN _segundonombre varchar(100),
+IN _primerapellido varchar(100),
+IN _segundoapellido varchar(100)
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+	UPDATE 
+		usuario
+	SET 
+		username = _usuario,
+		email = _email,
+		primer_nombre = _primernombre,
+		segundo_nombre = _segundonombre,
+		primer_apellido = _primerapellido,
+		segundo_apellido = _segundoapellido,
+        updated_at = now()
+	WHERE
+		id = _usuarioid;
+	 
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updEstadoElemento` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updEstadoElemento`(
+IN _estadoactual int,
+IN _elementotipo int,
+IN _elementoid int
+)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+	BEGIN
+		ROLLBACK;
+		SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+	END;
+
+	START TRANSACTION;
+		IF _elementotipo = 1 THEN
+			
+			UPDATE
+				aquaweb.usuario as usu
+			SET 
+				usu.estado = _estadoactual,
+				updated_at = now()
+			WHERE
+				usu.id = _elementoid;
+					
+		ELSEIF _elementotipo = 2 THEN
+			
+			UPDATE 
+				aquaweb.planta as pla
+			SET 
+				pla.estado = _estadoactual,
+				updated_at = now()
+			WHERE
+				pla.id = _elementoid;
+			
+		ELSEIF _elementotipo = 3 THEN
+
+			UPDATE
+				aquaweb.pez as pez
+			SET 
+				pez.estado = _estadoactual,
+                updated_at = now()
+			WHERE 
+				pez.id = _elementoid;
+		
+        ELSE
+        
+			UPDATE 
+				aquaweb.proceso as pro
+			SET 
+				pro.estado = _estadoactual,
+                updated_at = now()
+			WHERE 
+				pro.id = _elementoid;
+            
+		END IF;
+	COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updEstadoGaleria` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updEstadoGaleria`(
+IN _id INT,
+IN _estado INT
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+	
+    SET @var_estado:=1;
+	
+    IF _estado = 1 THEN
+    
+		SET @var_estado :=2;
+        
+	END IF;
+    
+	UPDATE 
+		galeria
+	SET 
+		estado = @var_estado,
+        updated_at = now()
+	WHERE
+		id = _id;
+	 
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updInfoGaleria` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updInfoGaleria`(
+IN _galeriaid int,
+IN _titulo varchar(100),
+IN _descripcion varchar(1000)
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+	UPDATE
+		galeria 
+	SET
+		titulo = _titulo,
+		descripcion =  _descripcion,
+        updated_at = now()
+	WHERE
+		id = _galeriaid;
+	
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `updPassUsuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updPassUsuario`(
+IN _usuarioid INT,
+IN _pass varchar(100)
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+
+	UPDATE 
+		usuario
+	SET 
+		password = _pass,
+		updated_at = now()
+	WHERE
+		id = _usuarioid;
+	 
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `upsEstadoColega` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `upsEstadoColega`(
+IN _usuarioid INT,
+IN _usuariocolega INT
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+	
+	UPDATE 
+		aquaweb.colegas
+	SET 
+		estado = 2,
+        updated_at = now()
+	WHERE
+		(usuario_id = _usuarioid and colega_id = _usuariocolega) or
+        (usuario_id = _usuariocolega and colega_id = _usuarioid);
+        	 
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `upsEstadoSolicitud` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `upsEstadoSolicitud`(
+IN _usuariosolicitante INT,
+IN _usuariosolicitado INT,
+IN _estado INT
+)
+BEGIN
+
+DECLARE EXIT HANDLER FOR SQLEXCEPTION, SQLWARNING
+BEGIN
+    ROLLBACK;
+    SELECT 'E0666' AS ERROR, 'SQLEXCEPTION' AS MESSAGE;
+END;
+
+START TRANSACTION;
+	
+	UPDATE 
+		aquaweb.solicitudes
+	SET 
+		estado = _estado,
+        updated_at = now()
+	WHERE
+		usuario_id_solicitante = _usuariosolicitante and 
+        usuario_id_solicitado = _usuariosolicitado;
+        
+	IF _estado = 2 THEN
+		INSERT INTO aquaweb.colegas (usuario_id,colega_id)
+        VALUES(_usuariosolicitante,_usuariosolicitado);    
+	END IF;
+	 
+COMMIT;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-09-08 13:57:04
